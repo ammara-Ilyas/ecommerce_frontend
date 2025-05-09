@@ -3,6 +3,7 @@ import Header from "../components/layout/Header";
 import "./globals.css";
 import Footer from "@/components/layout/footer/Footer";
 import NewsletterSection from "@/components/layout/footer/widgets/NewsLetter";
+import NewsLatter from "@/components/layout/footer/widgets/NewLatter";
 import FeatureCards from "@/components/layout/footer/widgets/FeaturedCard";
 
 const geistSans = Geist({
@@ -28,7 +29,7 @@ export default function RootLayout({ children }) {
       >
         <Header />
         {children}
-        <NewsletterSection />
+        <NewsLatter />
         <FeatureCards />
         <Footer />
       </body>

@@ -16,7 +16,7 @@ export default function ProductCard({ product }) {
 
   return (
     <div
-      className="relative w-64 rounded-xl overflow-hidden shadow-lg bg-white transition-all duration-300 hover:shadow-xl cursor-pointer"
+      className="relative w-full border-2 border-black rounded-xl overflow-hidden shadow-lg bg-white transition-all duration-300 hover:shadow-xl cursor-pointer"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -25,8 +25,10 @@ export default function ProductCard({ product }) {
         <Image
           src={
             hovered
-              ? product?.images?.[1] ?? product?.images?.[0] ?? "/fallback.jpg"
-              : product?.images?.[0] ?? "/fallback.jpg"
+              ? product?.images?.[1] ??
+                product?.images?.[0] ??
+                "/images/dummy.png"
+              : product?.images?.[0] ?? "/images/about/service-03.jpg"
           }
           alt="product"
           fill
@@ -35,15 +37,21 @@ export default function ProductCard({ product }) {
 
         {/* Overlay Icons */}
         <div
-          className={`absolute top-2 right-2 flex gap-2 p-2 bg-black/40 rounded-md transition-all duration-300 ${
+          className={`absolute top-2 right-2 flex gap-2 p-2 bg-black/10 rounded-md transition-all duration-300 ${
             hovered ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
           }`}
         >
-          <button className="bg-white p-1 rounded-full hover:scale-105 transition">
-            <FavoriteBorderIcon className="text-green-600" fontSize="small" />
+          <button className="bg-white p-1 rounded-full group-hover: hover:scale-105 transition">
+            <FavoriteBorderIcon
+              className="hover:text-green-600 text-black group"
+              fontSize="small"
+            />
           </button>
           <button className="bg-white p-1 rounded-full hover:scale-105 transition">
-            <VisibilityIcon className="text-green-600" fontSize="small" />
+            <VisibilityIcon
+              className="hover:text-green-600 text-black"
+              fontSize="small"
+            />
           </button>
         </div>
       </div>
