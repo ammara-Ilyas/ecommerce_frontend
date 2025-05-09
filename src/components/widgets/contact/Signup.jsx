@@ -5,7 +5,7 @@ import { TextField, Button, CircularProgress } from "@mui/material";
 import { callPublicApi } from "@/libs/callApis";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import logo from "/images/image/logo.png";
+// import logo from "/images/image/logo.png";
 import { FcGoogle } from "react-icons/fc";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -106,13 +106,13 @@ export default function Signup() {
 
         {/* Right Side */}
         <div className="w-[30%] shadow-md mr-2 rounded-md py-6 bg-gray-100 ml-auto pr-0 flex justify-center items-center flex-col  ">
-          <Image
+          {/* <Image
             src={logo}
             alt="Ecommerce Logo"
             className="w-16 h-16 my-6"
             width={16}
             heigt={16}
-          />
+          /> */}
           <h2 className="text-2xl font-semibold text-gray-800">ECOMMERCE</h2>
 
           <form

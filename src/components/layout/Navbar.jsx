@@ -48,60 +48,70 @@ const Navbar = () => {
     { icon: <FaShoppingBag />, link: "/shop", num: 0 },
   ];
   return (
-    <header className="">
-      <div className=" bg-gray-200 py-2   px-20">
-        <div className="container mx-auto">
-          <div className="flex justify-between">
-            <div className="header__top__left flex space-x-4">
-              <div className=" ">
-                <FaEnvelope className="inline-block mr-2" /> hello@colorlib.com
+    <header className="border-2 border-black">
+      {/* <div className=" bg-gray-200 border-2 border-orange-600   px-20">
+        {" "}
+        <div
+        // className="whitespace-nowrap animate-marquee"
+        // style={{
+        //   display: "inline-block",
+        //   // animation: "marquee 15s linear infinite",
+        // }}
+        >
+          <div className="container mx-auto">
+            <div className="flex justify-between">
+              <div className="header__top__left flex space-x-4">
+                <div className=" ">
+                  <FaEnvelope className="inline-block mr-2" />{" "}
+                  hello@colorlib.com
+                </div>
+                <div className="border-[1px] border-r-black"></div>
+                <div>Free Shipping for all Order of $99</div>
               </div>
-              <div className="border-[1px] border-r-black"></div>
-              <div>Free Shipping for all Order of $99</div>
-            </div>
-            <div className=" flex items-center space-x-7">
-              <div className=" flex items-center space-x-4 ml-3">
-                {socialIcons.map((item, i) => (
-                  <Link href={item.link} key={i}>
-                    {item.icon}
-                  </Link>
-                ))}
-              </div>
-              <div className="border-[1px] border-r-black h-full"></div>
-
-              <div className="relative">
-                <Image
-                  src="/images/header/usa.png"
-                  alt="Language"
-                  fill
-                  className="inline-block mr-2 w-[30px] h-[20px] "
-                />
-                <select
-                  className="bg-transparent border-none outline-none"
-                  name=""
-                  id=""
-                  value={language}
-                  onChange={(e) => setLanguage(e.target.value)}
-                >
-                  {langList.map((lang, i) => (
-                    <option value={lang} key={i}>
-                      {lang}
-                    </option>
+              <div className=" flex items-center space-x-7">
+                <div className=" flex items-center space-x-4 ml-3">
+                  {socialIcons.map((item, i) => (
+                    <Link href={item.link} key={i}>
+                      {item.icon}
+                    </Link>
                   ))}
-                </select>
-              </div>
-              <div className="border-[1px] border-r-black h-full"></div>
+                </div>
+                <div className="border-[1px] border-r-black h-full"></div>
 
-              <div className="">
-                <Link href="/contact/login">
-                  <FaUser className="inline-block mr-2" /> Login
-                </Link>
+                <div className="relative">
+                  <Image
+                    src="/images/header/usa.png"
+                    alt="Language"
+                    fill
+                    className="inline-block mr-2 w-[30px] h-[20px] "
+                  />
+                  <select
+                    className="bg-transparent border-none outline-none"
+                    name=""
+                    id=""
+                    value={language}
+                    onChange={(e) => setLanguage(e.target.value)}
+                  >
+                    {langList.map((lang, i) => (
+                      <option value={lang} key={i}>
+                        {lang}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="border-[1px] border-r-black h-full"></div>
+
+                <div className="">
+                  <Link href="/contact/login">
+                    <FaUser className="inline-block mr-2" /> Login
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="container mx-auto py-4  px-20">
+      </div> */}
+      <div className="container mx-auto   px-20">
         <div className="flex justify-between items-center  border-orange-600">
           <div className="">
             <Link href="/">

@@ -5,50 +5,53 @@ import Image from "next/image";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import CategoryCard from "../miniWidgets/CategoryCard";
-
-export const categories = [
-  {
-    title: "Fashion",
-    icon: "/fashion-icon.png", // Update with correct path
-    bgColor: "bg-green-100",
-  },
-  {
-    title: "Electronics",
-    icon: "/electronics-icon.png",
-    bgColor: "bg-rose-100",
-  },
-  {
-    title: "Fashion",
-    icon: "/fashion-icon.png", // Update with correct path
-    bgColor: "bg-green-100",
-  },
-  {
-    title: "Fashion",
-    icon: "/fashion-icon.png", // Update with correct path
-    bgColor: "bg-green-100",
-  },
-  {
-    title: "Fashion",
-    icon: "/fashion-icon.png", // Update with correct path
-    bgColor: "bg-green-100",
-  },
-  {
-    title: "Fashion",
-    icon: "/fashion-icon.png", // Update with correct path
-    bgColor: "bg-green-100",
-  },
-  {
-    title: "Fashion",
-    icon: "/fashion-icon.png", // Update with correct path
-    bgColor: "bg-green-100",
-  },
-  {
-    title: "Bags",
-    icon: "/bags-icon.png",
-    bgColor: "bg-pink-100",
-  },
-];
+import { useSelector } from "react-redux";
+// export const categories = [
+//   {
+//     title: "Fashion",
+//     icon: "/fashion-icon.png", // Update with correct path
+//     bgColor: "bg-green-100",
+//   },
+//   {
+//     title: "Electronics",
+//     icon: "/electronics-icon.png",
+//     bgColor: "bg-rose-100",
+//   },
+//   {
+//     title: "Fashion",
+//     icon: "/fashion-icon.png", // Update with correct path
+//     bgColor: "bg-green-100",
+//   },
+//   {
+//     title: "Fashion",
+//     icon: "/fashion-icon.png", // Update with correct path
+//     bgColor: "bg-green-100",
+//   },
+//   {
+//     title: "Fashion",
+//     icon: "/fashion-icon.png", // Update with correct path
+//     bgColor: "bg-green-100",
+//   },
+//   {
+//     title: "Fashion",
+//     icon: "/fashion-icon.png", // Update with correct path
+//     bgColor: "bg-green-100",
+//   },
+//   {
+//     title: "Fashion",
+//     icon: "/fashion-icon.png", // Update with correct path
+//     bgColor: "bg-green-100",
+//   },
+//   {
+//     title: "Bags",
+//     icon: "/bags-icon.png",
+//     bgColor: "bg-pink-100",
+//   },
+// ];
 const CategoriesSlider = () => {
+  const categories = useSelector((state) => state.product.categories);
+  console.log("catego", categories);
+
   const carouselRef = useRef(null);
 
   const responsive = {
@@ -97,11 +100,12 @@ const CategoriesSlider = () => {
           slidesToSlide={1}
           swipeable
         >
-          {categories.map((cat, index) => (
-            <div key={index} className="mx-3">
-              <CategoryCard cat={cat} />
-            </div>
-          ))}
+          {categories &&
+            categories.map((cat, index) => (
+              <div key={index} className="mx-3">
+                <CategoryCard cat={cat} />
+              </div>
+            ))}
         </Carousel>
       </div>
     </div>

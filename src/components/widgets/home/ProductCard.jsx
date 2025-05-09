@@ -7,7 +7,7 @@ import StarIcon from "@mui/icons-material/Star";
 
 export default function ProductCard({ product }) {
   const [hovered, setHovered] = useState(false);
-  console.log("product", product);
+  // console.log("product", product);
 
   const images = [
     "/images/dummy.png", // index 0 image
@@ -60,7 +60,7 @@ export default function ProductCard({ product }) {
       <div className="p-4 space-y-1">
         <p className="text-gray-500 text-sm">Fashion</p>
         <h3 className="font-semibold text-base text-gray-800 truncate">
-          Altecia Tie and Dye Joggers
+          {product.title}
         </h3>
         <div className="flex items-center text-yellow-500 text-sm">
           {Array.from({ length: 4 }).map((_, i) => (
@@ -70,8 +70,12 @@ export default function ProductCard({ product }) {
         </div>
         <p className="text-sm text-green-600">By Altecia</p>
         <div className="flex items-center gap-2">
-          <span className="text-green-600 font-bold">Rs 1500</span>
-          <span className="text-gray-400 line-through text-sm">Rs 1800</span>
+          <span className="text-green-600 font-bold">
+            Rs {product.newPrice}
+          </span>
+          <span className="text-gray-400 line-through text-sm">
+            Rs {product.oldPrice}
+          </span>
         </div>
       </div>
     </div>

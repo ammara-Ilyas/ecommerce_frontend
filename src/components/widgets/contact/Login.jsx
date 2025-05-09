@@ -7,7 +7,7 @@ import { FcGoogle } from "react-icons/fc";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
-import logo from "/images/image/logo.png";
+// import logo from "/images/image/logo.png";
 import { callPublicApi } from "@/libs/callApis";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -75,13 +75,13 @@ export default function Login() {
       <ToastContainer />
 
       <div className="flex flex-col w-11/12 md:w-1/3 p-8">
-        <Image
+        {/* <Image
           src={logo}
           alt="Ecommerce Logo"
           className="w-16 h-16 mx-auto mb-4"
           width={16}
           height={16}
-        />
+        /> */}
         <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">
           ECOMMERCE
         </h2>
