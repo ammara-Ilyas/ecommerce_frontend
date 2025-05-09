@@ -1,34 +1,33 @@
-// import BreadCums from "@/components/ClientSide/BreadCums";
-import React from "react";
-// import notFound from "@/assests/404.png";
-import Image from "next/image";
-const PageNotFound = () => {
+"use client";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+
+const NotFoundPage = () => {
+  const router = useRouter();
+  const handleBackward = () => {
+    router.push("/");
+  };
   return (
-    <>
-      {/* <BreadCums activeTab={"Page Not Found"} /> */}
-      <div className="container mx-auto px-[50px] py-20">
-        <div className="flex justify-center items-center flex-col">
-          {/* <Image
-            src={notFound}
-            width={582}
-            height={"100%"}
-            className="object-contain"
-            alt="not_found"
-          /> */}
-          <h1 className="text-[40px] leading-[40px] font-semibold text-gray-900 pt-3">
-            Oops! page not found
-          </h1>
-          <p className="text-[16px] font-medium text-gray-500 max-w-[500px] text-center pt-2">
-            Ut consequat ac tortor eu vehicula. Aenean accumsan purus eros.
-            Maecenas sagittis tortor at metus mollis
-          </p>
-          <button className="bg-color1 text-white px-8 py-3.5 transition ease-in-out duration-300 hover:bg-white hover:text-color1  rounded-full font-semibold text-[14px] mt-5">
-            Back to Home
-          </button>
-        </div>
-      </div>
-    </>
+    <div className="flex flex-col  items-center pt-16 min-h-screen bg-gray-100 text-gray-900">
+      <h1 className="text-6xl font-bold text-blue-600 mb-4">404</h1>
+      <h2 className="text-2xl font-semibold mb-2">Oops! Page Not Found</h2>
+      <p className="text-gray-600 mb-6">
+        The page you are looking for might have been removed or is temporarily
+        unavailable.
+      </p>
+      <button
+        className="bg-blue-600 focus:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg"
+        onClick={handleBackward}
+      >
+        Go Back Home
+      </button>
+      <footer className="text-center mt-5 text-gray-600">
+        © Ammara Ilyas, All Rights Reserved. Designed By HTML Codex
+        <br />
+        Distributed By Rumble
+      </footer>
+    </div>
   );
 };
 
-export default PageNotFound;
+export default NotFoundPage;

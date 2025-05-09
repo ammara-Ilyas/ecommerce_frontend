@@ -5,6 +5,9 @@ import Footer from "@/components/layout/footer/Footer";
 import NewsletterSection from "@/components/layout/footer/widgets/NewsLetter";
 import NewsLatter from "@/components/layout/footer/widgets/NewLatter";
 import FeatureCards from "@/components/layout/footer/widgets/FeaturedCard";
+// import ReduxProviders from "@/redux/ReduxProvider";
+import Hero from "@/components/layout/Hero";
+import Navbar from "@/components/layout/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,11 +30,15 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        {/* <ReduxProviders> */}
+        <Navbar />
+        <Hero />
         <Header />
         {children}
         <NewsLatter />
         <FeatureCards />
         <Footer />
+        {/* </ReduxProviders> */}
       </body>
     </html>
   );
