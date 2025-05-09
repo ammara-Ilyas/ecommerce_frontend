@@ -4,6 +4,7 @@ import AccountForm from "@/components/widgets/contact/AccountForm";
 import Breadcrumb from "@/components/widgets/contact/Breadcrumb";
 import ChangePassword from "@/components/widgets/contact/ChangePassword";
 import Wrapper from "@/components/miniWidgets/Wrapper";
+
 const Page = () => {
   const [activeTab, setActiveTab] = useState("edit");
   return (

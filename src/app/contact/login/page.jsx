@@ -1,6 +1,10 @@
 import React from "react";
 import Login from "@/components/widgets/contact/Login";
 import bg from "/images/image/bg_signup.webp";
+export const metadata = {
+  title: "Login",
+  description: "login page in SHop you & me",
+};
 const Page = () => {
   return (
     <>
