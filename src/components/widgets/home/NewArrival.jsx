@@ -84,6 +84,7 @@ const NewArrival = () => {
     // setNewArrival(products.filter((item) => item.isNewArrival == false));
     setNewArrival(products);
   }, [products]);
+  console.log("new arrival", newArrival);
 
   return (
     <div className="flex flex-col my-8 justify-between ">

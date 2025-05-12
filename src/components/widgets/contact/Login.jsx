@@ -54,6 +54,7 @@ export default function Login() {
         });
 
         localStorage.setItem("token", res.token);
+        localStorage.setItem("userId", res.userId);
         router.push("/"); // Navigate after success
       }
     } catch (error) {

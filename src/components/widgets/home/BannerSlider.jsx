@@ -89,12 +89,13 @@ const BannerSlider = () => {
         slidesToSlide={1}
         swipeable
       >
-        {banners.map((banner, index) => (
-          <div className="w-full  h-[400px]" key={index}>
-            {" "}
-            <Image src={banner.image} alt={banner.name} fill className="" />
-          </div>
-        ))}
+        {banners &&
+          banners.map((banner, index) => (
+            <div className="w-full  h-[400px]" key={banner._id}>
+              {" "}
+              <Image src={banner.image} alt={banner.name} fill />
+            </div>
+          ))}
       </Carousel>
     </div>
   );

@@ -85,6 +85,7 @@ const FeaturedProducts = () => {
     // setFeaturedProducts(products.filter((item) => item.isFeatured == false));
     setFeaturedProducts(products);
   }, [products]);
+  console.log("featured", featuredProduct);
 
   return (
     <div className="flex flex-col my-8 justify-between ">

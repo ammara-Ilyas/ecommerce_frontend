@@ -10,7 +10,7 @@ import { callPublicApi } from "@/libs/CallApis";
 import Hero from "@/components/layout/Hero";
 import Navbar from "@/components/layout/Navbar";
 import { categories } from "@/components/widgets/home/Categories";
-
+import { ToastContainer } from "react-toastify";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -59,7 +59,7 @@ export default function RootLayout({ children }) {
           <NewsLatter />
           <NewsletterSection />
           <FeatureCards />
-          <Footer />
+          <Footer /> <ToastContainer position="top-right" autoClose={3000} />
         </ReduxProviders>
       </body>
     </html>

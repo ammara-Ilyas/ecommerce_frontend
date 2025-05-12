@@ -1,8 +1,8 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CiSquarePlus, CiSquareMinus } from "react-icons/ci";
 
-// import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 // import {
 //   removefromCart,
 //   increCartItems,
@@ -10,53 +10,73 @@ import { CiSquarePlus, CiSquareMinus } from "react-icons/ci";
 // } from "@/redux/slice/cartSlice";
 
 import Image from "next/image";
+import { callPrivateApi } from "@/libs/CallApis";
+import { setCartItems } from "@/redux/silice/CartSlice";
+import { userId } from "@/libs/Token";
 const Cart = () => {
-  //   const dispatch = useDispatch();
-  //   const cartItems: Product[] = useSelector(
-  //     (state: { cart: { items: Product[] } }) => state.cart.items
-  //   );
-  //   // console.log("cart", cartItems);
-  //   const totalPriceAllProducts = cartItems.reduce((acc, priceItem: Product) => {
-  //     return acc + priceItem.quantity * priceItem.price;
-  //   }, 0);
-  //   // console.log("item", totalPriceAllProducts);
-  //   const deleteItem = (index: number) => {
-  //     console.log("delet", index);
+  const dispatch = useDispatch();
+  const carts = useSelector((state) => state.cart.cartItems);
+  const [cartItems, setCartItems] = useState([]);
+  useEffect(() => {
+    const fetchCartItems = async () => {
+      try {
+        const res = await callPrivateApi(`/cart/${userId}`, "GET");
+        console.log("res in cart", res);
+        if (res.status == 200 || res.status == 201) {
+          setCartItems(res.cartItems);
+          console.log("message", res.message);
+        }
+      } catch (error) {
+        console.log("error", error.message);
+      }
+    };
 
-  //     dispatch(removefromCart(index));
-  //   };
-  //   const handleProductItemInc = (index: number) => {
-  //     console.log(index);
-  //     dispatch(increCartItems(index));
-  //   };
-  //   const handleProductItemDec = (index: number) => {
-  //     dispatch(decreCartItems(index));
-  //   };
-  const cartItems = [
-    {
-      image: "/images/dummy.png",
-      title: "product",
-      price: 45,
-    },
-    {
-      image: "/images/dummy.png",
-      title: "product",
-      price: 45,
-      qunatity: 2,
-    },
-    {
-      image: "/images/dummy.png",
-      title: "product",
-      price: 45,
-      qunatity: 2,
-    },
-    {
-      image: "/images/dummy.png",
-      title: "product",
-      price: 45,
-      qunatity: 2,
-    },
-  ];
+    fetchCartItems();
+  }, [userId]);
+  console.log("cart items", cartItems);
+
+  // console.log("cart", cartItems);
+  // const totalPriceAllProducts = cartItems.reduce((acc, priceItem) => {
+  //   return acc + priceItem.quantity * priceItem.price;
+  // }, 0);
+  // // console.log("item", totalPriceAllProducts);
+  // const deleteItem = (index) => {
+  //   console.log("delet", index);
+
+  //   dispatch(removefromCart(index));
+  // };
+  // const handleProductItemInc = (index) => {
+  //   console.log(index);
+  //   dispatch(increCartItems(index));
+  // };
+  // const handleProductItemDec = (index) => {
+  //   dispatch(decreCartItems(index));
+  // };
+  // const cartItems = [
+  //   {
+  //     image: "/images/dummy.png",
+  //     title: "product",
+  //     price: 45,
+  //   },
+  //   {
+  //     image: "/images/dummy.png",
+  //     title: "product",
+  //     price: 45,
+  //     qunatity: 2,
+  //   },
+  //   {
+  //     image: "/images/dummy.png",
+  //     title: "product",
+  //     price: 45,
+  //     qunatity: 2,
+  //   },
+  //   {
+  //     image: "/images/dummy.png",
+  //     title: "product",
+  //     price: 45,
+  //     qunatity: 2,
+  //   },
+  // ];
   return (
     <div className="mb-16 scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar scrollbar-thumb-slate-500  scrollbar-track-white w-[95%] md:w-3/4 mx-auto mt-8 bg-base-100 shadow-xl  p-24 transition flex overflow-hidden ">
       {cartItems.length === 0 ? (
