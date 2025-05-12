@@ -34,13 +34,20 @@ const fetchData = async () => {
     console.log("res in CategoriesRes list ", CategoriesRes);
     const bannerRes = await callPublicApi("/banners", "GET");
     console.log("res in bannerRes list ", bannerRes);
-    return { productRes, CategoriesRes, bannerRes };
+    const cartRes = await callPublicApi("/cart", "GET");
+    console.log("res in bannerRes list ", cartRes);
+    return { productRes, CategoriesRes, bannerRes, cartRes };
   } catch (error) {
     console.error("Error fetching data:", error);
-    return { productRes: null, CategoriesRes: null, bannerRes: null };
+    return {
+      productRes: null,
+      CategoriesRes: null,
+      bannerRes: null,
+      cartRes: null,
+    };
   }
 };
-const { productRes, CategoriesRes, bannerRes } = await fetchData();
+const { productRes, CategoriesRes, bannerRes, cartRes } = await fetchData();
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
@@ -51,6 +58,7 @@ export default function RootLayout({ children }) {
           product={productRes}
           categories={CategoriesRes}
           banners={bannerRes}
+          cartsItems={cartRes}
         >
           <Navbar />
           <Hero />

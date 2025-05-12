@@ -3,7 +3,13 @@ import { useEffect } from "react";
 import { store } from "./store";
 import { useDispatch, Provider } from "react-redux";
 import { setCategories, setProducts, setBanners } from "./silice/ProductSlice";
-function DataInitializer({ categories, product, banners, children }) {
+function DataInitializer({
+  categories,
+  product,
+  banners,
+  cartsItems,
+  children,
+}) {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -19,18 +25,29 @@ function DataInitializer({ categories, product, banners, children }) {
       console.log("banners data in Redux Provider", banners.banners);
       dispatch(setBanners(banners.banners));
     }
+    if (cartsItems) {
+      console.log("cartItem data in Redux Provider", banners.banners);
+      dispatch(setBanners(cartsItems.cartItem));
+    }
   }, []);
 
   return <>{children}</>;
 }
 
-function ReduxProviders({ categories, product, banners, children }) {
+function ReduxProviders({
+  categories,
+  product,
+  banners,
+  cartsItems,
+  children,
+}) {
   return (
     <Provider store={store}>
       <DataInitializer
         product={product}
         categories={categories}
         banners={banners}
+        cartsItems={cartsItems}
       >
         {children}
       </DataInitializer>

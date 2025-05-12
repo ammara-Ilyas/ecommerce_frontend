@@ -37,15 +37,18 @@ const navlinks = [
   },
 ];
 const Navbar = () => {
+  const cartItem = useSelector((state) => state.cart.cartItems);
+  const wishListItems = useSelector((state) => state.wish.wishList);
   const [language, setLanguage] = useState("English");
   //   const cartItems: Product[] = useSelector(
   //     (state: { cart: { items: Product[] } }) => state.cart.items
   //   );
   const langList = ["English", "Spanish", "Japanese", "Chinese", "Urdu"];
+  // console.log("cart", cartItem.length(), "wish", wishListItems.length());
 
   const cartIcons = [
-    { icon: <FaHeart />, link: "/cart", num: 5 },
-    { icon: <FaShoppingBag />, link: "/shop", num: 0 },
+    { icon: <FaHeart />, link: "/cart", num: cartItem.length },
+    { icon: <FaShoppingBag />, link: "/shop", num: wishListItems.length },
   ];
   return (
     <header className="border-2 border-black">

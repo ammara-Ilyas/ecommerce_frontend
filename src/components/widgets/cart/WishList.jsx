@@ -4,34 +4,26 @@ import { CiSquarePlus, CiSquareMinus } from "react-icons/ci";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector, useDispatch } from "react-redux";
-// import {
-//   removefromCart,
-//   increCartItems,
-//   decreCartItems,
-// } from "@/redux/slice/cartSlice";
 
 import Image from "next/image";
 import { callPrivateApi } from "@/libs/CallApis";
-import { setCartItems } from "@/redux/silice/CartSlice";
+import { setWishList } from "@/redux/silice/WishListSlice";
 import { userId } from "@/libs/Token";
 import CartSkeleton from "@/components/miniWidgets/CartSkeleton";
-const Cart = () => {
+const WishList = () => {
   const dispatch = useDispatch();
   const carts = useSelector((state) => state.cart.cartItems);
-  const [cartItem, setCartItem] = useState([]);
+  const [wishListItems, setWishListItems] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [totalPrice, setTotalPrice] = useState(0);
   useEffect(() => {
     const fetchCartItems = async () => {
       setLoading(true);
       try {
-        const res = await callPrivateApi(`/cart/${userId}`, "GET");
-        console.log("res in cart", res);
-        setCartItem(res.cartItems);
-        dispatch(setCartItems(res.cartItems));
-        console.log("message", res.message);
-        if (res.status == 200 || res.status == 201) {
-        }
+        const res = await callPrivateApi(`/wish/${userId}`, "GET");
+        console.log("res in wishlist", res);
+        setWishListItems(res.wishlist);
+        dispatch(setWishList(res.wishlist));
+        // console.log("message", res.message);
       } catch (error) {
         console.log("error", error.message);
       } finally {
@@ -40,36 +32,20 @@ const Cart = () => {
     };
     fetchCartItems();
   }, []);
-  console.log("cart items", carts);
-
-  // console.log("cart", cartItems);
-  useEffect(() => {
-    const totalPriceAllProducts = cartItem.reduce((acc, priceItem) => {
-      return acc + priceItem.quantity * priceItem.product.newPrice;
-    }, 0);
-    console.log("item", totalPriceAllProducts);
-    setTotalPrice(totalPriceAllProducts);
-  }, [cartItem]);
-  // const handleProductItemInc = (index) => {
-  //   console.log(index);
-  //   dispatch(increcartItem(index));
-  // };
-  // const handleProductItemDec = (index) => {
-  //   dispatch(decreCartItems(index));
-  // };
+  console.log("wishlist items", wishListItems);
 
   const handleDelete = async (id) => {
     console.log("id in del", id);
 
     setLoading(true);
     try {
-      const res = await callPrivateApi(`/cart/${id}`, "DELETE");
-      console.log("res in  cart item delete ", res);
-      const updated = cartItem.filter((item) => item._id !== id);
+      const res = await callPrivateApi(`/wish/${id}`, "DELETE");
+      console.log("res in  wishlist item delete ", res);
+      const updated = wishListItems.filter((item) => item._id !== id);
       console.log("updated", updated);
-      setCartItem(updated);
-      dispatch(setCartItems(updated));
-      toast.success(res.message || " cart item deleted successfully");
+      setWishListItems(updated);
+      dispatch(setWishList(updated));
+      toast.success(res.message || " wishlist item deleted successfully");
     } catch (error) {
       toast.error(error?.message || "Something went wrong");
     } finally {
@@ -82,16 +58,18 @@ const Cart = () => {
     <div className="mb-16 scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar scrollbar-thumb-slate-500  scrollbar-track-white w-[95%] md:w-3/4 mx-auto mt-8 bg-base-100 shadow-xl  p-24 transition flex overflow-hidden ">
       {loading ? (
         <CartSkeleton />
-      ) : cartItem.length === 0 ? (
+      ) : wishListItems.length === 0 ? (
         <div className="text-gray-600 min-h-20 flex text-center text-2xl pt-11 font-bold justify-center items-center">
-          <h2>Your cart is empty.</h2>
+          <h2>Your wish list is empty.</h2>
         </div>
       ) : (
         <div className="w-full">
-          <h1 className="text-3xl font-bold mb-4 text-center">Your Cart</h1>
+          <h1 className="text-3xl font-bold mb-4 text-center">
+            Your Wish List
+          </h1>
 
           <div className="scrollbar-thin h-[350px] overflow-y-scroll">
-            {cartItem.map((product, index) => (
+            {wishListItems.map((product, index) => (
               <div
                 key={index}
                 className="flex items-center flex-col md:flex-row   justify-between border-b border-gray-300 py-4"
@@ -114,15 +92,6 @@ const Cart = () => {
                   </div>
                 </div>
                 <div className="flex basis-1/4 justify-between pr-4">
-                  <div className="flex items-center  gap-2 font-bold text-xl">
-                    <CiSquarePlus
-                    //  onClick={() => handleProductItemInc(index)}
-                    />
-                    {product.quantity}
-                    <CiSquareMinus
-                    //   onClick={() => handleProductItemDec(index)}
-                    />
-                  </div>
                   <button
                     className="text-red-600 font-semibold"
                     onClick={() => handleDelete(product._id)}
@@ -133,18 +102,10 @@ const Cart = () => {
               </div>
             ))}
           </div>
-          <div className="mt-8 flex justify-end flex-col">
-            <p className="text-center font-bold text-2xl mb-3">
-              Total Price : {totalPrice}$
-            </p>
-            <button className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700">
-              Checkout
-            </button>
-          </div>
         </div>
       )}
     </div>
   );
 };
 
-export default Cart;
+export default WishList;
