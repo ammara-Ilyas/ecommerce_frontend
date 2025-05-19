@@ -2,7 +2,7 @@ import React from "react";
 import Signup from "@/components/widgets/contact/Signup";
 export const metadata = {
   title: "Register",
-  description: "register page in SHop you & me",
+  description: "register page in Ecommerce",
 };
 const Page = () => {
   return (

@@ -1,19 +1,20 @@
-// Wrapper.jsx
 "use client";
-import { useCategory } from "@/contextApi/CategoriesContext";
+
+import React from "react";
+import { usePathname } from "next/navigation";
+import Hero from "../layout/Hero";
+
 const Wrapper = ({ children }) => {
-  const { isSidebarOpen } = useCategory();
-  console.log("isopen", isSidebarOpen);
+  const pathname = usePathname();
+
+  // Pages where Hero should NOT appear
+  const hideHeroPaths = ["/contact/login", "/contact/register", "/otp"];
+  const showHero = !hideHeroPaths.includes(pathname);
 
   return (
-    <div className="relative overflow-hidden w-full  ">
-      <div
-        className={`transform ${
-          isSidebarOpen ? "translate-x-0 w-[80%]" : "-translate-x-[0%] w-[98%]"
-        } transition-transform duration-300 ease-in-out ml-auto `}
-      >
-        {children}
-      </div>
+    <div>
+      {showHero && <Hero />}
+      <main>{children}</main>
     </div>
   );
 };

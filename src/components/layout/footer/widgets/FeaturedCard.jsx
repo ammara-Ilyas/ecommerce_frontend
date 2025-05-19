@@ -1,26 +1,35 @@
+// features.js
+import {
+  FaTags,
+  FaShippingFast,
+  FaFileInvoiceDollar,
+  FaBoxes,
+  FaUndoAlt,
+} from "react-icons/fa";
+
 const features = [
   {
-    icon: "/icons/discount.svg",
+    icon: <FaTags size={28} />,
     title: "Best prices & offers",
     subtitle: "Orders $50 or more",
   },
   {
-    icon: "/icons/delivery.svg",
+    icon: <FaShippingFast size={28} />,
     title: "Free delivery",
     subtitle: "Orders $50 or more",
   },
   {
-    icon: "/icons/daily-deal.svg",
+    icon: <FaFileInvoiceDollar size={28} />,
     title: "Great daily deal",
     subtitle: "Orders $50 or more",
   },
   {
-    icon: "/icons/assortment.svg",
+    icon: <FaBoxes size={28} />,
     title: "Wide assortment",
     subtitle: "Orders $50 or more",
   },
   {
-    icon: "/icons/returns.svg",
+    icon: <FaUndoAlt size={28} />,
     title: "Easy returns",
     subtitle: "Orders $50 or more",
   },

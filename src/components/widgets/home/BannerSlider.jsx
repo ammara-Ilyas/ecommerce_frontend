@@ -58,16 +58,16 @@ const BannerSlider = () => {
         ref={carouselRef} // Attach the ref here
         additionalTransfrom={0}
         arrows
-        customLeftArrow={
-          <button className="absolute left-2 top-1/2 shadow-md border-[1px] transform -translate-y-1/2 z-10 text-black bg-white p-2 rounded-full hover:bg-green-600 hover:text-white">
-            <FaArrowLeft />
-          </button>
-        }
-        customRightArrow={
-          <button className="absolute right-2 top-1/2shadow-md border-[1px]  transform -translate-y-1/2 z-10 text-black bg-white p-2 rounded-full hover:bg-green-600 hover:text-white">
-            <FaArrowRight />
-          </button>
-        }
+        // customLeftArrow={
+        //   <button className="absolute left-2 top-1/2 shadow-md border-[1px] transform -translate-y-1/2 z-10 text-black bg-white p-2 rounded-full hover:bg-green-600 hover:text-white">
+        //     <FaArrowLeft />
+        //   </button>
+        // }
+        // customRightArrow={
+        //   <button className="absolute right-2 top-1/2shadow-md border-[1px]  transform -translate-y-1/2 z-10 text-black bg-white p-2 rounded-full hover:bg-green-600 hover:text-white">
+        //     <FaArrowRight />
+        //   </button>
+        // }
         autoPlay
         autoPlaySpeed={3000}
         className="mb-12"

@@ -32,7 +32,7 @@ const Icon = () => {
       {socialIcons.map((item, i) => (
         <li
           key={i}
-          className="border-none bg-white p-3 rounded-full group hover:bg-green-500 duration-200"
+          className="border-none bg-white p-3 rounded-full group hover:bg-blue-600 duration-200"
         >
           <Link href={item.link}>
             <span className="group-hover:rotate-180 group-hover:text-white duration-500">

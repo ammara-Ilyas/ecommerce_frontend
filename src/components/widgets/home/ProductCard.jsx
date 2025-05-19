@@ -65,7 +65,7 @@ export default function ProductCard({ product }) {
 
   return (
     <div
-      className="relative w-full border-2 border-black rounded-xl overflow-hidden shadow-lg bg-white transition-all duration-300 hover:shadow-xl cursor-pointer"
+      className="relative w-full  rounded-xl overflow-hidden shadow-lg bg-white transition-all duration-300 hover:shadow-xl cursor-pointer"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -81,16 +81,16 @@ export default function ProductCard({ product }) {
           }
           alt="product"
           fill
-          className="w-full h-full object-cover transition-all duration-500"
+          className="w-full h-full object-cover border-b transition-all duration-500"
         />
 
         {/* Overlay Icons */}
         <div
-          className={`absolute top-2 right-2 flex gap-2 p-2 flex-col bg-black/10 rounded-md transition-all duration-300 ${
+          className={`absolute top-2 right-2 flex gap-2 p-2 flex-col bg-transparent rounded-md transition-all duration-300 ${
             hovered ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4"
           }`}
         >
-          <button className="bg-white group hover:bg-blue-600  py-1 px-[6px]  rounded-full group-hover: hover:scale-105 transition">
+          <button className="bg-white shadow-md group hover:bg-blue-600  py-1 px-[6px]  rounded-full group-hover: hover:scale-105 transition">
             <span className="text-black group-hover:text-white transition-colors duration-200">
               <FavoriteBorderIcon
                 fontSize="small"
@@ -98,7 +98,7 @@ export default function ProductCard({ product }) {
               />
             </span>
           </button>
-          <button className="bg-white group hover:bg-blue-600   py-1 px-[6px] rounded-full group-hover: hover:scale-105 transition">
+          <button className="bg-white shadow-md group hover:bg-blue-600   py-1 px-[6px] rounded-full group-hover: hover:scale-105 transition">
             <span className="text-black group-hover:text-white transition-colors duration-200">
               <ShoppingCartIcon
                 fontSize="small"
@@ -106,7 +106,7 @@ export default function ProductCard({ product }) {
               />
             </span>
           </button>
-          <button className="bg-white group hover:bg-blue-600  py-1 px-[6px] rounded-full hover:scale-105 transition">
+          <button className="bg-white shadow-md group hover:bg-blue-600  py-1 px-[6px] rounded-full hover:scale-105 transition">
             <span className="text-black group-hover:text-white transition-colors duration-200">
               <VisibilityIcon fontSize="small" />
             </span>

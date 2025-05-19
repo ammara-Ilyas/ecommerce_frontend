@@ -2,8 +2,10 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { FaBars, FaAngleDown } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 const HeroCategories = () => {
+  const categories = useSelector((state) => state.product.categories);
   const [isOpen, setIsOpen] = useState(false);
   const CategoriesList = [
     {
@@ -42,14 +44,26 @@ const HeroCategories = () => {
       name: "Denim & Jeans",
       link: "/",
     },
+    {
+      name: "Denim & Jeans",
+      link: "/",
+    },
+    {
+      name: "Denim & Jeans",
+      link: "/",
+    },
+    {
+      name: "Denim & Jeans",
+      link: "/",
+    },
   ];
   const handleOpenDepartment = () => {
     setIsOpen((prevOpen) => !prevOpen);
   };
   return (
-    <div className=" flex flex-col">
+    <div className=" relative flex flex-col">
       <div
-        className=" flex  w-[80%] bg-green-500 p-3 text-white items-center gap-4"
+        className="relative flex w-[80%] bg-blue-500 focus:bg-blue-600 p-3 text-white items-center gap-4"
         onClick={handleOpenDepartment}
       >
         <div className="">
@@ -59,9 +73,9 @@ const HeroCategories = () => {
         <FaAngleDown className="" />
       </div>
       {isOpen ? (
-        <ul className="  flex flex-col gap-4 w-[80%] p-5 mt-0 bg-transparent bg-opacity-20 border-[1px]">
+        <ul className=" absolute z-40 bg-white py-3 pl-2 ml-0 top-[53px] left-0 flex flex-col gap-4 w-[80%] p-5 mt-0 bg-transparent  border-[1px]">
           {CategoriesList.map((item, i) => (
-            <li key={i}>
+            <li key={i} className="border-b">
               <Link href={item.link}>{item.name}</Link>
             </li>
           ))}

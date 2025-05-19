@@ -1,14 +1,8 @@
 // components/Footer/Footer.js
 import FooterSection from "./widgets/FooterSection";
-
-import {
-  FaApplePay,
-  FaCcVisa,
-  FaCcMastercard,
-  FaCcDiscover,
-} from "react-icons/fa";
+import Image from "next/image";
 import { MdEmail, MdPhone } from "react-icons/md";
-import { RiSecurePaymentLine } from "react-icons/ri";
+import FooterCopyright from "./widgets/FooterCopyRight";
 
 const sections = [
   {
@@ -51,23 +45,31 @@ const sections = [
 
 const Footer = () => {
   return (
-    <footer className="bg-black text-gray-300 px-6 py-10">
+    <footer className="bg-gray-100 text-black  px-6 py-10">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-8">
         {/* Logo and Contact Info */}
         <div>
-          <div className="flex items-center space-x-2 mb-4">
-            <img src="/logo.png" alt="Ecobazar Logo" className="h-6" />
-            <span className="text-white text-xl font-semibold">Ecobazar</span>
+          <div className="flex items-center space-x-3">
+            <Image
+              src="/images/logo.png"
+              alt="Logo"
+              width={50}
+              height={40}
+              className="w-[50px] h-[40px] "
+            />
+            <span className="mr-4 text-xl font-bold text-blue-600">
+              Ecommerce
+            </span>
           </div>
           <p className="text-sm mb-4">
             Morbi cursus porttitor enim lobortis molestie. Duis gravida turpis
             dui, eget bibendum magna congue nec.
           </p>
           <div className="flex items-center space-x-2 text-green-400">
-            <MdPhone /> <span>(219) 555-0114</span>
+            <MdPhone /> <span>+65 11.188.888</span>
           </div>
           <div className="flex items-center space-x-2 text-green-400">
-            <MdEmail /> <span>Proxy@gmail.com</span>
+            <MdEmail /> <span>ecommerce@gmail.com</span>
           </div>
         </div>
 
@@ -80,18 +82,7 @@ const Footer = () => {
         ))}
       </div>
 
-      <div className="border-t border-gray-700 mt-10 pt-6 flex flex-col md:flex-row items-center justify-between text-sm">
-        <p className="text-gray-400">
-          Ecobazar eCommerce © 2025. All Rights Reserved
-        </p>
-        <div className="flex space-x-4 mt-4 md:mt-0">
-          <FaApplePay className="text-white text-xl" />
-          <FaCcVisa className="text-white text-xl" />
-          <FaCcDiscover className="text-white text-xl" />
-          <FaCcMastercard className="text-white text-xl" />
-          <RiSecurePaymentLine className="text-white text-xl" />
-        </div>
-      </div>
+      <FooterCopyright />
     </footer>
   );
 };

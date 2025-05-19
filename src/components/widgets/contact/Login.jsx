@@ -7,7 +7,6 @@ import { FcGoogle } from "react-icons/fc";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
-// import logo from "/images/image/logo.png";
 import { callPublicApi } from "@/libs/callApis";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -54,7 +53,7 @@ export default function Login() {
         });
 
         localStorage.setItem("token", res.token);
-        localStorage.setItem("userId", res.userId);
+        localStorage.setItem("user", JSON.stringify(res.user));
         router.push("/"); // Navigate after success
       }
     } catch (error) {
@@ -67,22 +66,16 @@ export default function Login() {
 
   return (
     <div className="min-h-screen  flex flex-col items-center justify-center  bg-gray-100  p-7 shadow-md rounded-md">
-      <Head>
-        <title>Ecommerce Login</title>
-        <meta name="description" content="Ecommerce Login Page" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <ToastContainer />
 
       <div className="flex flex-col w-11/12 md:w-1/3 p-8">
-        {/* <Image
-          src={logo}
+        <Image
+          src="/images/logo.png"
           alt="Ecommerce Logo"
           className="w-16 h-16 mx-auto mb-4"
-          width={16}
-          height={16}
-        /> */}
+          width={64}
+          height={64}
+        />
         <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">
           ECOMMERCE
         </h2>

@@ -1,14 +1,14 @@
 import React from "react";
-import Login from "@/components/widgets/contact/Login";
+import OtpForm from "@/components/widgets/contact/OtpForm";
 export const metadata = {
-  title: "Login",
-  description: "login page in Ecommerce ",
+  title: "Otp",
+  description: "Otp page of ecommerce dashboard",
 };
 const Page = () => {
   return (
     <>
       <div
-        className=" -mt-24 h-[100vh]"
+        className=" -mt-24 h-[]100vh"
         style={{
           backgroundImage: `url${"/images/bg_signup.webp"}`,
           backgroundSize: "cover",
@@ -16,7 +16,7 @@ const Page = () => {
           backgroundRepeat: "no-repeat",
         }}
       >
-        <Login />
+        <OtpForm />
       </div>
     </>
   );
