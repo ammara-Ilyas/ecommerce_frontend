@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const initialState = {
   cartItems: [],
+  totalPrice: 0,
 };
 
 export const cartSlice = createSlice({
@@ -11,6 +12,9 @@ export const cartSlice = createSlice({
   reducers: {
     setCartItems(state, action) {
       state.cartItems = action.payload;
+    },
+    setTotalPrice(state, action) {
+      state.totalPrice = action.payload;
     },
     AddToCart(state, action) {
       const item = action.payload;
@@ -77,6 +81,7 @@ export const {
   increCartItems,
   decreCartItems,
   AddToCart,
+  setTotalPrice,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

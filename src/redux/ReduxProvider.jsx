@@ -30,7 +30,7 @@ function DataInitializer({
           dispatch(setCartItems(cartRes.cartItems));
         }
       } catch (error) {
-        console.error("Cart fetch failed:", error);
+        console.log("Cart fetch failed:", error);
       }
       try {
         const wishlistRes = await callPrivateApi(`/wish/${userId}`, "GET");
@@ -41,7 +41,7 @@ function DataInitializer({
           dispatch(setWishList(wishlistRes.wishlist));
         }
       } catch (error) {
-        console.error("Cart fetch failed:", error);
+        console.log("Cart fetch failed:", error);
       }
     };
     fetchData();

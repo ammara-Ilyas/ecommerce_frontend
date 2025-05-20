@@ -17,7 +17,7 @@ const HeroSearch = () => {
           <input
             type="text"
             value={search}
-            onChange={() => setSearch(e.target.value)}
+            onChange={(e) => setSearch(e.target.value)}
             placeholder="What do you need?"
             className="p-3 border-none outline-none w-[70%] border-gray-300 "
           />

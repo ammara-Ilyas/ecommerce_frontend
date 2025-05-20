@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import Image from "next/image";
 import { callPrivateApi } from "@/libs/CallApis";
-import { setCartItems } from "@/redux/silice/CartSlice";
+import { setCartItems, setTotalPrice } from "@/redux/silice/CartSlice";
 import { user } from "@/libs/Token";
 import CartSkeleton from "@/components/miniWidgets/CartSkeleton";
 import Button from "@/components/miniWidgets/Button";
@@ -16,9 +16,10 @@ import Link from "next/link";
 const Cart = () => {
   const dispatch = useDispatch();
   const cartItem = useSelector((state) => state.cart.cartItems);
+  const totalPrice = useSelector((state) => state.cart.totalPrice);
   // const [cartItem, setCartItem] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [totalPrice, setTotalPrice] = useState(0);
+  // const [totalPrice, setTotalPrice] = useState(0);
   console.log("user and user id", user, user.id);
 
   useEffect(() => {
@@ -47,7 +48,7 @@ const Cart = () => {
       return acc + priceItem.quantity * priceItem.product.newPrice;
     }, 0);
     console.log("item", totalPriceAllProducts);
-    setTotalPrice(totalPriceAllProducts);
+    dispatch(setTotalPrice(totalPriceAllProducts));
   }, [cartItem]);
   const handleProductItemInc = async (id) => {
     console.log(id);
