@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Image from "next/image";
 import { callPrivateApi } from "@/libs/CallApis";
 import { setWishList } from "@/redux/silice/WishListSlice";
-import { userId } from "@/libs/Token";
+import { user } from "@/libs/Token";
 import CartSkeleton from "@/components/miniWidgets/CartSkeleton";
 const WishList = () => {
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ const WishList = () => {
     const fetchCartItems = async () => {
       setLoading(true);
       try {
-        const res = await callPrivateApi(`/wish/${userId}`, "GET");
+        const res = await callPrivateApi(`/wish/${user.id}`, "GET");
         console.log("res in wishlist", res);
         setWishListItems(res.wishlist);
         dispatch(setWishList(res.wishlist));

@@ -4,14 +4,18 @@ import Image from "next/image";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { FaHeart } from "react-icons/fa6";
+
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import StarIcon from "@mui/icons-material/Star";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { useDispatch } from "react-redux";
+import { BsCart } from "react-icons/bs";
+import { FaShoppingCart } from "react-icons/fa";
+
+import { useDispatch, useSelector } from "react-redux";
 import { AddToCart } from "@/redux/silice/CartSlice";
 import { AddToWishList } from "@/redux/silice/WishListSlice";
 import { callPrivateApi } from "@/libs/CallApis";
-import { userId } from "@/libs/Token";
+import { user } from "@/libs/Token";
 export default function ProductCard({ product }) {
   const dispatch = useDispatch();
   const [hovered, setHovered] = useState(false);
@@ -21,32 +25,36 @@ export default function ProductCard({ product }) {
     // Instead of Formpayload, use JSON
     const payload = {
       productId: item._id,
-      userId: userId,
+      userId: user.id,
       quantity: "1",
     };
 
     console.log("payload product JSON", payload);
 
     try {
-      const res = await callPrivateApi("/cart", "POST", payload);
-      console.log("res in cart", res);
+      const res = await callPrivateApi(`/cart`, "POST", payload);
+      console.log("res in wish", res, "status", res.status);
       if (res.status == 200 || res.status == 201) {
         toast.success(res.message || "Item added to cart");
       }
     } catch (error) {
-      toast.success(error.message || "Failed to add in cart");
+      toast.error(error.message || "Failed to add in cart");
     }
   };
-  const images = [
-    "/images/dummy.png", // index 0 image
-    "/images/dummy.png", // index 1 image (on hover)
-  ];
+
+  // ✅ Access cart and wishlist from Redux
+  const cartItems = useSelector((state) => state.cart.cartItems);
+  const wishItems = useSelector((state) => state.wish.wishList);
+
+  // ✅ Check if product is in cart or wishlist
+  const isInCart = cartItems.some((item) => item._id === product._id);
+  const isInWish = wishItems.some((item) => item._id === product._id);
   const handleAddToWish = async (item) => {
     dispatch(AddToWishList(item));
     // Instead of Formpayload, use JSON
     const payload = {
       productId: item._id,
-      userId: userId,
+      userId: user.id,
       quantity: "1",
     };
 
@@ -54,12 +62,13 @@ export default function ProductCard({ product }) {
 
     try {
       const res = await callPrivateApi("/wish", "POST", payload);
-      console.log("res in wish", res);
+      console.log("res in wish", res, "status", res.status);
+
       if (res.status == 200 || res.status == 201) {
         toast.success(res.message || "Item added to Wish List");
       }
     } catch (error) {
-      toast.success(error.message || "Failed to add in Wish List");
+      toast.error(error.message || "Failed to add in Wish List");
     }
   };
 
@@ -90,20 +99,39 @@ export default function ProductCard({ product }) {
             hovered ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4"
           }`}
         >
-          <button className="bg-white shadow-md group hover:bg-blue-600  py-1 px-[6px]  rounded-full group-hover: hover:scale-105 transition">
-            <span className="text-black group-hover:text-white transition-colors duration-200">
-              <FavoriteBorderIcon
-                fontSize="small"
-                onClick={() => handleAddToWish(product)}
-              />
+          {/* Wishlist Button */}
+          <button
+            className={`bg-white shadow-md group py-1 px-[6px] rounded-full hover:scale-105 transition ${
+              isInWish ? "text-red-500" : " hover:bg-blue-600"
+            }`}
+          >
+            <span
+              className={`group-hover:text-white transition-colors text-sm duration-200 ${
+                isInWish ? "text-red-500" : "text-black"
+              }`}
+              onClick={() => handleAddToWish(product)}
+            >
+              {!isInWish ? (
+                <FavoriteBorderIcon fontSize="small" />
+              ) : (
+                <FaHeart />
+              )}
             </span>
           </button>
-          <button className="bg-white shadow-md group hover:bg-blue-600   py-1 px-[6px] rounded-full group-hover: hover:scale-105 transition">
-            <span className="text-black group-hover:text-white transition-colors duration-200">
-              <ShoppingCartIcon
-                fontSize="small"
-                onClick={() => handleAddToCart(product)}
-              />
+
+          {/* Cart Button */}
+          <button
+            className={`shadow-md bg-white group py-2 px-[6px] rounded-full hover:scale-105 transition 
+               hover:bg-blue-600
+            `}
+          >
+            <span
+              className={`group-hover:text-white transition-colors duration-200 ${
+                isInCart ? "text-red-500" : "text-black"
+              }`}
+              onClick={() => handleAddToCart(product)}
+            >
+              {!isInCart ? <BsCart /> : <FaShoppingCart />}
             </span>
           </button>
           <button className="bg-white shadow-md group hover:bg-blue-600  py-1 px-[6px] rounded-full hover:scale-105 transition">
@@ -136,7 +164,16 @@ export default function ProductCard({ product }) {
           </span>
         </div>
       </div>
-      <ToastContainer />
+      <ToastContainer
+        position="top-right"
+        autoClose={500} // 1 second
+        newestOnTop
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover={false}
+        toastClassName="!w-[200px] !text-sm"
+      />
     </div>
   );
 }

@@ -32,22 +32,38 @@ export const cartSlice = createSlice({
       );
       setCartItems(filteredCartItem);
     },
-    IncreaseQuantity(state, action) {
-      const item = action.payload;
-      const existingItem = state.cartItems.find(
-        (product) => product._id == item._id
-      );
-      if (existingItem) {
-        existingItem.quantity += 1;
-      }
+    increCartItems(state, action) {
+      const id = action.payload;
+      const updatedItems = state.cartItems.map((data) => {
+        if (data._id === id) {
+          return {
+            ...data,
+            quantity: data.quantity + 1,
+            totalPrice: data.price * (data.quantity + 1),
+          };
+        }
+        return data;
+      });
+      state.cartItems = updatedItems;
     },
-    DecreaseQuantity(state, action) {
-      const item = action.payload;
-      const existingItem = state.cartItems.find(
-        (product) => product._id == item._id
-      );
-      if (existingItem) {
-        existingItem.quantity += 1;
+    decreCartItems(state, action) {
+      const id = action.payload;
+      const item = state.cartItems.find((item) => item._id == id);
+
+      if (item.quantity > 1) {
+        const updatedItems = state.cartItems.map((data, i) => {
+          if (data._id === id) {
+            return {
+              ...data,
+              quantity: data.quantity - 1,
+              totalPrice: data.price * (data.quantity - 1),
+            };
+          }
+          return data;
+        });
+        state.cartItems = updatedItems;
+      } else {
+        toast.warning("Minimum quantity is 1. Cannot decrease further.");
       }
     },
   },
@@ -58,6 +74,8 @@ export const {
   IncreaseQuantity,
   DecreaseQuantity,
   RemoveFromCart,
+  increCartItems,
+  decreCartItems,
   AddToCart,
 } = cartSlice.actions;
 

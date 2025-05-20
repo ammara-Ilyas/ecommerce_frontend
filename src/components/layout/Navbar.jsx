@@ -67,8 +67,8 @@ const Navbar = () => {
   // console.log("cart", cartItem.length(), "wish", wishListItems.length());
 
   const cartIcons = [
-    { icon: <FaHeart />, link: "/cart", num: wishListItems.length },
-    { icon: <FaShoppingBag />, link: "/wishlist", num: cartItem?.length },
+    { icon: <FaHeart />, link: "/cart", num: wishListItems.length || 0 },
+    { icon: <FaShoppingBag />, link: "/wishlist", num: cartItem?.length || 0 },
   ];
   const account = [
     {

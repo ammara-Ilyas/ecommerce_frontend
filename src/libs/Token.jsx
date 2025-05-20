@@ -3,5 +3,7 @@
 export const token = localStorage.getItem("token");
 console.log("token in api call", token);
 
-export const user = localStorage.getItem("user");
+const users = localStorage.getItem("user");
+export const user = JSON.parse(users);
+
 console.log("user in api call", user);
