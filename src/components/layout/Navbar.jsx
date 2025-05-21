@@ -94,7 +94,7 @@ const Navbar = () => {
       {/* Overlay for sidebar */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-40 z-40"
+          className="fixed inset-0 bg-black border-4 w-full bg-opacity-40 z-40"
           onClick={() => setSidebarOpen(false)}
         />
       )}
@@ -104,7 +104,7 @@ const Navbar = () => {
           isScrolled ? "fixed top-0 left-0 w-full shadow-md z-50 bg-white" : ""
         } transition-all duration-300 py-3`}
       >
-        <div className="container mx-auto px-4 md:px-20">
+        <div className="container mx-auto px-4 lg:px-20">
           <div className="flex justify-between items-center">
             {/* Logo */}
             <Link href="/" className="flex items-center space-x-3">
@@ -119,7 +119,7 @@ const Navbar = () => {
             </Link>
 
             {/* Desktop Nav */}
-            <nav className="hidden md:block">
+            <nav className="hidden xl:block">
               <ul className="flex items-center space-x-4">
                 {navlinks.map((item, i) => (
                   <li key={i}>
@@ -134,8 +134,8 @@ const Navbar = () => {
               </ul>
             </nav>
 
-            {/* Cart & User (Always visible) */}
-            <div className="flex items-center space-x-2">
+            {/* Cart & User (only visible in medium) */}
+            <div className="hidden md:flex items-center space-x-2">
               {cartIcons.map((item, i) => (
                 <Link
                   href={item.link}
@@ -206,37 +206,45 @@ const Navbar = () => {
                   </ul>
                 )}
               </div>
-
-              {/* Mobile Menu Button */}
-              <button
-                className="md:hidden text-2xl ml-2"
-                onClick={() => setSidebarOpen(true)}
-              >
-                <FaBars />
-              </button>
             </div>
+            {/* Mobile Menu Button */}
+            <button
+              className="xl:hidden text-2xl ml-2"
+              onClick={() => setSidebarOpen(true)}
+            >
+              <FaBars />
+            </button>
           </div>
         </div>
       </header>
 
       {/* Sidebar Nav */}
       <div
-        className={`fixed top-0 left-0 h-full w-64 bg-white z-50 p-5 shadow-lg transform transition-transform duration-300 ${
+        className={`fixed top-0 left-0 h-full w-[75%] bg-white z-50 flex flex-col  gap-5 pt-3 px-5 shadow-lg transform transition-transform duration-300 ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-lg font-bold text-blue-600">Menu</h2>
+        <div className="flex  justify-between items-center mb-6">
+          <Link href="/" className="flex items-center border-b space-x-3">
+            <Image
+              src="/images/logo.png"
+              alt="Logo"
+              width={50}
+              height={40}
+              className="w-[50px] h-[40px]"
+            />
+            <span className="text-xl font-bold text-blue-600">Ecommerce</span>
+          </Link>
           <button onClick={() => setSidebarOpen(false)} className="text-2xl">
             <FaTimes />
           </button>
         </div>
-        <ul className="flex flex-col gap-4">
+        <ul className="flex ml-8 flex-col border-4 gap-4">
           {navlinks.map((item, i) => (
             <li key={i}>
               <Link
                 href={item.link}
-                className="text-black text-lg capitalize hover:text-blue-600"
+                className="text-black text-lg border-b w-full capitalize hover:text-blue-600"
                 onClick={() => setSidebarOpen(false)}
               >
                 {item.name}
@@ -244,6 +252,75 @@ const Navbar = () => {
             </li>
           ))}
         </ul>
+        <div className="md:hidden border-2 relative  flex items-center space-x-2">
+          {cartIcons.map((item, i) => (
+            <Link
+              href={item.link}
+              key={i}
+              className="relative border-2 p-2 text-xl"
+            >
+              {item.icon}
+              <span className="absolute top-0 left-4 text-xs bg-red-600 text-white rounded-full px-1">
+                {item.num && item.num}
+              </span>
+            </Link>
+          ))}
+
+          {/* User/Login */}
+          <div
+            className=" items-center justify-between flex space-x-1 cursor-pointer w-[190px] text-xl"
+            onClick={() => setIsOpen((prev) => !prev)}
+          >
+            {user ? (
+              <div className="flex items-center space-x-2">
+                {user.img ? (
+                  <Avatar alt={user.name} src={user.img} />
+                ) : (
+                  <Avatar sx={{ bgcolor: blue[800] }}>
+                    {Array.from(user.name)[0]}
+                  </Avatar>
+                )}
+                <div>
+                  <p className="text-sm font-semibold">{user.name}</p>
+                  <p className="text-xs text-gray-500">{user.email}</p>
+                </div>
+              </div>
+            ) : (
+              <span className="text-xl flex gap-2 flex-row">
+                <FaUser />
+                Login
+              </span>
+            )}
+            {isOpen && (
+              <ul className="absolute flex flex-col gap-2 bg-white z-50 py-3 border rounded-md shadow-md right-0 top-0">
+                {account.map((item, i) => (
+                  <li
+                    key={i}
+                    className="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 cursor-pointer transition-all"
+                  >
+                    <span className="text-gray-700">{item.icon}</span>
+                    <Link href={item.link} className="text-sm text-gray-800">
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+                {!user ? (
+                  <li className="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 cursor-pointer transition-all text-sm text-gray-800">
+                    <FaUser size={20} className="text-gray-700" /> Login
+                  </li>
+                ) : (
+                  <li
+                    className="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 cursor-pointer transition-all text-sm text-gray-800"
+                    onClick={handleLogout}
+                  >
+                    <MdLogout size={20} className="text-gray-700" />
+                    Logout
+                  </li>
+                )}
+              </ul>
+            )}
+          </div>
+        </div>
       </div>
     </>
   );

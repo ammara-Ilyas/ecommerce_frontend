@@ -11,19 +11,13 @@ import {
 import { setCartItems } from "./silice/CartSlice";
 import { setWishList } from "./silice/WishListSlice";
 import { callPrivateApi } from "@/libs/CallApis";
-import { userId } from "@/libs/Token";
-function DataInitializer({
-  categories,
-  product,
-  banners,
-
-  children,
-}) {
+import { user } from "@/libs/Token";
+function DataInitializer({ categories, product, banners, children }) {
   const dispatch = useDispatch();
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const cartRes = await callPrivateApi(`/cart/${userId}`, "GET");
+        const cartRes = await callPrivateApi(`/cart/${user.id}`, "GET");
         console.log("res in cartRes list ", cartRes);
         if (cartRes) {
           console.log("cartItem data in Redux Provider", cartRes.cartItems);
@@ -33,7 +27,7 @@ function DataInitializer({
         console.log("Cart fetch failed:", error);
       }
       try {
-        const wishlistRes = await callPrivateApi(`/wish/${userId}`, "GET");
+        const wishlistRes = await callPrivateApi(`/wish/${user.id}`, "GET");
         console.log("res in wishlistRes list ", wishlistRes);
 
         if (wishlistRes) {
@@ -45,7 +39,7 @@ function DataInitializer({
       }
     };
     fetchData();
-  }, []);
+  }, [user]);
   useEffect(() => {
     if (categories) {
       console.log("categories data in Redux Provider", categories.categories);

@@ -63,7 +63,7 @@ const HeroCategories = () => {
   return (
     <div className=" relative flex flex-col">
       <div
-        className="relative flex w-[80%] bg-blue-500 focus:bg-blue-600 p-3 text-white items-center gap-4"
+        className="relative flex mx-auto sm:mx-0  w-[80%] bg-blue-500 focus:bg-blue-600 p-3 text-white items-center gap-4"
         onClick={handleOpenDepartment}
       >
         <div className="">

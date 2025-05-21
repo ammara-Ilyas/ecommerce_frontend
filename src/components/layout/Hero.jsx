@@ -4,13 +4,13 @@ import HeroCategories from "./widgets/HeroCategories";
 import HeroSearch from "./widgets/HearoSearch";
 const Hero = () => {
   return (
-    <section className="border-2 h-[65px]">
-      <div className="container mx-auto px-4">
+    <section className="border-2 border-red-900 ">
+      <div className=" mx-auto sm:px-4">
         <div className="row flex flex-wrap">
-          <div className="col-lg-3 w-full lg:w-1/4">
+          <div className=" mx-auto sm:mx-0 w-3/4  sm:w-1/2 lg:w-[35%] xl:w-1/4">
             <HeroCategories />
           </div>
-          <div className="col-lg-9 w-full lg:w-3/4">
+          <div className="mx-auto sm:mx-0 border-2 w-full lg:w-3/4">
             <HeroSearch />
           </div>
         </div>

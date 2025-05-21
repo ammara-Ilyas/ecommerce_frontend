@@ -92,7 +92,7 @@ const NewArrival = () => {
         New Arrivals
       </h2>
 
-      <div className="grid grid-cols-4 gap-4 border-2  mx-10 space-x-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 border-2  mx-10 space-x-4">
         {newArrival &&
           newArrival.map((item, i) => (
             <div className="border-2" key={i}>

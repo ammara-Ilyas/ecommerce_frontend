@@ -21,24 +21,28 @@ export default function ProductCard({ product }) {
   const [hovered, setHovered] = useState(false);
   // console.log("product", product);
   const handleAddToCart = async (item) => {
-    dispatch(AddToCart(item));
-    // Instead of Formpayload, use JSON
-    const payload = {
-      productId: item._id,
-      userId: user.id,
-      quantity: "1",
-    };
+    if (user) {
+      dispatch(AddToCart(item));
+      // Instead of Formpayload, use JSON
+      const payload = {
+        productId: item._id,
+        userId: user.id,
+        quantity: "1",
+      };
 
-    console.log("payload product JSON", payload);
+      console.log("payload product JSON", payload);
 
-    try {
-      const res = await callPrivateApi(`/cart`, "POST", payload);
-      console.log("res in wish", res, "status", res.status);
-      if (res.status == 200 || res.status == 201) {
-        toast.success(res.message || "Item added to cart");
+      try {
+        const res = await callPrivateApi(`/cart`, "POST", payload);
+        console.log("res in wish", res, "status", res.status);
+        if (res.status == 200 || res.status == 201) {
+          toast.success(res.message || "Item added to cart");
+        }
+      } catch (error) {
+        toast.error(error.message || "Failed to add in cart");
       }
-    } catch (error) {
-      toast.error(error.message || "Failed to add in cart");
+    } else {
+      toast.error("firstly signed in");
     }
   };
 
@@ -50,25 +54,29 @@ export default function ProductCard({ product }) {
   const isInCart = cartItems.some((item) => item._id === product._id);
   const isInWish = wishItems.some((item) => item._id === product._id);
   const handleAddToWish = async (item) => {
-    dispatch(AddToWishList(item));
-    // Instead of Formpayload, use JSON
-    const payload = {
-      productId: item._id,
-      userId: user.id,
-      quantity: "1",
-    };
+    if (user) {
+      dispatch(AddToWishList(item));
+      // Instead of Formpayload, use JSON
+      const payload = {
+        productId: item._id,
+        userId: user.id,
+        quantity: "1",
+      };
 
-    console.log("payload product JSON", payload);
+      console.log("payload product JSON", payload);
 
-    try {
-      const res = await callPrivateApi("/wish", "POST", payload);
-      console.log("res in wish", res, "status", res.status);
+      try {
+        const res = await callPrivateApi("/wish", "POST", payload);
+        console.log("res in wish", res, "status", res.status);
 
-      if (res.status == 200 || res.status == 201) {
-        toast.success(res.message || "Item added to Wish List");
+        if (res.status == 200 || res.status == 201) {
+          toast.success(res.message || "Item added to Wish List");
+        }
+      } catch (error) {
+        toast.error(error.message || "Failed to add in Wish List");
       }
-    } catch (error) {
-      toast.error(error.message || "Failed to add in Wish List");
+    } else {
+      toast.error("Firstly sign");
     }
   };
 
