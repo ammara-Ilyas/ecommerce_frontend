@@ -33,7 +33,7 @@ function getStepContent(step) {
       throw new Error("Unknown step");
   }
 }
-export default function Checkout(props) {
+export default function Checkout() {
   const [activeStep, setActiveStep] = useState(0);
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -42,10 +42,11 @@ export default function Checkout(props) {
     setActiveStep(activeStep - 1);
   };
   return (
-    <>
+    <div className="border-8 border-yellow-600 h-full">
       <CssBaseline
         enableColorScheme
         sx={{
+          height: "100%",
           border: "2px solid",
           borderColor: "orange",
           borderRadius: 2,
@@ -53,9 +54,9 @@ export default function Checkout(props) {
       />
       <Box
         sx={{
-          position: "fixed",
-          top: "1rem",
-          right: "1rem",
+          // position: "fixed",
+          // top: "1rem",
+          // right: "1rem",
           border: "2px solid",
           borderColor: "orange",
           borderRadius: 2,
@@ -69,7 +70,7 @@ export default function Checkout(props) {
         sx={{
           height: {
             xs: "100%",
-            sm: "calc(100dvh - var(--template-frame-height, 0px))",
+            // sm: "calc(100dvh - var(--template-frame-height, 0px))",
           },
           width: "80%",
           mx: "auto",
@@ -118,6 +119,7 @@ export default function Checkout(props) {
               display: "flex",
               flexDirection: "column",
               flexGrow: 1,
+              height: "auto",
               width: "100%",
               maxWidth: 500,
               border: "2px solid",
@@ -217,7 +219,7 @@ export default function Checkout(props) {
               flexGrow: 1,
               width: "100%",
               maxWidth: { sm: "100%", md: 600 },
-              maxHeight: "720px",
+              // maxHeight: "100%",
               gap: { xs: 5, md: "none" },
             }}
           >
@@ -341,6 +343,6 @@ export default function Checkout(props) {
           </Box>
         </Grid>
       </Grid>
-    </>
+    </div>
   );
 }

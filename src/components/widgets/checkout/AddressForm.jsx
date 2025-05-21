@@ -19,6 +19,7 @@ export default function AddressForm() {
   const shippingInfo = useSelector((state) => state.checkout.shippingInfo);
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
+    console.log("target", e.target);
 
     dispatch(
       updateShippingInfo({
@@ -28,17 +29,17 @@ export default function AddressForm() {
   };
 
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={3} sx={{ height: "auto" }}>
       <FormGrid size={{ xs: 12, md: 6 }}>
-        <FormLabel htmlFor="first-name" required>
+        <FormLabel htmlFor="firstName" required>
           First name
         </FormLabel>
         <OutlinedInput
-          id="first-name"
-          name="first-name"
-          type="name"
+          id="firstName"
+          name="firstName"
+          type="text"
           placeholder="John"
-          autoComplete="first name"
+          autoComplete="given-name"
           required
           size="small"
           value={shippingInfo.firstName}
@@ -46,15 +47,15 @@ export default function AddressForm() {
         />
       </FormGrid>
       <FormGrid size={{ xs: 12, md: 6 }}>
-        <FormLabel htmlFor="phone-number" required>
+        <FormLabel htmlFor="lastName" required>
           Last name
         </FormLabel>
         <OutlinedInput
-          id="last-name"
-          name="last-name"
-          type="last-name"
+          id="lastName"
+          name="lastName"
+          type="text"
           placeholder="Snow"
-          autoComplete="last name"
+          autoComplete="given-name"
           required
           size="small"
           value={shippingInfo.lastName}
@@ -78,12 +79,12 @@ export default function AddressForm() {
         />
       </FormGrid>
       <FormGrid size={{ xs: 12, md: 6 }}>
-        <FormLabel htmlFor="phone-number" required>
+        <FormLabel htmlFor="phoneNumber" required>
           Phone Number
         </FormLabel>
         <OutlinedInput
-          id="phone-number"
-          name="phone-number"
+          id="phoneNumber"
+          name="phoneNumber"
           type="tel"
           placeholder="+1 (555) 123-4567"
           autoComplete="phone number"
@@ -100,7 +101,7 @@ export default function AddressForm() {
         <OutlinedInput
           id="address1"
           name="address1"
-          type="address1"
+          type="text"
           placeholder="Street name and number"
           autoComplete="shipping address-line1"
           required
@@ -114,7 +115,7 @@ export default function AddressForm() {
         <OutlinedInput
           id="address2"
           name="address2"
-          type="address2"
+          type="text"
           placeholder="Apartment, suite, unit, etc. (optional)"
           autoComplete="shipping address-line2"
           required
@@ -130,7 +131,7 @@ export default function AddressForm() {
         <OutlinedInput
           id="city"
           name="city"
-          type="city"
+          type="text"
           placeholder="New York"
           autoComplete="City"
           required
@@ -146,7 +147,7 @@ export default function AddressForm() {
         <OutlinedInput
           id="state"
           name="state"
-          type="state"
+          type="text"
           placeholder="NY"
           autoComplete="State"
           required
@@ -162,7 +163,7 @@ export default function AddressForm() {
         <OutlinedInput
           id="zip"
           name="zip"
-          type="zip"
+          type="text"
           placeholder="12345"
           autoComplete="shipping postal-code"
           required
@@ -178,7 +179,7 @@ export default function AddressForm() {
         <OutlinedInput
           id="country"
           name="country"
-          type="country"
+          type="text"
           placeholder="United States"
           autoComplete="shipping country"
           required

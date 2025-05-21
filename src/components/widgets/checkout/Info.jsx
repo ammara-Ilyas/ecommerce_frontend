@@ -31,7 +31,9 @@ export default function OrderSummary() {
           <Divider className="mb-4" />
 
           <div className="flex justify-between mb-4">
-            <Typography variant="h6">Total</Typography>
+            <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+              Total
+            </Typography>
             <Typography variant="h6" className="text-green-600 font-bold">
               $4{totalPrice + 3.7 + 5}
             </Typography>

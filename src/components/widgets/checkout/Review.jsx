@@ -46,7 +46,7 @@ export default function Review() {
           >
             Shipment details
           </Typography>
-          <Typography gutterBottom variant="h5" sx={{ fontWeight: "bold" }}>
+          <Typography gutterBottom sx={{ fontWeight: "bold" }}>
             {shippingInfo.firstName} {shippingInfo.lastName}
           </Typography>
           <Typography
