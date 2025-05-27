@@ -4,14 +4,8 @@ import { useState, useRef } from "react";
 import Image from "next/image";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-const images = [
-  "/images/deal.jpg",
-  "/images/deal.jpg",
-  "/images/deal.jpg",
-  "/images/deal.jpg",
-  "/images/deal.jpg",
-];
-const DealSlider = () => {
+
+const DealSlider = ({ images = [], height = "" }) => {
   const carouselRef = useRef(null);
 
   const responsive = {
@@ -30,13 +24,13 @@ const DealSlider = () => {
     },
   };
   return (
-    <div className=" mx-8 h-[400px] border-2 ">
+    <div className={` mx-8 my-2 sm:my-5 space-x-2  ${height} `}>
       <Carousel
-        ref={carouselRef} // Attach the ref here
+        ref={carouselRef}
         additionalTransfrom={0}
         // arrows
         autoPlay
-        autoPlaySpeed={3000}
+        autoPlaySpeed={10000}
         className="mb-12"
         containerClass="carousel-container"
         draggable
@@ -56,11 +50,20 @@ const DealSlider = () => {
         slidesToSlide={1}
         swipeable
       >
-        {images.map((image, index) => (
-          <div key={index} className="mx-3 border-2 border-red-950  h-[250px]">
-            <Image src={image} alt={`slider ${index}`} fill />
-          </div>
-        ))}
+        {images &&
+          images.map((image, index) => (
+            <div
+              key={index}
+              className={` relative ${height} hover:scale-105 duration-300 transition-all hover:shadow-md ease-in-out rounded-md mx-[1px]`}
+            >
+              <Image
+                src={image}
+                alt={`slider ${index}`}
+                fill
+                className="rounded-md "
+              />
+            </div>
+          ))}
       </Carousel>
     </div>
   );

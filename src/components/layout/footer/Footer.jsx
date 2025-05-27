@@ -29,7 +29,7 @@ const sections = [
       { label: "About Us", href: "/about" },
       { label: "Shop", href: "/shop" },
       { label: "Product", href: "/product" },
-      { label: "Track Order", href: "/track-order" },
+      { label: "Track Order", href: "/order" },
     ],
   },
   {

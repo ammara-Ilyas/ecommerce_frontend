@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useUser } from "@/contextApi/UserContext"; // Ensure this context is client-safe
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -11,7 +10,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { CircularProgress } from "@mui/material";
 import { callPrivateApi, callPublicApi } from "@/libs/callApis";
 const ChangePassword = () => {
-  const { user, setUser } = useUser();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     oldPassword: "",

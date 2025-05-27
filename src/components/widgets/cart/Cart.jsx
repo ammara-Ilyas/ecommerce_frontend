@@ -17,10 +17,9 @@ const Cart = () => {
   const dispatch = useDispatch();
   const cartItem = useSelector((state) => state.cart.cartItems);
   const totalPrice = useSelector((state) => state.cart.totalPrice);
-  // const [cartItem, setCartItem] = useState([]);
   const [loading, setLoading] = useState(false);
-  // const [totalPrice, setTotalPrice] = useState(0);
   console.log("user and user id", user, user.id);
+  console.log("totalPrice in cart", totalPrice);
 
   useEffect(() => {
     const fetchCartItems = async () => {

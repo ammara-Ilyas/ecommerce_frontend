@@ -7,7 +7,7 @@ import { FaAddressCard } from "react-icons/fa";
 import Link from "next/link";
 const Address = () => {
   return (
-    <div className="bg-slate-50 w-[95%] mx-auto border-2 flex gap-4">
+    <div className="bg-slate-50 w-full mx-auto border-2 flex gap-4 justify-center ">
       <div className="flex bg-slate-50 flex-col gap-10 p-10 py-28 ">
         <h2 className="text-4xl font-bold tracking-tight text-gray-900">
           Contact Us

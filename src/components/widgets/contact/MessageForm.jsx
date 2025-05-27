@@ -1,130 +1,92 @@
 "use client";
-import React, { useState } from "react";
-
-const MessageForm = () => {
-  const [messageData, setMessageData] = useState([]);
+import { callPrivateApi } from "@/libs/CallApis";
+import { user } from "@/libs/Token";
+import { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+export default function ContactForm() {
   const [formData, setFormData] = useState({
-    fName: "",
-    lName: "",
+    name: "",
     email: "",
     message: "",
   });
+  const [loading, setLoading] = useState(false);
 
-  const handleChange = () => {
-    const { name, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    setMessageData((prevMessageData) => [...prevMessageData, formData]);
-    setFormData({
-      fName: "",
-      lName: "",
-      email: "",
-      message: "",
-    });
-    console.log(messageData);
+    setLoading(true);
+    console.log("formdata", formData);
+    if (user) {
+      try {
+        const res = await callPrivateApi("/contact", "POST", formData);
+
+        toast.success(res.message || "Message sent successfully!");
+        setFormData({ name: "", email: "", message: "" });
+      } catch (err) {
+        toast.error(err || "Internal Server error");
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      toast("Please login to send message");
+    }
   };
 
   return (
-    <form
-      className="px-6 pb-24 pt-20 sm:pb-32 lg:px-8 lg:py-32"
-      onSubmit={handleSubmit}
-    >
-      <div className="mx-auto max-w-xl lg:mr-0 lg:max-w-lg">
-        <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-          <div>
-            <label
-              htmlFor="first-name"
-              className="block text-sm font-semibold leading-6 text-gray-900"
-            >
-              First name
-            </label>
-            <div className="mt-2.5">
-              <input
-                type="text"
-                id="first-name"
-                autoComplete="given-name"
-                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                name="fName"
-                value={formData.fName}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-          <div>
-            <label
-              htmlFor="last-name"
-              className="block text-sm font-semibold leading-6 text-gray-900"
-            >
-              Last name
-            </label>
-            <div className="mt-2.5">
-              <input
-                type="text"
-                id="last-name"
-                autoComplete="family-name"
-                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                name="lName"
-                value={formData.lName}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-          <div className="sm:col-span-2">
-            <label
-              htmlFor="email"
-              className="block text-sm font-semibold leading-6 text-gray-900"
-            >
-              Email
-            </label>
-            <div className="mt-2.5">
-              <input
-                type="email"
-                id="email"
-                autoComplete="email"
-                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-          <div className="sm:col-span-2">
-            <label
-              htmlFor="message"
-              className="block text-sm font-semibold leading-6 text-gray-900"
-            >
-              Message
-            </label>
-            <div className="mt-2.5">
-              <textarea
-                id="message"
-                rows={4}
-                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="mt-8 flex justify-end">
-          <button
-            type="submit"
-            className="w-max rounded-md border-2 border-[#0057ff] bg-[#0057ff] px-5 py-2 text-sm font-semibold text-white transition-colors duration-150 ease-in-out hover:border-blue-600 hover:bg-blue-600"
-          >
-            Send message
-          </button>
-        </div>
-      </div>
-    </form>
-  );
-};
+    <div className="w-[80%]  mx-auto mt-16 p-6 bg-white shadow-md rounded-lg">
+      <h2 className="text-2xl font-semibold mb-4">Contact Us</h2>
 
-export default MessageForm;
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label className="block mb-1 font-medium text-gray-700">Name</label>
+          <input
+            name="name"
+            type="text"
+            value={formData.name}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        <div>
+          <label className="block mb-1 font-medium text-gray-700">Email</label>
+          <input
+            name="email"
+            type="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        <div>
+          <label className="block mb-1 font-medium text-gray-700">
+            Message
+          </label>
+          <textarea
+            name="message"
+            rows="4"
+            value={formData.message}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          ></textarea>
+        </div>
+
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
+        >
+          {loading ? "Sending..." : "Send Message"}
+        </button>
+      </form>
+      <ToastContainer />
+    </div>
+  );
+}

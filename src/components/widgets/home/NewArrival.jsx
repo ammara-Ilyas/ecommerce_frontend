@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
+import { Heading, SeeAllButton } from "@/components/miniWidgets/Button";
 // const products = [
 //   {
 //     category: "Fashion",
@@ -77,6 +79,7 @@ import { useSelector } from "react-redux";
 //   },
 // ];
 const NewArrival = () => {
+  const router = useRouter();
   const products = useSelector((state) => state.product.products);
   console.log("products", products);
   const [newArrival, setNewArrival] = useState([]);
@@ -85,17 +88,21 @@ const NewArrival = () => {
     setNewArrival(products);
   }, [products]);
   console.log("new arrival", newArrival);
-
+  const handleNavigate = () => {
+    router.push("product");
+  };
   return (
-    <div className="flex flex-col my-8 justify-between ">
-      <h2 className="text-black ml-16 mb-6 text-xl font-semibold  letter-wide">
-        New Arrivals
-      </h2>
+    <div className="flex flex-col mt-10 justify-between ">
+      <div className="flex mr-16  mb-2 justify-between items-center">
+        {" "}
+        <Heading text="New Arrivals" />
+        <SeeAllButton text="See All" handleNavigate={handleNavigate} />
+      </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 border-2  mx-10 space-x-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4   mx-10 ">
         {newArrival &&
           newArrival.map((item, i) => (
-            <div className="border-2" key={i}>
+            <div className="" key={i}>
               <ProductCard product={item} />
             </div>
           ))}

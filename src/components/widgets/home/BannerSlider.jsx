@@ -7,30 +7,6 @@ import Image from "next/image";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { useSelector } from "react-redux";
-import CategoryCard from "../miniWidgets/CategoryCard";
-import { categories } from "./Categories";
-// const banners = [
-//   {
-//     name: "Summer Sale",
-//     image: "/images/banner-1.jpg",
-//   },
-//   {
-//     name: "New Arrivals",
-//     image: "/images/dummy.png",
-//   },
-//   {
-//     name: "Limited Offer",
-//     image: "/images/dummy.png",
-//   },
-//   {
-//     name: "Best Sellers",
-//     image: "/images/dummy.png",
-//   },
-//   {
-//     name: "Clearance",
-//     image: "/images/dummy.png",
-//   },
-// ];
 
 const BannerSlider = () => {
   const carouselRef = useRef(null);
@@ -58,16 +34,6 @@ const BannerSlider = () => {
         ref={carouselRef} // Attach the ref here
         additionalTransfrom={0}
         arrows
-        // customLeftArrow={
-        //   <button className="absolute left-2 top-1/2 shadow-md border-[1px] transform -translate-y-1/2 z-10 text-black bg-white p-2 rounded-full hover:bg-green-600 hover:text-white">
-        //     <FaArrowLeft />
-        //   </button>
-        // }
-        // customRightArrow={
-        //   <button className="absolute right-2 top-1/2shadow-md border-[1px]  transform -translate-y-1/2 z-10 text-black bg-white p-2 rounded-full hover:bg-green-600 hover:text-white">
-        //     <FaArrowRight />
-        //   </button>
-        // }
         autoPlay
         autoPlaySpeed={3000}
         className="mb-12"
@@ -91,7 +57,10 @@ const BannerSlider = () => {
       >
         {banners &&
           banners.map((banner, index) => (
-            <div className="w-full  h-[400px]" key={banner._id}>
+            <div
+              className="w-full h-[150px] sm:h-[250px] md:h-[350px] lg:h-[400px]"
+              key={banner._id}
+            >
               {" "}
               <Image src={banner.image} alt={banner.name} fill />
             </div>

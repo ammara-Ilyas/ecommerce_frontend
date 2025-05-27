@@ -4,8 +4,7 @@ import Image from "next/image";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { FaHeart } from "react-icons/fa6";
-
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import StarIcon from "@mui/icons-material/Star";
 import { BsCart } from "react-icons/bs";
@@ -16,6 +15,7 @@ import { AddToCart } from "@/redux/silice/CartSlice";
 import { AddToWishList } from "@/redux/silice/WishListSlice";
 import { callPrivateApi } from "@/libs/CallApis";
 import { user } from "@/libs/Token";
+import Link from "next/link";
 export default function ProductCard({ product }) {
   const dispatch = useDispatch();
   const [hovered, setHovered] = useState(false);
@@ -81,13 +81,15 @@ export default function ProductCard({ product }) {
   };
 
   return (
-    <div
-      className="relative w-full  rounded-xl overflow-hidden shadow-lg bg-white transition-all duration-300 hover:shadow-xl cursor-pointer"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      {/* Product Image */}
-      <div className="relative h-72 overflow-hidden">
+    <div className="relative w-full     shadow-lg hover:scale-105 bg-white transition-all duration-300 hover:shadow-xl cursor-pointer">
+      <div className="absolute z-30 top-2 left-2 bg-blue-600 text-white px-[4px] py-[7px] rounded-full text-[10px] ">
+        {product?.discount}%
+      </div>
+      <div
+        className="relative h-[150px] sm:h-[200px] md:h-[260x] "
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
         <Image
           src={
             hovered
@@ -98,7 +100,7 @@ export default function ProductCard({ product }) {
           }
           alt="product"
           fill
-          className="w-full h-full object-cover border-b transition-all duration-500"
+          className="w-full h-full object-cover  border-b transition-all duration-500"
         />
 
         {/* Overlay Icons */}
@@ -109,9 +111,7 @@ export default function ProductCard({ product }) {
         >
           {/* Wishlist Button */}
           <button
-            className={`bg-white shadow-md group py-1 px-[6px] rounded-full hover:scale-105 transition ${
-              isInWish ? "text-red-500" : " hover:bg-blue-600"
-            }`}
+            className={`bg-white text-black shadow-md group py-1 px-[6px] rounded-full hover:scale-105 transition hover:bg-blue-600 hover:text-white`}
           >
             <span
               className={`group-hover:text-white transition-colors text-sm duration-200 ${
@@ -122,7 +122,7 @@ export default function ProductCard({ product }) {
               {!isInWish ? (
                 <FavoriteBorderIcon fontSize="small" />
               ) : (
-                <FaHeart />
+                <FavoriteIcon fontSize="small" />
               )}
             </span>
           </button>
@@ -143,26 +143,31 @@ export default function ProductCard({ product }) {
             </span>
           </button>
           <button className="bg-white shadow-md group hover:bg-blue-600  py-1 px-[6px] rounded-full hover:scale-105 transition">
-            <span className="text-black group-hover:text-white transition-colors duration-200">
+            <Link
+              href={`/product/${product._id}`}
+              className="text-black group-hover:text-white transition-colors duration-200"
+            >
               <VisibilityIcon fontSize="small" />
-            </span>
+            </Link>
           </button>
         </div>
       </div>
 
       {/* Product Info */}
-      <div className="p-4 space-y-1">
-        <p className="text-gray-500 text-sm">Fashion</p>
+      <div className="p-4 space-y-0 xs:space-y-1">
         <h3 className="font-semibold text-base text-gray-800 truncate">
-          {product.title}
+          {product.product}
         </h3>
+        <p className="text-gray-500 text-sm">{product?.category?.name}</p>
+        <p className="text-sm text-green-600">In stock</p>
+
         <div className="flex items-center text-yellow-500 text-sm">
           {Array.from({ length: 4 }).map((_, i) => (
             <StarIcon key={i} fontSize="small" />
           ))}
           <StarIcon fontSize="small" className="text-gray-300" />
         </div>
-        <p className="text-sm text-green-600">By Altecia</p>
+        <p className="text-sm text-blue-600">By {product?.brand}</p>
         <div className="flex items-center gap-2">
           <span className="text-green-600 font-bold">
             Rs {product.newPrice}
@@ -172,16 +177,6 @@ export default function ProductCard({ product }) {
           </span>
         </div>
       </div>
-      <ToastContainer
-        position="top-right"
-        autoClose={500} // 1 second
-        newestOnTop
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable={false}
-        pauseOnHover={false}
-        toastClassName="!w-[200px] !text-sm"
-      />
     </div>
   );
 }

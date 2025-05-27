@@ -1,106 +1,83 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import ProductCard from "./ProductCard";
-import { useSelector } from "react-redux";
+import { useState, useRef, useEffect } from "react";
 
-// const products = [
-//   {
-//     category: "Fashion",
-//     title: "Glito Black Solid Dry-Fit...",
-//     rating: 5,
-//     seller: "V-Mart",
-//     currentPrice: 460,
-//     originalPrice: 490,
-//     images: ["/images/dummy.png", "images/dummy.png"], // Replace with actual image path or URL
-//   },
-//   {
-//     category: "Fashion",
-//     title: "Glito Black Solid Dry-Fit...",
-//     rating: 5,
-//     seller: "V-Mart",
-//     currentPrice: 460,
-//     originalPrice: 490,
-//     imageUrl: ["/images/dummy.png", "images/dummy.png"], // Replace with actual image path or URL
-//   },
-//   {
-//     category: "Fashion",
-//     title: "Glito Black Solid Dry-Fit...",
-//     rating: 5,
-//     seller: "V-Mart",
-//     currentPrice: 460,
-//     originalPrice: 490,
-//     imageUrl: ["/images/dummy.png", "images/dummy.png"], // Replace with actual image path or URL
-//   },
-//   {
-//     category: "Fashion",
-//     title: "Glito Black Solid Dry-Fit...",
-//     rating: 5,
-//     seller: "V-Mart",
-//     currentPrice: 460,
-//     originalPrice: 490,
-//     imageUrl: ["/images/dummy.png", "images/dummy.png"], // Replace with actual image path or URL
-//   },
-//   {
-//     category: "Fashion",
-//     title: "Glito Black Solid Dry-Fit...",
-//     rating: 5,
-//     seller: "V-Mart",
-//     currentPrice: 460,
-//     originalPrice: 490,
-//     imageUrl: ["/images/dummy.png", "images/dummy.png"], // Replace with actual image path or URL
-//   },
-//   {
-//     category: "Fashion",
-//     title: "Glito Black Solid Dry-Fit...",
-//     rating: 5,
-//     seller: "V-Mart",
-//     currentPrice: 460,
-//     originalPrice: 490,
-//     imageUrl: ["/images/dummy.png", "images/dummy.png"], // Replace with actual image path or URL
-//   },
-//   {
-//     category: "Fashion",
-//     title: "Glito Black Solid Dry-Fit...",
-//     rating: 5,
-//     seller: "V-Mart",
-//     currentPrice: 460,
-//     originalPrice: 490,
-//     imageUrl: ["/images/dummy.png", "images/dummy.png"], // Replace with actual image path or URL
-//   },
-//   {
-//     category: "Fashion",
-//     title: "Glito Black Solid Dry-Fit...",
-//     rating: 5,
-//     seller: "V-Mart",
-//     currentPrice: 460,
-//     originalPrice: 490,
-//     imageUrl: ["/images/dummy.png", "images/dummy.png"], // Replace with actual image path or URL
-//   },
-// ];
+import Image from "next/image";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+import ProductCard from "./ProductCard";
+import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+import { Heading, SeeAllButton } from "@/components/miniWidgets/Button";
+
 const FeaturedProducts = () => {
+  const carouselRef = useRef(null);
+
+  const router = useRouter();
   const products = useSelector((state) => state.product.products);
   console.log("products", products);
-  const [featuredProduct, setFeaturedProducts] = useState([]);
+  const [popularProducts, setPopularProducts] = useState([]);
   useEffect(() => {
-    // setFeaturedProducts(products.filter((item) => item.isFeatured == false));
-    setFeaturedProducts(products);
+    // setPopularProducts(products.filter((item) => item.ispopularProducts == false));
+    setPopularProducts(products);
   }, [products]);
-  console.log("featured", featuredProduct);
+  console.log("new arrival", popularProducts);
 
+  const responsive = {
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 4, // Show 4 items on desktop
+      partialVisibilityGutter: 30, // Adjust gutter between cards
+    },
+    tablet: {
+      breakpoint: { max: 786, min: 650 },
+      items: 3, // Show 2 items on tablets
+    },
+    mobile: {
+      breakpoint: { max: 650, min: 0 },
+      items: 2, // Show 1 item on mobile
+    },
+  };
+  const handleNavigate = () => {
+    router.push("product");
+  };
   return (
-    <div className="flex flex-col my-8 justify-between ">
-      <h2 className="text-black ml-16 mb-6 text-xl font-semibold  letter-wide">
-        Popular Products
-      </h2>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4   mx-10 space-x-4">
-        {featuredProduct &&
-          featuredProduct.map((item, i) => (
-            <div className="border-2" key={i}>
-              <ProductCard product={item} />
-            </div>
-          ))}
-      </div>
+    <div className=" mx-8 pt-14  space-x-2  ">
+      <div className="flex mr-16  mb-5 justify-between items-center">
+        {" "}
+        <Heading text="Featured Products" />
+        <SeeAllButton text="See All" handleNavigate={handleNavigate} />
+      </div>{" "}
+      <Carousel
+        ref={carouselRef}
+        additionalTransfrom={0}
+        // arrows
+        autoPlay
+        autoPlaySpeed={7000}
+        className="mb-12"
+        containerClass="carousel-container"
+        draggable
+        focusOnSelect={true}
+        infinite
+        itemClass="carousel-item-padding-40-px"
+        keyBoardControl
+        minimumTouchDrag={80}
+        pauseOnHover
+        renderDotsOutside
+        responsive={responsive}
+        rewind={false}
+        rewindWithAnimation={false}
+        rtl={false}
+        shouldResetAutoplay
+        sliderClass=""
+        slidesToSlide={2}
+        swipeable
+      >
+        {products.map((product, index) => (
+          <div key={index + product._id} className="mx-3  h-auto ">
+            <ProductCard product={product} />
+          </div>
+        ))}
+      </Carousel>
     </div>
   );
 };

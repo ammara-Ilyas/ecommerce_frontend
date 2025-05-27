@@ -9,7 +9,11 @@ export const metadata = {
 const page = () => {
   return (
     <>
-      <Hero />
+      <Hero
+        image="/images/about/bg.jpg"
+        haeading="About Us"
+        text="Fast, Secure & Easy Shopping"
+      />
       <AboutUs />
       {/* <ShopWithUs /> */}
     </>

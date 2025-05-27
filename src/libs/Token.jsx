@@ -1,9 +1,16 @@
 "use client";
 
-export const token = localStorage.getItem("token");
-console.log("token in api call", token);
+export function getToken() {
+  if (typeof window !== "undefined") {
+    return localStorage.getItem("token");
+  }
+  return null;
+}
 
-const users = localStorage.getItem("user");
-export const user = JSON.parse(users);
-
-console.log("user in api call", user);
+export function user() {
+  if (typeof window !== "undefined") {
+    const storedUser = localStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : null;
+  }
+  return null;
+}

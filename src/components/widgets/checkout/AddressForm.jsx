@@ -1,205 +1,163 @@
+"use client";
 import React, { useState } from "react";
-
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormLabel from "@mui/material/FormLabel";
-import Grid from "@mui/material/Grid";
-import OutlinedInput from "@mui/material/OutlinedInput";
+import {
+  Grid,
+  OutlinedInput,
+  FormLabel,
+  FormControlLabel,
+  Checkbox,
+  Typography,
+  Button,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { useDispatch, useSelector } from "react-redux";
-import { updateShippingInfo } from "@/redux/silice/CheckoutSlice";
-
+import { useForm } from "react-hook-form";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { callPrivateApi } from "@/libs/CallApis";
+import { useSelector } from "react-redux";
 const FormGrid = styled(Grid)(() => ({
   display: "flex",
   flexDirection: "column",
 }));
 
 export default function AddressForm() {
-  const dispatch = useDispatch();
-  const shippingInfo = useSelector((state) => state.checkout.shippingInfo);
-  const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    console.log("target", e.target);
+  const [loading, setLoading] = useState(false);
+  const cartItem = useSelector((state) => state.cart.cartItems);
+  const totalPrice = useSelector((state) => state.cart.totalPrice);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  console.log("cart item", cartItem);
 
-    dispatch(
-      updateShippingInfo({
-        [name]: type === "checkbox" ? checked : value,
-      })
-    );
+  const onSubmit = async (data) => {
+    setLoading(true);
+    // e.preventDefault();
+    try {
+      const fullName = `${data.firstName} ${data.lastName}`;
+      const fullAddress = `${data.address1}${
+        data.address2 ? ", " + data.address2 : ""
+      }, ${data.city}, ${data.state}, ${data.zip}, ${data.country}`;
+
+      const payload = {
+        name: fullName,
+        email: data.email,
+        phone: data.phoneNumber,
+        address: fullAddress,
+        cartItems: cartItem,
+        amount: Number(180),
+      };
+
+      const res = await callPrivateApi(
+        "/create-checkout-session",
+        "POST",
+        payload
+      );
+
+      if (res.url) {
+        window.location.href = res.url;
+      } else {
+        toast.error("Failed to create checkout session");
+      }
+    } catch (err) {
+      console.log("error", err);
+
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <Grid container spacing={3} sx={{ height: "auto" }}>
-      <FormGrid size={{ xs: 12, md: 6 }}>
-        <FormLabel htmlFor="firstName" required>
-          First name
-        </FormLabel>
-        <OutlinedInput
-          id="firstName"
-          name="firstName"
-          type="text"
-          placeholder="John"
-          autoComplete="given-name"
-          required
-          size="small"
-          value={shippingInfo.firstName}
-          onChange={handleInputChange}
-        />
-      </FormGrid>
-      <FormGrid size={{ xs: 12, md: 6 }}>
-        <FormLabel htmlFor="lastName" required>
-          Last name
-        </FormLabel>
-        <OutlinedInput
-          id="lastName"
-          name="lastName"
-          type="text"
-          placeholder="Snow"
-          autoComplete="given-name"
-          required
-          size="small"
-          value={shippingInfo.lastName}
-          onChange={handleInputChange}
-        />
-      </FormGrid>
-      <FormGrid size={{ xs: 12, md: 6 }}>
-        <FormLabel htmlFor="email" required>
-          Email
-        </FormLabel>
-        <OutlinedInput
-          id="email"
-          name="email"
-          type="email"
-          placeholder="Johnsnow@gmail.com"
-          autoComplete="email"
-          required
-          size="small"
-          value={shippingInfo.email}
-          onChange={handleInputChange}
-        />
-      </FormGrid>
-      <FormGrid size={{ xs: 12, md: 6 }}>
-        <FormLabel htmlFor="phoneNumber" required>
-          Phone Number
-        </FormLabel>
-        <OutlinedInput
-          id="phoneNumber"
-          name="phoneNumber"
-          type="tel"
-          placeholder="+1 (555) 123-4567"
-          autoComplete="phone number"
-          required
-          size="small"
-          value={shippingInfo.phoneNumber}
-          onChange={handleInputChange}
-        />
-      </FormGrid>
-      <FormGrid size={{ xs: 12 }}>
-        <FormLabel htmlFor="address1" required>
-          Address line 1
-        </FormLabel>
-        <OutlinedInput
-          id="address1"
-          name="address1"
-          type="text"
-          placeholder="Street name and number"
-          autoComplete="shipping address-line1"
-          required
-          size="small"
-          value={shippingInfo.address1}
-          onChange={handleInputChange}
-        />
-      </FormGrid>
-      <FormGrid size={{ xs: 12 }}>
-        <FormLabel htmlFor="address2">Address line 2</FormLabel>
-        <OutlinedInput
-          id="address2"
-          name="address2"
-          type="text"
-          placeholder="Apartment, suite, unit, etc. (optional)"
-          autoComplete="shipping address-line2"
-          required
-          size="small"
-          value={shippingInfo.address2}
-          onChange={handleInputChange}
-        />
-      </FormGrid>
-      <FormGrid size={{ xs: 6 }}>
-        <FormLabel htmlFor="city" required>
-          City
-        </FormLabel>
-        <OutlinedInput
-          id="city"
-          name="city"
-          type="text"
-          placeholder="New York"
-          autoComplete="City"
-          required
-          size="small"
-          value={shippingInfo.city}
-          onChange={handleInputChange}
-        />
-      </FormGrid>
-      <FormGrid size={{ xs: 6 }}>
-        <FormLabel htmlFor="state" required>
-          State
-        </FormLabel>
-        <OutlinedInput
-          id="state"
-          name="state"
-          type="text"
-          placeholder="NY"
-          autoComplete="State"
-          required
-          size="small"
-          value={shippingInfo.state}
-          onChange={handleInputChange}
-        />
-      </FormGrid>
-      <FormGrid size={{ xs: 6 }}>
-        <FormLabel htmlFor="zip" required>
-          Zip / Postal code
-        </FormLabel>
-        <OutlinedInput
-          id="zip"
-          name="zip"
-          type="text"
-          placeholder="12345"
-          autoComplete="shipping postal-code"
-          required
-          size="small"
-          value={shippingInfo.zip}
-          onChange={handleInputChange}
-        />
-      </FormGrid>
-      <FormGrid size={{ xs: 6 }}>
-        <FormLabel htmlFor="country" required>
-          Country
-        </FormLabel>
-        <OutlinedInput
-          id="country"
-          name="country"
-          type="text"
-          placeholder="United States"
-          autoComplete="shipping country"
-          required
-          size="small"
-          value={shippingInfo.country}
-          onChange={handleInputChange}
-        />
-      </FormGrid>
-      <FormGrid size={{ xs: 12 }}>
-        <FormControlLabel
-          control={
-            <Checkbox
-              name="saveAddress"
-              checked={shippingInfo.saveAddress}
-              onChange={handleInputChange}
+    <>
+      <Typography
+        variant="h6"
+        sx={{ color: "black", fontWeight: "bold", mb: 4 }}
+      >
+        Shipping Information
+      </Typography>
+
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Grid container spacing={3}>
+          {[
+            { name: "firstName", label: "First Name", placeholder: "John" },
+            { name: "lastName", label: "Last Name", placeholder: "Snow" },
+            {
+              name: "email",
+              label: "Email",
+              placeholder: "johnsnow@gmail.com",
+              type: "email",
+            },
+            {
+              name: "phoneNumber",
+              label: "Phone Number",
+              placeholder: "+1 (555) 123-4567",
+            },
+            {
+              name: "address1",
+              label: "Address Line 1",
+              placeholder: "Street name and number",
+            },
+            {
+              name: "address2",
+              label: "Address Line 2",
+              placeholder: "Apartment (optional)",
+              required: false,
+            },
+            { name: "city", label: "City", placeholder: "New York" },
+            { name: "state", label: "State", placeholder: "NY" },
+            { name: "zip", label: "Zip Code", placeholder: "12345" },
+            { name: "country", label: "Country", placeholder: "United States" },
+          ].map(
+            ({ name, label, placeholder, type = "text", required = true }) => (
+              <FormGrid
+                item
+                xs={12}
+                md={name === "address2" ? 12 : 6}
+                key={name}
+              >
+                <FormLabel htmlFor={name}>
+                  {label} {required && "*"}
+                </FormLabel>
+                <OutlinedInput
+                  id={name}
+                  placeholder={placeholder}
+                  type={type}
+                  size="small"
+                  {...register(name, {
+                    required: required ? `${label} is required` : false,
+                  })}
+                />
+                {errors[name] && (
+                  <Typography color="error" fontSize={13}>
+                    {errors[name]?.message}
+                  </Typography>
+                )}
+              </FormGrid>
+            )
+          )}
+
+          <FormGrid item xs={12}>
+            <FormControlLabel
+              control={<Checkbox {...register("saveAddress")} />}
+              label="Use this address for payment details"
             />
-          }
-          label="Use this address for payment details"
-        />
-      </FormGrid>
-    </Grid>
+          </FormGrid>
+        </Grid>
+
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          color="primary"
+          sx={{ mt: 4 }}
+          disabled={loading}
+        >
+          {loading ? "Processing..." : "Place Order"}
+        </Button>
+      </form>
+      <ToastContainer />
+    </>
   );
 }

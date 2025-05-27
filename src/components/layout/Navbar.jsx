@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Image from "next/image";
 import { MdPerson, MdSecurity, MdLogout } from "react-icons/md";
-import token from "@/libs/Token";
+// import token from "@/libs/Token";
 import { socialIcons } from "../widgets/contact/Icon";
 import Link from "next/link";
 import Avatar from "@mui/material/Avatar";
@@ -17,6 +17,7 @@ import {
   FaTimes,
   FaShoppingBag,
   FaAngleDown,
+  FaPhoneAlt,
 } from "react-icons/fa";
 import user from "@/libs/Token";
 const navlinks = [
@@ -52,6 +53,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [user, setUser] = useState(null); // <-- user state
 
   useEffect(() => {
     const handleScroll = () => {
@@ -67,8 +69,8 @@ const Navbar = () => {
   // console.log("cart", cartItem.length(), "wish", wishListItems.length());
 
   const cartIcons = [
-    { icon: <FaHeart />, link: "/cart", num: wishListItems.length || 0 },
-    { icon: <FaShoppingBag />, link: "/wishlist", num: cartItem?.length || 0 },
+    { icon: <FaHeart />, link: "/wishlist", num: wishListItems.length || 0 },
+    { icon: <FaShoppingBag />, link: "/cart", num: cartItem?.length || 0 },
   ];
   const account = [
     {
@@ -86,9 +88,16 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    setUser(null);
     router.push("/");
   };
-  const user = JSON.parse(localStorage.getItem("user"));
+  // Load user from localStorage on client only
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedUser = localStorage.getItem("user");
+      setUser(storedUser ? JSON.parse(storedUser) : null);
+    }
+  }, []);
   return (
     <>
       {/* Overlay for sidebar */}
@@ -102,7 +111,7 @@ const Navbar = () => {
       <header
         className={`${
           isScrolled ? "fixed top-0 left-0 w-full shadow-md z-50 bg-white" : ""
-        } transition-all duration-300 py-3`}
+        } transition-all duration-300 py-2 sm:py-3`}
       >
         <div className="container mx-auto px-4 lg:px-20">
           <div className="flex justify-between items-center">
@@ -113,9 +122,11 @@ const Navbar = () => {
                 alt="Logo"
                 width={50}
                 height={40}
-                className="w-[50px] h-[40px]"
+                className="sm:w-[50px] w-[40px] h-[30px] sm:h-[40px]"
               />
-              <span className="text-xl font-bold text-blue-600">Ecommerce</span>
+              <span className=" text-[16px] sm:text-xl font-bold text-blue-600">
+                Ecommerce
+              </span>
             </Link>
 
             {/* Desktop Nav */}
@@ -209,7 +220,7 @@ const Navbar = () => {
             </div>
             {/* Mobile Menu Button */}
             <button
-              className="xl:hidden text-2xl ml-2"
+              className="xl:hidden text-lg md:text-2xl ml-2"
               onClick={() => setSidebarOpen(true)}
             >
               <FaBars />
@@ -220,11 +231,11 @@ const Navbar = () => {
 
       {/* Sidebar Nav */}
       <div
-        className={`fixed top-0 left-0 h-full w-[75%] bg-white z-50 flex flex-col  gap-5 pt-3 px-5 shadow-lg transform transition-transform duration-300 ${
+        className={`fixed top-0 left-0 pl-4 h-full w-[75%] bg-white z-50 flex flex-col  gap-5 pt-3 px-5 shadow-lg transform transition-transform duration-300 ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="flex  justify-between items-center mb-6">
+        <div className="flex  justify-between items-center mt-5 mb-6">
           <Link href="/" className="flex items-center border-b space-x-3">
             <Image
               src="/images/logo.png"
@@ -239,7 +250,7 @@ const Navbar = () => {
             <FaTimes />
           </button>
         </div>
-        <ul className="flex ml-8 flex-col border-4 gap-4">
+        <ul className="flex w-full flex-col border-4 gap-4">
           {navlinks.map((item, i) => (
             <li key={i}>
               <Link
@@ -319,6 +330,16 @@ const Navbar = () => {
                 )}
               </ul>
             )}
+          </div>
+          {/* Phone Section */}
+        </div>
+        <div className="xl:hidden flex items-center gap-4">
+          <div className="p-3 bg-gray-200 rounded-full group hover:bg-blue-500 duration-200">
+            <FaPhoneAlt className="text-blue-500 group-hover:text-white transition" />
+          </div>
+          <div className="text-sm sm:text-base">
+            <h5 className="font-semibold">+65 11.188.888</h5>
+            <span className="text-gray-600">Support 24/7 time</span>
           </div>
         </div>
       </div>

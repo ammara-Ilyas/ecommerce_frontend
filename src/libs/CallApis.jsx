@@ -1,7 +1,11 @@
 const HOSTNAME = "http://127.0.0.1:5000/api";
-import { token } from "./Token";
-// Function to make API calls using fetch
+const getToken = () => {
+  // For example, from localStorage:
+  return localStorage.getItem("token");
+}; // Function to make API calls using fetch
 export const callPrivateApi = async (endpoint, method, payload) => {
+  const token = getToken();
+
   console.log("data in api call", endpoint, method, payload);
   console.log("token in private", token);
 
