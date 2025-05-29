@@ -7,7 +7,7 @@ import { FcGoogle } from "react-icons/fc";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
-import { callPublicApi } from "@/libs/callApis";
+import { callPublicApi } from "@/libs/CallApis";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 

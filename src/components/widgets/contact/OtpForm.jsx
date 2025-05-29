@@ -5,7 +5,7 @@ import { Button, CircularProgress } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
-import { callPublicApi } from "@/libs/callApis";
+import { callPublicApi } from "@/libs/CallApis";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";

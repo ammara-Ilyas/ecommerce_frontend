@@ -8,7 +8,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { CircularProgress } from "@mui/material";
-import { callPrivateApi, callPublicApi } from "@/libs/callApis";
+import { callPrivateApi, callPublicApi } from "@/libs/CallApis";
 const ChangePassword = () => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({

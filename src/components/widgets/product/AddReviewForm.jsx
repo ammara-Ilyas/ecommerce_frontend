@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { TextField, Button, Box, Typography } from "@mui/material";
 import Rating from "@mui/material/Rating";
-import { callPrivateApi } from "@/libs/callApis";
+import { callPrivateApi } from "@/libs/CallApis";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
