@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AddToCart } from "@/redux/silice/CartSlice";
 import { AddToWishList } from "@/redux/silice/WishListSlice";
 import { callPrivateApi } from "@/libs/CallApis";
-import { getToken, user } from "@/libs/Token";
+import { getToken } from "@/libs/Token";
 import Link from "next/link";
 export default function ProductCard({ product }) {
   const dispatch = useDispatch();

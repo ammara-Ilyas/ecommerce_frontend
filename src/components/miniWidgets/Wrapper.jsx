@@ -3,7 +3,6 @@
 import { useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Hero from "../layout/Hero";
-import { user } from "@/libs/Token"; // assumes user() returns null or user object
 import { ToastContainer } from "react-toastify";
 
 const Wrapper = ({ children }) => {
@@ -19,7 +18,7 @@ const Wrapper = ({ children }) => {
   const isProtected = protectedPaths.includes(pathname);
 
   useEffect(() => {
-    const isLoggedIn = user(); // check login status
+    const isLoggedIn = localStorage.getItem("token") || null; // check login status
 
     if (isProtected && !isLoggedIn) {
       router.replace("/contact/login"); // redirect to login if unauthenticated

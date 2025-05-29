@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Image from "next/image";
 import { MdPerson, MdSecurity, MdLogout } from "react-icons/md";
-// import token from "@/libs/Token";
 import { socialIcons } from "../widgets/contact/Icon";
 import Link from "next/link";
 import Avatar from "@mui/material/Avatar";
@@ -19,7 +18,6 @@ import {
   FaAngleDown,
   FaPhoneAlt,
 } from "react-icons/fa";
-import user from "@/libs/Token";
 const navlinks = [
   {
     name: "Home",

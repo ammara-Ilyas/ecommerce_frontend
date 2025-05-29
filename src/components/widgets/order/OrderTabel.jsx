@@ -3,7 +3,7 @@
 import { Heading } from "@/components/miniWidgets/Button";
 import { useEffect, useState } from "react";
 
-const VenueOrders = () => {
+const OrderTable = () => {
   const [orders, setOrders] = useState([]);
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -114,4 +114,4 @@ const VenueOrders = () => {
   );
 };
 
-export default VenueOrders;
+export default OrderTable;
