@@ -15,7 +15,7 @@ export const cartSlice = createSlice({
     },
     setTotalPrice(state, action) {
       state.totalPrice = action.payload;
-      console.log("total price", totalPrice);
+      console.log("total price", state.totalPrice);
     },
     AddToCart(state, action) {
       const item = action.payload;

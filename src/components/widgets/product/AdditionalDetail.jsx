@@ -5,7 +5,7 @@ import { Button } from "@mui/material";
 import ReviewList from "./ReviewList";
 import AddReviewForm from "./AddReviewForm";
 
-const ProductAdditionalDetail = () => {
+const ProductAdditionalDetail = ({ product }) => {
   const [activeTab, setActiveTab] = useState("description");
 
   const tabs = [
@@ -15,7 +15,7 @@ const ProductAdditionalDetail = () => {
   ];
 
   const additionalInfo = [
-    { label: "Brand", value: "IZTOSS (View more from IZTOSS)" },
+    { label: "Brand", value: "bran name" },
     { label: "Model Number", value: "IZTOSS-FG-1212-TWZ1234" },
     { label: "Color", value: "Black, Blue, Red, White" },
     { label: "Size", value: "1/2" },
@@ -79,7 +79,7 @@ const ProductAdditionalDetail = () => {
         {activeTab === "reviews" && (
           <div className="text-gray-600 space-y-2">
             <ReviewList />
-            <AddReviewForm />
+            <AddReviewForm id={product._id} />
           </div>
         )}
       </div>

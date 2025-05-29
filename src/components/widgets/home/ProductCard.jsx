@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -14,32 +14,47 @@ import { useDispatch, useSelector } from "react-redux";
 import { AddToCart } from "@/redux/silice/CartSlice";
 import { AddToWishList } from "@/redux/silice/WishListSlice";
 import { callPrivateApi } from "@/libs/CallApis";
-import { user } from "@/libs/Token";
+import { getToken, user } from "@/libs/Token";
 import Link from "next/link";
 export default function ProductCard({ product }) {
   const dispatch = useDispatch();
   const [hovered, setHovered] = useState(false);
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    const t = getToken();
+    setToken(t);
+  }, []);
+  const user = JSON.parse(localStorage.getItem("user"));
   // console.log("product", product);
+  const cartItems = useSelector((state) => state.cart.cartItems);
+  const isInCart = cartItems.some((item) => item._id === product._id);
   const handleAddToCart = async (item) => {
     if (user) {
-      dispatch(AddToCart(item));
-      // Instead of Formpayload, use JSON
-      const payload = {
-        productId: item._id,
-        userId: user.id,
-        quantity: "1",
-      };
+      if (isInCart) {
+        toast.error("Item already in cart");
+      } else {
+        dispatch(AddToCart(item));
+        // Instead of Formpayload, use JSON
+        const payload = {
+          productId: item._id,
+          quantity: "1",
+        };
 
-      console.log("payload product JSON", payload);
+        console.log("payload product JSON", payload);
 
-      try {
-        const res = await callPrivateApi(`/cart`, "POST", payload);
-        console.log("res in wish", res, "status", res.status);
-        if (res.status == 200 || res.status == 201) {
-          toast.success(res.message || "Item added to cart");
+        try {
+          const res = await callPrivateApi(
+            `/cart/${user.id}`,
+            "POST",
+            payload,
+            token
+          );
+          console.log("res in wish", res, "status", res.status);
+          toast.success(res.message);
+        } catch (error) {
+          toast.error(error.message || "Failed to add in cart");
         }
-      } catch (error) {
-        toast.error(error.message || "Failed to add in cart");
       }
     } else {
       toast.error("firstly signed in");
@@ -47,33 +62,39 @@ export default function ProductCard({ product }) {
   };
 
   // ✅ Access cart and wishlist from Redux
-  const cartItems = useSelector((state) => state.cart.cartItems);
+
   const wishItems = useSelector((state) => state.wish.wishList);
 
   // ✅ Check if product is in cart or wishlist
-  const isInCart = cartItems.some((item) => item._id === product._id);
-  const isInWish = wishItems.some((item) => item._id === product._id);
+  const isInWish = wishItems.some((pro) => pro._id === product._id);
   const handleAddToWish = async (item) => {
     if (user) {
-      dispatch(AddToWishList(item));
       // Instead of Formpayload, use JSON
-      const payload = {
-        productId: item._id,
-        userId: user.id,
-        quantity: "1",
-      };
+      if (isInWish) {
+        toast.error("Item already in wish list");
+      } else {
+        dispatch(AddToWishList(item));
 
-      console.log("payload product JSON", payload);
+        const payload = {
+          productId: item._id,
+          quantity: "1",
+        };
 
-      try {
-        const res = await callPrivateApi("/wish", "POST", payload);
-        console.log("res in wish", res, "status", res.status);
+        console.log("payload product JSON", payload);
 
-        if (res.status == 200 || res.status == 201) {
-          toast.success(res.message || "Item added to Wish List");
+        try {
+          const res = await callPrivateApi(
+            `/wish/${user.id}`,
+            "POST",
+            payload,
+            token
+          );
+          console.log("res in wish", res, "status", res.status);
+
+          toast.success(res.message);
+        } catch (error) {
+          toast.error(error.message || "Failed to add in Wish List");
         }
-      } catch (error) {
-        toast.error(error.message || "Failed to add in Wish List");
       }
     } else {
       toast.error("Firstly sign");

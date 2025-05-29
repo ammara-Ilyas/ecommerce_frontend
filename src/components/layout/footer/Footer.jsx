@@ -45,10 +45,10 @@ const sections = [
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-100 text-black  px-6 py-10">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-8">
+    <footer className="bg-gray-100 text-black   px-6 py-10">
+      <div className="max-w-7xl mx-auto flex flex-wrap   ">
         {/* Logo and Contact Info */}
-        <div>
+        <div className=" w-[90%] mx-auto md:w-[30%] lg:w-[25%] p-2 py-3 space-y-2 ">
           <div className="flex items-center space-x-3">
             <Image
               src="/images/logo.png"
@@ -65,21 +65,22 @@ const Footer = () => {
             Morbi cursus porttitor enim lobortis molestie. Duis gravida turpis
             dui, eget bibendum magna congue nec.
           </p>
-          <div className="flex items-center space-x-2 text-green-400">
+          <div className="flex items-center space-x-2 text-blue-500">
             <MdPhone /> <span>+65 11.188.888</span>
           </div>
-          <div className="flex items-center space-x-2 text-green-400">
+          <div className="flex items-center space-x-2 text-blue-500">
             <MdEmail /> <span>ecommerce@gmail.com</span>
           </div>
         </div>
-
-        {sections.map((section, index) => (
-          <FooterSection
-            key={index}
-            title={section.title}
-            links={section.links}
-          />
-        ))}
+        <div className=" w-full xs:w-[95%] md:w-[70%] lg:w-[75%] grid grid-cols-2 gap-2 lg:gap-8 md:grid-cols-4 ">
+          {sections.map((section, index) => (
+            <FooterSection
+              key={index}
+              title={section.title}
+              links={section.links}
+            />
+          ))}
+        </div>
       </div>
 
       <FooterCopyright />

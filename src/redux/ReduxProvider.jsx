@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { store } from "./store";
 import { useDispatch, Provider } from "react-redux";
 import {
@@ -8,26 +8,53 @@ import {
   setBanners,
   setFilteredProducts,
 } from "./silice/ProductSlice";
-import { setCartItems } from "./silice/CartSlice";
+import { setCartItems, setTotalPrice } from "./silice/CartSlice";
 import { setWishList } from "./silice/WishListSlice";
 import { callPrivateApi } from "@/libs/CallApis";
-import { user } from "@/libs/Token";
+import { getToken } from "@/libs/Token";
 function DataInitializer({ categories, product, banners, children }) {
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    const t = getToken();
+    setToken(t);
+  }, []);
+  const user = JSON.parse(localStorage.getItem("user"));
+  console.log("user in redux", user);
+
   const dispatch = useDispatch();
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const cartRes = await callPrivateApi(`/cart/${user.id}`, "GET");
+        const cartRes = await callPrivateApi(
+          `/cart/${user.id}`,
+          "GET",
+          undefined,
+          token
+        );
         console.log("res in cartRes list ", cartRes);
         if (cartRes) {
           console.log("cartItem data in Redux Provider", cartRes.cartItems);
           dispatch(setCartItems(cartRes.cartItems));
+          const totalPriceAllProducts = cartRes.cartItems.reduce(
+            (acc, priceItem) => {
+              return acc + priceItem.quantity * priceItem.product.newPrice;
+            },
+            0
+          );
+          console.log("totalPriceAllProducts in redux", totalPriceAllProducts);
+          dispatch(setTotalPrice(totalPriceAllProducts));
         }
       } catch (error) {
         console.log("Cart fetch failed:", error);
       }
       try {
-        const wishlistRes = await callPrivateApi(`/wish/${user.id}`, "GET");
+        const wishlistRes = await callPrivateApi(
+          `/wish/${user.id}`,
+          "GET",
+          undefined,
+          token
+        );
         console.log("res in wishlistRes list ", wishlistRes);
 
         if (wishlistRes) {

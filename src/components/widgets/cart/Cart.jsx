@@ -8,7 +8,6 @@ import { useSelector, useDispatch } from "react-redux";
 import Image from "next/image";
 import { callPrivateApi } from "@/libs/CallApis";
 import { setCartItems, setTotalPrice } from "@/redux/silice/CartSlice";
-import { user } from "@/libs/Token";
 import CartSkeleton from "@/components/miniWidgets/CartSkeleton";
 import Button from "@/components/miniWidgets/Button";
 import { increCartItems, decreCartItems } from "@/redux/silice/CartSlice";
@@ -18,6 +17,7 @@ const Cart = () => {
   const cartItem = useSelector((state) => state.cart.cartItems);
   const totalPrice = useSelector((state) => state.cart.totalPrice);
   const [loading, setLoading] = useState(false);
+  const user = JSON.parse(localStorage.getItem("user") || null);
   console.log("user and user id", user, user.id);
   console.log("totalPrice in cart", totalPrice);
 
@@ -100,7 +100,7 @@ const Cart = () => {
       ) : cartItem.length === 0 ? (
         <div className="text-gray-600 min-h-20 flex text-center text-2xl flex-col gap-10 font-bold  ">
           <h2>Your cart is empty.</h2>
-          <Link href="/">
+          <Link href="/product">
             {" "}
             <Button
               text="Continue shopping"
@@ -116,23 +116,23 @@ const Cart = () => {
             {cartItem &&
               cartItem.map((product, index) => (
                 <div
-                  key={index}
+                  key={index + product?._id + product?.product}
                   className="flex items-center flex-col md:flex-row   justify-between border-b border-gray-300 py-4"
                 >
                   <div className="flex items-center space-x-4">
                     <Image
-                      src={product.product.images[0]}
-                      alt={product.product.product}
+                      src={product?.product?.images[0]}
+                      alt={product?.product?.product}
                       width={50}
                       height={50}
                       className="h-28 w-28 md:h-16 md:w-16 object-cover rounded"
                     />
                     <div>
                       <h2 className="text-lg font-bold">
-                        {product.product.product}
+                        {product?.product?.product}
                       </h2>
                       <p className="text-gray-600 font-semibold">
-                        Price: ${product.product.newPrice}
+                        Price: ${product?.product?.newPrice}
                       </p>
                     </div>
                   </div>
@@ -141,7 +141,7 @@ const Cart = () => {
                       <CiSquarePlus
                         onClick={() => handleProductItemInc(product._id)}
                       />
-                      {product.quantity}
+                      {product?.quantity}
                       <CiSquareMinus
                         onClick={() => handleProductItemDec(product._id)}
                       />
@@ -160,9 +160,12 @@ const Cart = () => {
             <p className="text-center font-bold text-2xl mb-3">
               Total Price : {totalPrice}$
             </p>
-            <button className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700">
+            <Link
+              href="/checkout"
+              className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700"
+            >
               Checkout
-            </button>
+            </Link>
           </div>
         </div>
       )}

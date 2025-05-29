@@ -24,16 +24,20 @@ export default function AddressForm() {
   const [loading, setLoading] = useState(false);
   const cartItem = useSelector((state) => state.cart.cartItems);
   const totalPrice = useSelector((state) => state.cart.totalPrice);
+  const user = JSON.parse(localStorage.getItem("user")) || null;
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  console.log("cart item", cartItem);
+  console.log("user in address", user);
 
+  console.log("cart item", cartItem);
   const onSubmit = async (data) => {
     setLoading(true);
     // e.preventDefault();
+    console.log("data in checkout", data);
+
     try {
       const fullName = `${data.firstName} ${data.lastName}`;
       const fullAddress = `${data.address1}${
@@ -41,6 +45,7 @@ export default function AddressForm() {
       }, ${data.city}, ${data.state}, ${data.zip}, ${data.country}`;
 
       const payload = {
+        userId: user.id,
         name: fullName,
         email: data.email,
         phone: data.phoneNumber,
@@ -54,6 +59,7 @@ export default function AddressForm() {
         "POST",
         payload
       );
+      console.log("res in address", res);
 
       if (res.url) {
         window.location.href = res.url;
@@ -124,6 +130,7 @@ export default function AddressForm() {
                   id={name}
                   placeholder={placeholder}
                   type={type}
+                  defaultValue={name == "email" && user ? user.email : ""}
                   size="small"
                   {...register(name, {
                     required: required ? `${label} is required` : false,

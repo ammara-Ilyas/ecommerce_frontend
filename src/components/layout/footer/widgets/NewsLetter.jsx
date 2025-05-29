@@ -21,7 +21,7 @@ export default function NewsletterSection() {
       </div>
 
       {/* Right content */}
-      <div className="flex flex-col gap-4 w-full md:w-auto">
+      <div className="flex flex-col gap-4 mx-auto w-[70%] md:w-auto">
         <div className="flex">
           <input
             type="email"

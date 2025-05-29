@@ -5,30 +5,52 @@ import Rating from "@mui/material/Rating";
 import { callPrivateApi } from "@/libs/callApis";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-const AddReviewForm = () => {
+import { useRouter } from "next/navigation";
+import { getToken } from "@/libs/Token";
+const AddReviewForm = ({ id }) => {
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [token, setToken] = useState(null);
 
+  useEffect(() => {
+    const t = getToken();
+    setToken(t);
+  }, []);
+  const user = JSON.parse(localStorage.getItem("user"));
+  console.log("user in add review form", user);
+  const router = useRouter();
   const handleSubmit = async (e) => {
     e.preventDefault();
+    t;
     setLoading(true);
-    const data = {
-      comment,
-      rating,
-    };
+    if (user) {
+      const data = {
+        comment,
+        rating,
+        userId: user.id,
+      };
 
-    try {
-      const response = await callPrivateApi(`/review`, "POST", data);
-      console.log("res in api", response);
+      try {
+        const response = await callPrivateApi(
+          `/review/${id}`,
+          "POST",
+          data,
+          token
+        );
+        console.log("res in api", response);
 
-      toast.success(response.message || "Review update successfully");
-      setComment("");
-      setRating(0);
-    } catch (err) {
-      toast.error(err.message || "Failed to submit review.");
-    } finally {
-      setLoading(false);
+        toast.success(response.message || "Review update successfully");
+        setComment("");
+        setRating(0);
+      } catch (err) {
+        toast.error(err.message || "Failed to submit review.");
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      toast.warning("Login firstly");
+      router.push("/contact/login");
     }
   };
 

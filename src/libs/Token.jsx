@@ -1,11 +1,11 @@
 "use client";
 
-export function getToken() {
+export const getToken = () => {
   if (typeof window !== "undefined") {
     return localStorage.getItem("token");
   }
-  return null;
-}
+  return null; // Or throw error / handle fallback
+};
 
 export function user() {
   if (typeof window !== "undefined") {

@@ -1,7 +1,9 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { callPrivateApi } from "@/libs/CallApis";
+import { getToken, user } from "@/libs/Token";
 export default function Success() {
   const router = useRouter();
 
@@ -15,6 +17,29 @@ export default function Success() {
     };
     verify();
   }, [router.query]);
+  const user = JSON.parse(localStorage.getItem("user")) || null;
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    const t = getToken();
+    setToken(t);
+  }, []);
+  useEffect(() => {
+    const deleteCartItems = async () => {
+      try {
+        const res = await callPrivateApi(
+          `/cart/delete-all/${user.id}`,
+          "DELETE",
+          undefined,
+          token
+        );
+        console.log("res in sucess", res);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    deleteCartItems;
+  }, []);
 
   return (
     <div className="mt-20 flex flex-col items-center justify-center p-6">

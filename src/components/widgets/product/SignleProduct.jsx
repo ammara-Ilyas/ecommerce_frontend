@@ -4,6 +4,7 @@ import ProductDetail from "./Productdeatil";
 import ProductAdditionalDetail from "./AdditionalDetail";
 import { CircularProgress } from "@mui/material";
 import { callPublicApi } from "@/libs/CallApis";
+import ProductDetailsSkeleton from "./ProductSkeleton";
 
 const SignleProduct = ({ productId }) => {
   console.log("productId", productId);
@@ -13,6 +14,8 @@ const SignleProduct = ({ productId }) => {
     const fetchProduct = async () => {
       try {
         const res = await callPublicApi(`/product/${productId}`, "GET");
+        console.log("res in single product", res);
+
         setProduct(res.product);
       } catch (err) {
         console.error("Error fetching product:", err);
@@ -24,7 +27,7 @@ const SignleProduct = ({ productId }) => {
     fetchProduct();
   }, [productId]);
   console.log("product", product);
-  if (loading) return <CircularProgress />;
+  if (loading) return <ProductDetailsSkeleton />;
   if (!product)
     return (
       <div className="ml-16 my-10 text-2xl font-semibold">

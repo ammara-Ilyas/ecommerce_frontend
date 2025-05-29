@@ -2,6 +2,7 @@
 
 import { Star, StarBorder } from "@mui/icons-material";
 import { format } from "date-fns";
+import { useEffect, useState } from "react";
 
 const reviews = [
   {
@@ -30,7 +31,23 @@ const reviews = [
   },
 ];
 
-const ReviewList = () => {
+const ReviewList = ({ id }) => {
+  const [reviews, setReviews] = useState([]);
+  useEffect(() => {
+    const fetchAllReviews = async () => {
+      try {
+        const response = await callPublicApi(`/reviews/${id}`, "GET");
+        console.log("res ", response);
+
+        setReviews(response.reviews);
+      } catch (error) {
+        toast.error("Error fetching reviews:" || error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchAllReviews();
+  }, [id]);
   return (
     <div className="bg-purple-50 p-6 rounded-md">
       <h2 className="text-lg font-semibold mb-4 text-gray-800">

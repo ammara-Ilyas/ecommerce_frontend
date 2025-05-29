@@ -9,6 +9,7 @@ export default {
     extend: {
       screens: {
         xs: "400px",
+        mxl: "800px",
       },
       colors: {
         background: "var(--background)",

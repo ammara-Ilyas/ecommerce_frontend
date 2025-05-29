@@ -41,7 +41,7 @@ const ShopWithUs = () => {
   ];
 
   return (
-    <div className="flex flex-wrap w-[95%] py-5 mt-5  gap-4 mx-auto items-center justify-center">
+    <div className="flex flex-wrap w-[95%] py-5 mt-5  gap-2 xl:gap-4 mx-auto items-center justify-center">
       {shop &&
         shop.map((item, i) => (
           <div
@@ -58,9 +58,6 @@ const ShopWithUs = () => {
             </div>
           </div>
         ))}
-      <div></div>
-      <div></div>
-      <div></div>
     </div>
   );
 };

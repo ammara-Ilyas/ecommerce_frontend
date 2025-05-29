@@ -98,6 +98,8 @@ const Navbar = () => {
       setUser(storedUser ? JSON.parse(storedUser) : null);
     }
   }, []);
+  console.log("user in nav", user);
+
   return (
     <>
       {/* Overlay for sidebar */}
@@ -203,7 +205,12 @@ const Navbar = () => {
                     ))}
                     {!user ? (
                       <li className="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 cursor-pointer transition-all text-sm text-gray-800">
-                        <FaUser size={20} className="text-gray-700" /> Login
+                        <Link
+                          className="flex items-center gap-3"
+                          href="/contact/login"
+                        >
+                          <FaUser size={20} className="text-gray-700" /> Login
+                        </Link>
                       </li>
                     ) : (
                       <li

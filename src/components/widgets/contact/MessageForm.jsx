@@ -1,6 +1,6 @@
 "use client";
 import { callPrivateApi } from "@/libs/CallApis";
-import { user } from "@/libs/Token";
+import { getToken, user } from "@/libs/Token";
 import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 export default function ContactForm() {
@@ -10,7 +10,12 @@ export default function ContactForm() {
     message: "",
   });
   const [loading, setLoading] = useState(false);
+  const [token, setToken] = useState(null);
 
+  useEffect(() => {
+    const t = getToken();
+    setToken(t);
+  }, []);
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -21,7 +26,7 @@ export default function ContactForm() {
     console.log("formdata", formData);
     if (user) {
       try {
-        const res = await callPrivateApi("/contact", "POST", formData);
+        const res = await callPrivateApi("/contact", "POST", formData, token);
 
         toast.success(res.message || "Message sent successfully!");
         setFormData({ name: "", email: "", message: "" });
