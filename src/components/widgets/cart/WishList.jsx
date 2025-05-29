@@ -8,7 +8,6 @@ import { useSelector, useDispatch } from "react-redux";
 import Image from "next/image";
 import { callPrivateApi } from "@/libs/CallApis";
 import { setWishList } from "@/redux/silice/WishListSlice";
-import { user } from "@/libs/Token";
 import CartSkeleton from "@/components/miniWidgets/CartSkeleton";
 const WishList = () => {
   const dispatch = useDispatch();
