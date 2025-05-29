@@ -14,13 +14,13 @@ const FeaturedProducts = () => {
 
   const router = useRouter();
   const products = useSelector((state) => state.product.products);
-  console.log("products", products);
+  // console.log("products", products);
   const [popularProducts, setPopularProducts] = useState([]);
   useEffect(() => {
     // setPopularProducts(products.filter((item) => item.ispopularProducts == false));
     setPopularProducts(products);
   }, [products]);
-  console.log("new arrival", popularProducts);
+  // console.log("new arrival", popularProducts);
 
   const responsive = {
     desktop: {

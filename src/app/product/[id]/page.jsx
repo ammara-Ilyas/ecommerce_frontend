@@ -6,7 +6,6 @@ export const metadata = {
 };
 const page = async ({ params }) => {
   const { id } = await params;
-  console.log("id", id);
 
   return (
     <div>

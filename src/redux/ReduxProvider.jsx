@@ -20,7 +20,7 @@ function DataInitializer({ categories, product, banners, children }) {
     setToken(t);
   }, []);
   const user = JSON.parse(localStorage.getItem("user"));
-  console.log("user in redux", user);
+  // console.log("user in redux", user);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -32,9 +32,9 @@ function DataInitializer({ categories, product, banners, children }) {
           undefined,
           token
         );
-        console.log("res in cartRes list ", cartRes);
+        // console.log("res in cartRes list ", cartRes);
         if (cartRes) {
-          console.log("cartItem data in Redux Provider", cartRes.cartItems);
+          // console.log("cartItem data in Redux Provider", cartRes.cartItems);
           dispatch(setCartItems(cartRes.cartItems));
           const totalPriceAllProducts = cartRes.cartItems.reduce(
             (acc, priceItem) => {
@@ -42,7 +42,7 @@ function DataInitializer({ categories, product, banners, children }) {
             },
             0
           );
-          console.log("totalPriceAllProducts in redux", totalPriceAllProducts);
+          // console.log("totalPriceAllProducts in redux", totalPriceAllProducts);
           dispatch(setTotalPrice(totalPriceAllProducts));
         }
       } catch (error) {
@@ -55,10 +55,10 @@ function DataInitializer({ categories, product, banners, children }) {
           undefined,
           token
         );
-        console.log("res in wishlistRes list ", wishlistRes);
+        // console.log("res in wishlistRes list ", wishlistRes);
 
         if (wishlistRes) {
-          console.log("wishlist data in Redux Provider", wishlistRes.wishlist);
+          // console.log("wishlist data in Redux Provider", wishlistRes.wishlist);
           dispatch(setWishList(wishlistRes.wishlist));
         }
       } catch (error) {
@@ -69,16 +69,16 @@ function DataInitializer({ categories, product, banners, children }) {
   }, [user]);
   useEffect(() => {
     if (categories) {
-      console.log("categories data in Redux Provider", categories.categories);
+      // console.log("categories data in Redux Provider", categories.categories);
       dispatch(setCategories(categories.categories));
     }
     if (product) {
-      console.log("product data in Redux Provider", product.products);
+      // console.log("product data in Redux Provider", product.products);
       dispatch(setProducts(product.products));
       dispatch(setFilteredProducts(product.products));
     }
     if (banners) {
-      console.log("banners data in Redux Provider", banners.banners);
+      // console.log("banners data in Redux Provider", banners.banners);
       dispatch(setBanners(banners.banners));
     }
   }, []);

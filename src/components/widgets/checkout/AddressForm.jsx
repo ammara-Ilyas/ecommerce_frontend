@@ -30,13 +30,13 @@ export default function AddressForm() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  console.log("user in address", user);
+  // console.log("user in address", user);
 
-  console.log("cart item", cartItem);
+  // console.log("cart item", cartItem);
   const onSubmit = async (data) => {
     setLoading(true);
     // e.preventDefault();
-    console.log("data in checkout", data);
+    // console.log("data in checkout", data);
 
     try {
       const fullName = `${data.firstName} ${data.lastName}`;
@@ -59,7 +59,7 @@ export default function AddressForm() {
         "POST",
         payload
       );
-      console.log("res in address", res);
+      // console.log("res in address", res);
 
       if (res.url) {
         window.location.href = res.url;

@@ -5,7 +5,7 @@ import { Button, CircularProgress } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
-import { callPublicApi } from "@/libs/CallApis";
+import { callPublicApi } from "@/libs/CcallApis";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -42,7 +42,7 @@ export default function OtpForm() {
       const res = await callPublicApi("/auth/resend-otp", "POST", {
         email: email,
       });
-      console.log("res in resend", res);
+      // console.log("res in resend", res);
       toast.success(res.message);
     } catch (error) {
       console.log(error?.message);
@@ -58,7 +58,7 @@ export default function OtpForm() {
       toast.error("Please enter a 6-digit OTP.");
       return;
     }
-    console.log("email", email, fullOtp);
+    // console.log("email", email, fullOtp);
 
     setLoading(true);
     try {

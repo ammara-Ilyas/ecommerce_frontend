@@ -13,8 +13,8 @@ export default function Review() {
   const paymentInfo = useSelector((state) => state.checkout.paymentInfo);
   const [addresses, setAddresses] = useState([]);
   const [payments, setPayments] = useState([]);
-  console.log("shipping info", shippingInfo);
-  console.log("paymentInfo info", paymentInfo);
+  // console.log("shipping info", shippingInfo);
+  // console.log("paymentInfo info", paymentInfo);
   useEffect(() => {
     setAddresses([
       shippingInfo.address1,

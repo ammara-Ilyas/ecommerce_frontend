@@ -37,7 +37,7 @@ export default function CheckoutPage() {
         "POST",
         payload
       );
-      console.log("data", data);
+      // console.log("data", data);
       if (data.url) {
         // Redirect user to Stripe Checkout
         window.location.href = data.url;

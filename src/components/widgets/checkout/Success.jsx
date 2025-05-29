@@ -12,7 +12,7 @@ export default function Success() {
       const { session_id } = router.query;
       if (session_id) {
         const res = await fetch(`/api/verify-payment?session_id=${session_id}`);
-        console.log("res", res);
+        // console.log("res", res);
       }
     };
     verify();
@@ -33,7 +33,7 @@ export default function Success() {
           undefined,
           token
         );
-        console.log("res in sucess", res);
+        // console.log("res in sucess", res);
       } catch (error) {
         console.error(error);
       }

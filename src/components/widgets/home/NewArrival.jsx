@@ -81,13 +81,13 @@ import { Heading, SeeAllButton } from "@/components/miniWidgets/Button";
 const NewArrival = () => {
   const router = useRouter();
   const products = useSelector((state) => state.product.products);
-  console.log("products", products);
+  // console.log("products", products);
   const [newArrival, setNewArrival] = useState([]);
   useEffect(() => {
     // setNewArrival(products.filter((item) => item.isNewArrival == false));
     setNewArrival(products);
   }, [products]);
-  console.log("new arrival", newArrival);
+  // console.log("new arrival", newArrival);
   const handleNavigate = () => {
     router.push("product");
   };

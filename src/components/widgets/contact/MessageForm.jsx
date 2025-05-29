@@ -23,7 +23,7 @@ export default function ContactForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    console.log("formdata", formData);
+    // console.log("formdata", formData);
     if (user) {
       try {
         const res = await callPrivateApi("/contact", "POST", formData, token);

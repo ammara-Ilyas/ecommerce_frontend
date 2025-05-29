@@ -20,7 +20,7 @@ const WishList = () => {
       setLoading(true);
       try {
         const res = await callPrivateApi(`/wish/${user.id}`, "GET");
-        console.log("res in wishlist", res);
+        // console.log("res in wishlist", res);
         setWishListItems(res.wishlist);
         dispatch(setWishList(res.wishlist));
         // console.log("message", res.message);
@@ -32,17 +32,17 @@ const WishList = () => {
     };
     fetchCartItems();
   }, []);
-  console.log("wishlist items", wishListItems);
+  // console.log("wishlist items", wishListItems);
 
   const handleDelete = async (id) => {
-    console.log("id in del", id);
+    // console.log("id in del", id);
 
     setLoading(true);
     try {
       const res = await callPrivateApi(`/wish/${id}`, "DELETE");
-      console.log("res in  wishlist item delete ", res);
+      // console.log("res in  wishlist item delete ", res);
       const updated = wishListItems.filter((item) => item._id !== id);
-      console.log("updated", updated);
+      // console.log("updated", updated);
       setWishListItems(updated);
       dispatch(setWishList(updated));
       toast.success(res.message || " wishlist item deleted successfully");

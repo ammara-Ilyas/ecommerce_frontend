@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 const BannerSlider = () => {
   const carouselRef = useRef(null);
   const banners = useSelector((state) => state.product.banners);
-  console.log("bannerssss", banners);
+  // console.log("bannerssss", banners);
 
   const responsive = {
     desktop: {

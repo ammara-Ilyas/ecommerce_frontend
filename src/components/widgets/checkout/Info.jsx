@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 export default function OrderSummary() {
   const totalPrice = useSelector((state) => state.cart.totalPrice);
   const cartItem = useSelector((state) => state.cart.cartItems);
-  console.log("total price in checkout", totalPrice);
+  // console.log("total price in checkout", totalPrice);
 
   return (
     <Card className="  px-2 h-full ">

@@ -6,8 +6,8 @@ const HOSTNAME = "https://ecommerce-apis-hl5w.onrender.com/api";
 export const callPrivateApi = async (endpoint, method, payload, token) => {
   // const token = getToken();
 
-  console.log("data in api call", endpoint, method, payload);
-  console.log("token in private", token);
+  // console.log("data in api call", endpoint, method, payload);
+  // console.log("token in private", token);
 
   const headers = {
     Accept: "application/json",
@@ -43,7 +43,7 @@ export const callPrivateApi = async (endpoint, method, payload, token) => {
 };
 
 export const callPublicApi = async (endpoint, method, payload) => {
-  console.log("data in api call", endpoint, method, payload);
+  // console.log("data in api call", endpoint, method, payload);
 
   const headers = {
     Accept: "application/json",
@@ -58,11 +58,11 @@ export const callPublicApi = async (endpoint, method, payload) => {
       headers,
       body: method !== "GET" ? body : undefined,
     });
-    console.log("response in public apis", response);
+    // console.log("response in public apis", response);
 
     if (!response.ok) {
       const errorData = await response.json();
-      console.log("error in public apis", errorData);
+      // console.log("error in public apis", errorData);
 
       throw errorData;
     }

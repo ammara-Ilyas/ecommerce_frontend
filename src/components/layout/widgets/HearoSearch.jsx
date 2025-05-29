@@ -2,12 +2,14 @@
 import React, { useState } from "react";
 import { FaPhoneAlt } from "react-icons/fa";
 import Button from "@/components/miniWidgets/Button";
+import { useRouter } from "next/navigation";
 
 const HeroSearch = () => {
+  const router = useRouter();
   const [search, setSearch] = useState("");
 
   const handleClick = () => {
-    console.log("search", search);
+    router.push("/product");
   };
 
   return (

@@ -51,7 +51,7 @@ import { Heading } from "@/components/miniWidgets/Button";
 // ];
 const CategoriesSlider = () => {
   const categories = useSelector((state) => state.product.categories);
-  console.log("catego", categories);
+  // console.log("catego", categories);
 
   const carouselRef = useRef(null);
 

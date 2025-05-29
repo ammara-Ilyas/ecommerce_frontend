@@ -41,7 +41,7 @@ export default function ProductCard({ product }) {
           quantity: "1",
         };
 
-        console.log("payload product JSON", payload);
+        // console.log("payload product JSON", payload);
 
         try {
           const res = await callPrivateApi(
@@ -50,7 +50,7 @@ export default function ProductCard({ product }) {
             payload,
             token
           );
-          console.log("res in wish", res, "status", res.status);
+          // console.log("res in wish", res, "status", res.status);
           toast.success(res.message);
         } catch (error) {
           toast.error(error.message || "Failed to add in cart");
@@ -80,7 +80,7 @@ export default function ProductCard({ product }) {
           quantity: "1",
         };
 
-        console.log("payload product JSON", payload);
+        // console.log("payload product JSON", payload);
 
         try {
           const res = await callPrivateApi(
@@ -89,7 +89,7 @@ export default function ProductCard({ product }) {
             payload,
             token
           );
-          console.log("res in wish", res, "status", res.status);
+          // console.log("res in wish", res, "status", res.status);
 
           toast.success(res.message);
         } catch (error) {

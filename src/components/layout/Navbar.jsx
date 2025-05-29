@@ -98,7 +98,6 @@ const Navbar = () => {
       setUser(storedUser ? JSON.parse(storedUser) : null);
     }
   }, []);
-  console.log("user in nav", user);
 
   return (
     <>

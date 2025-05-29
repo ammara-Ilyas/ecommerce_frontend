@@ -32,21 +32,18 @@ const fetchData = async () => {
 
   try {
     productRes = await callPublicApi("/products", "GET");
-    // console.log("res in productRes list ", productRes);
   } catch (error) {
     console.error("Product fetch failed:", error);
   }
 
   try {
     CategoriesRes = await callPublicApi("/category", "GET");
-    // console.log("res in CategoriesRes list ", CategoriesRes);
   } catch (error) {
     console.error("Categories fetch failed:", error);
   }
 
   try {
     bannerRes = await callPublicApi("/banners", "GET");
-    // console.log("res in bannerRes list ", bannerRes);
   } catch (error) {
     console.error("Banner fetch failed:", error);
   }
@@ -56,7 +53,6 @@ const fetchData = async () => {
 
 const { productRes, CategoriesRes, bannerRes, cartRes, wishlistRes } =
   await fetchData();
-// console.log("product", productRes, "cate", CategoriesRes, bannerRes);
 
 export default function RootLayout({ children }) {
   return (

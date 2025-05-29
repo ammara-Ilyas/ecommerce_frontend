@@ -42,7 +42,7 @@ const ChangePassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true); // Start loading spinner
-    console.log("form data", formData);
+    // console.log("form data", formData);
 
     if (
       !formData.oldPassword ||
@@ -65,7 +65,7 @@ const ChangePassword = () => {
     };
     try {
       const res = await callPrivateApi("/auth/change-password", "POST", data);
-      console.log("res in Change ", res);
+      // console.log("res in Change ", res);
 
       toast.success(res.message || "Password changed successfully");
       setFormData({
@@ -74,7 +74,7 @@ const ChangePassword = () => {
         confirmPassword: "",
       });
     } catch (error) {
-      console.log("error", error);
+      // console.log("error", error);
       toast.error(error?.message || "Something went wrong");
     } finally {
       setLoading(false);

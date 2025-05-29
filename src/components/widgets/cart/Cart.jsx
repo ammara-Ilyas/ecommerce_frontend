@@ -18,17 +18,17 @@ const Cart = () => {
   const totalPrice = useSelector((state) => state.cart.totalPrice);
   const [loading, setLoading] = useState(false);
   const user = JSON.parse(localStorage.getItem("user") || null);
-  console.log("user and user id", user, user.id);
-  console.log("totalPrice in cart", totalPrice);
+  // console.log("user and user id", user, user.id);
+  // console.log("totalPrice in cart", totalPrice);
 
   useEffect(() => {
     const fetchCartItems = async () => {
       setLoading(true);
       try {
         const res = await callPrivateApi(`/cart/${user.id}`, "GET");
-        console.log("res in cart", res);
+        // console.log("res in cart", res);
         dispatch(setCartItems(res.cartItems));
-        console.log("message", res.message);
+        // console.log("message", res.message);
         if (res.status == 200 || res.status == 201) {
         }
       } catch (error) {
@@ -39,34 +39,34 @@ const Cart = () => {
     };
     fetchCartItems();
   }, []);
-  console.log("cart items", cartItem);
+  // console.log("cart items", cartItem);
 
   // console.log("cart", cartItems);
   useEffect(() => {
     const totalPriceAllProducts = cartItem.reduce((acc, priceItem) => {
       return acc + priceItem.quantity * priceItem.product.newPrice;
     }, 0);
-    console.log("item", totalPriceAllProducts);
+    // console.log("item", totalPriceAllProducts);
     dispatch(setTotalPrice(totalPriceAllProducts));
   }, [cartItem]);
   const handleProductItemInc = async (id) => {
-    console.log(id);
+    // console.log(id);
     dispatch(increCartItems(id));
     try {
       const res = await callPrivateApi(`/cart/increase/${id}`, "PATCH");
-      console.log("res in cart increment", res);
+      // console.log("res in cart increment", res);
 
-      console.log("message", res.message);
+      // console.log("message", res.message);
     } catch (error) {
-      console.log("error", error.message);
+      // console.log("error", error.message);
     }
   };
   const handleProductItemDec = async (id) => {
     dispatch(decreCartItems(id));
-    console.log(id);
+    // console.log(id);
     try {
       const res = await callPrivateApi(`/cart/decrease/${id}`, "PATCH");
-      console.log("res in cart decrement", res);
+      // console.log("res in cart decrement", res);
     } catch (error) {
       console.log("error", error.message);
     } finally {
@@ -74,14 +74,14 @@ const Cart = () => {
   };
 
   const handleDelete = async (id) => {
-    console.log("id in del", id);
+    // console.log("id in del", id);
 
     setLoading(true);
     try {
       const res = await callPrivateApi(`/cart/${id}`, "DELETE");
-      console.log("res in  cart item delete ", res);
+      // console.log("res in  cart item delete ", res);
       const updated = cartItem.filter((item) => item._id !== id);
-      console.log("updated", updated);
+      // console.log("updated", updated);
       // setCartItem(updated);
       dispatch(setCartItems(updated));
       toast.success(res.message || " cart item deleted successfully");
