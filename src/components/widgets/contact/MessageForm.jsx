@@ -1,9 +1,22 @@
 "use client";
 import { callPrivateApi } from "@/libs/CallApis";
 import { getToken } from "@/libs/Token";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 export default function ContactForm() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const localUser = localStorage.getItem("user");
+      if (localUser) {
+        setUser(JSON.parse(localUser));
+      } else {
+        setUser(null);
+      }
+    }
+  }, []);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -11,6 +24,15 @@ export default function ContactForm() {
   });
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState(null);
+  useEffect(() => {
+    if (user) {
+      setFormData((prev) => ({
+        ...prev,
+        name: user.name,
+        email: user.email,
+      }));
+    }
+  }, [user]);
 
   useEffect(() => {
     const t = getToken();
@@ -19,9 +41,14 @@ export default function ContactForm() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
+  const router = useRouter();
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!user) {
+      toast.warning("Firstly signin");
+      router.push("/contact/login");
+      return;
+    }
     setLoading(true);
     // console.log("formdata", formData);
     if (user) {
@@ -53,6 +80,7 @@ export default function ContactForm() {
             value={formData.name}
             onChange={handleChange}
             required
+            disabled={!!user}
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
@@ -65,6 +93,7 @@ export default function ContactForm() {
             value={formData.email}
             onChange={handleChange}
             required
+            disabled={!!user}
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>

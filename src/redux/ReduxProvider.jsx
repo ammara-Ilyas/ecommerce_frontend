@@ -14,13 +14,18 @@ import { callPrivateApi } from "@/libs/CallApis";
 import { getToken } from "@/libs/Token";
 function DataInitializer({ categories, product, banners, children }) {
   const [token, setToken] = useState(null);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const t = getToken();
     setToken(t);
+    if (typeof window !== "undefined") {
+      const localUser = localStorage.getItem("user");
+      if (localUser) {
+        setUser(JSON.parse(localUser));
+      }
+    }
   }, []);
-  const user = JSON.parse(localStorage.getItem("user"));
-  // console.log("user in redux", user);
 
   const dispatch = useDispatch();
   useEffect(() => {

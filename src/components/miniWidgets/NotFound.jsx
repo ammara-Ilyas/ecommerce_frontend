@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-const NotFound = () => {
+const NotFoundComponent = () => {
   const router = useRouter();
   const handleBackward = () => {
     router.push("/");
@@ -30,4 +30,4 @@ const NotFound = () => {
   );
 };
 
-export default NotFound;
+export default NotFoundComponent;

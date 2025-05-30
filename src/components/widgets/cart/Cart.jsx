@@ -23,6 +23,8 @@ const Cart = () => {
 
   useEffect(() => {
     const fetchCartItems = async () => {
+      if (!user) return;
+
       setLoading(true);
       try {
         const res = await callPrivateApi(`/cart/${user.id}`, "GET");

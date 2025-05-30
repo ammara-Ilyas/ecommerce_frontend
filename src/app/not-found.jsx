@@ -1,12 +1,12 @@
-import NotFound from "@/components/miniWidgets/NotFound";
+import NotFoundComponent from "@/components/miniWidgets/NotFound";
 import React from "react";
 
-let NotFoundPage = () => {
+let NotFound = () => {
   return (
     <div>
-      <NotFound />
+      <NotFoundComponent />
     </div>
   );
 };
 
-export default NotFoundPage;
+export default NotFound;
