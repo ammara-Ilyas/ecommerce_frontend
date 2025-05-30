@@ -7,6 +7,8 @@ const OrderTable = () => {
   const [orders, setOrders] = useState([]);
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [cancelOrderState, setCancelOrderState] = useState(null);
+
   const fetchAllOrders = async () => {
     setLoading(true);
     try {
@@ -22,6 +24,16 @@ const OrderTable = () => {
   useEffect(() => {
     fetchAllOrders();
   }, []);
+  const handleCancel = (order) => {
+    if (order.status === "PENDING") {
+      setCancelOrderState(order);
+    }
+  };
+
+  const confirmCancel = () => {
+    dispatch(cancelOrder(cancelOrderState.id));
+    setCancelOrderState(null);
+  };
   return (
     <div className="p-4 sm:p-6 md:p-8">
       <Heading text="Total Orders" />
