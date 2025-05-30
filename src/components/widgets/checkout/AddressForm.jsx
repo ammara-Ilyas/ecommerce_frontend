@@ -23,7 +23,6 @@ const FormGrid = styled(Grid)(() => ({
 export default function AddressForm() {
   const [loading, setLoading] = useState(false);
   const cartItem = useSelector((state) => state.cart.cartItems);
-  const totalPrice = useSelector((state) => state.cart.totalPrice);
   const [user, setUser] = useState(null);
 
   useEffect(() => {

@@ -5,15 +5,29 @@ import Image from "next/image";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const AccountForm = () => {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const [user, setUser] = useState(null);
   const [formData, setFormData] = useState({
-    name: user?.name || "",
-    email: user?.email || "",
-    phone: user?.phone || "",
-    // img: user?.img || "",
+    name: "",
+    email: "",
+    phone: "",
   });
-  const [image, setImage] = useState(user?.img || null);
+  const [image, setImage] = useState(null);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const localUser = localStorage.getItem("user");
+      if (localUser) {
+        const parsedUser = JSON.parse(localUser);
+        setUser(parsedUser);
+        setFormData({
+          name: parsedUser.name || "",
+          email: parsedUser.email || "",
+          phone: parsedUser.phone || "",
+        });
+        setImage(parsedUser.img || null);
+      }
+    }
+  }, []);
   // Handle form field changes
   const handleForm = (e) => {
     const { name, value } = e.target;
