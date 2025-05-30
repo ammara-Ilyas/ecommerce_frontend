@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Grid,
   OutlinedInput,
@@ -24,7 +24,16 @@ export default function AddressForm() {
   const [loading, setLoading] = useState(false);
   const cartItem = useSelector((state) => state.cart.cartItems);
   const totalPrice = useSelector((state) => state.cart.totalPrice);
-  const user = JSON.parse(localStorage.getItem("user")) || null;
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const localUser = localStorage.getItem("user");
+      if (localUser) {
+        setUser(JSON.parse(localUser));
+      }
+    }
+  }, []);
   const {
     register,
     handleSubmit,
