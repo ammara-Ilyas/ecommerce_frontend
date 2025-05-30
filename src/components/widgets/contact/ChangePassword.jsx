@@ -84,8 +84,8 @@ const ChangePassword = () => {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <div className="bg-white p-6 mb-6 w-[95%]">
-          <div className="grid grid-cols-3 gap-4">
+        <div className="bg-white p-16 px-20 mb-6 w-[95%]">
+          <div className="grid mb-5 grid-cols-3 gap-4">
             {/* Old Password Field */}
             <div className="flex flex-col">
               <TextField
@@ -183,7 +183,6 @@ const ChangePassword = () => {
           </Button>
         </div>
       </form>
-      {/* ToastContainer for displaying toast notifications */}
       <ToastContainer />
     </>
   );

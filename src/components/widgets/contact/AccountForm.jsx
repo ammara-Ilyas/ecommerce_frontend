@@ -123,8 +123,8 @@ const AccountForm = () => {
         </div>
 
         {/* Form Fields Section */}
-        <div className="bg-white p-6 w-[65%]  mb-6">
-          <div className="grid grid-cols-2 gap-4">
+        <div className="bg-white p-6 w-[65%]  ">
+          <div className="grid grid-cols-2 gap-4 mb-10 border-2">
             <div className="flex flex-col">
               <TextField
                 value={formData.name}
