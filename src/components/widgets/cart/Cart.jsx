@@ -100,12 +100,11 @@ const Cart = () => {
       ) : cartItem.length === 0 ? (
         <div className="text-gray-600 min-h-20 flex text-center text-2xl flex-col gap-10 font-bold  ">
           <h2>Your cart is empty.</h2>
-          <Link href="/product">
-            {" "}
-            <Button
-              text="Continue shopping"
-              tailwindClasees="p-3 rounded-md active:bg-blue-700"
-            />
+          <Link
+            href="/product"
+            className="p-3 rounded-md active:bg-blue-700 bg-blue-600 text-white"
+          >
+            Continue Shopping
           </Link>
         </div>
       ) : (
@@ -162,7 +161,7 @@ const Cart = () => {
             </p>
             <Link
               href="/checkout"
-              className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700"
+              className="bg-blue-600 text-center text-white px-6 py-2 rounded-md hover:bg-blue-700"
             >
               Checkout
             </Link>

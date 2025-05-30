@@ -12,7 +12,7 @@ const Wrapper = ({ children }) => {
   const is404Page =
     typeof window !== "undefined" && document.title.includes("404");
   const hideHeroPaths = ["/contact/login", "/contact/register", "/otp"];
-  const protectedPaths = ["/cart", "/wishlist"];
+  const protectedPaths = ["/cart", "/wishlist", "/contact/account"];
 
   const showHero = !hideHeroPaths.includes(pathname) && !is404Page;
   const isProtected = protectedPaths.includes(pathname);

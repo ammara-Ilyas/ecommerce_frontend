@@ -89,7 +89,6 @@ const Navbar = () => {
     setUser(null);
     router.push("/");
   };
-  // Load user from localStorage on client only
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedUser = localStorage.getItem("user");
