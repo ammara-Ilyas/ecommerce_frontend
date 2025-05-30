@@ -1,7 +1,8 @@
 "use client";
-import React, { useState } from "react";
-import { TextField, Button } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { TextField, Button, Avatar } from "@mui/material";
 import Image from "next/image";
+import { blue } from "@mui/material/colors";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const AccountForm = () => {
@@ -75,19 +76,21 @@ const AccountForm = () => {
         <div className="flex mt-10 w-[25%] justify-center ">
           {/* Circular Upload Container */}
           <div
-            className="relative w-36 h-36 rounded-full border-2 border-blue-500 overflow-hidden cursor-pointer hover:bg-blue-100 group"
+            className="relative w-36 h-36 rounded-full border-2  border-blue-500 overflow-hidden cursor-pointer hover:bg-blue-100 group"
             onClick={() => document.getElementById("fileInput").click()} // Click triggers file input
           >
             {/* Uploaded Image or Default Placeholder */}
             {image ? (
               <Image
                 src={image}
-                alt=""
+                alt="image"
                 className="w-full h-full object-cover"
+                width={144}
+                height={144}
               />
             ) : (
               <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                <span className="text-gray-500"></span>
+                <Avatar sx={{ bgcolor: blue[800] }}>A</Avatar>
               </div>
             )}
 
@@ -167,6 +170,7 @@ const AccountForm = () => {
           </Button>
         </div>
       </div>
+      <ToastContainer />
     </form>
   );
 };
