@@ -17,7 +17,16 @@ const Cart = () => {
   const cartItem = useSelector((state) => state.cart.cartItems);
   const totalPrice = useSelector((state) => state.cart.totalPrice);
   const [loading, setLoading] = useState(false);
-  const user = JSON.parse(localStorage.getItem("user") || null);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const localUser = localStorage.getItem("user");
+      if (localUser) {
+        setUser(JSON.parse(localUser));
+      }
+    }
+  }, []);
   // console.log("user and user id", user, user.id);
   // console.log("totalPrice in cart", totalPrice);
 
