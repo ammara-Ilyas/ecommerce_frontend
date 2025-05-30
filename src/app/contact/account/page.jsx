@@ -34,7 +34,7 @@ const Page = () => {
               CHANGE PASSWORD
             </button>
           </div>
-          {/* {activeTab === "edit" && <AccountForm />} */}
+          {activeTab === "edit" && <AccountForm />}
           {activeTab === "password" && (
             <div>
               <ChangePassword />

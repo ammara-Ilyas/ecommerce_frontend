@@ -101,7 +101,7 @@ const Navbar = () => {
       {/* Overlay for sidebar */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black border-4 w-full bg-opacity-40 z-40"
+          className="fixed inset-0 bg-black  w-full bg-opacity-40 z-40"
           onClick={() => setSidebarOpen(false)}
         />
       )}
@@ -149,7 +149,7 @@ const Navbar = () => {
                 <Link
                   href={item.link}
                   key={i}
-                  className="relative border-2 p-2 text-xl"
+                  className="relative  p-2 text-xl"
                 >
                   {item.icon}
                   <span className="absolute top-0 left-4 text-xs bg-red-600 text-white rounded-full px-1">
@@ -253,7 +253,7 @@ const Navbar = () => {
             <FaTimes />
           </button>
         </div>
-        <ul className="flex w-full flex-col border-4 gap-4">
+        <ul className="flex w-full flex-col  gap-4">
           {navlinks.map((item, i) => (
             <li key={i}>
               <Link
@@ -266,13 +266,9 @@ const Navbar = () => {
             </li>
           ))}
         </ul>
-        <div className="md:hidden border-2 relative  flex items-center space-x-2">
+        <div className="md:hidden  relative  flex items-center space-x-2">
           {cartIcons.map((item, i) => (
-            <Link
-              href={item.link}
-              key={i}
-              className="relative border-2 p-2 text-xl"
-            >
+            <Link href={item.link} key={i} className="relative  p-2 text-xl">
               {item.icon}
               <span className="absolute top-0 left-4 text-xs bg-red-600 text-white rounded-full px-1">
                 {item.num && item.num}

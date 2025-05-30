@@ -1,4 +1,5 @@
 const HOSTNAME = "https://ecommerce-apis-hl5w.onrender.com/api";
+// const HOSTNAME = "http://localhost:5000/api";
 // const getToken = () => {
 //   // For example, from localStorage:
 //   return localStorage.getItem("token");
