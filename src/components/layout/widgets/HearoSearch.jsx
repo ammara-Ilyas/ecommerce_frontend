@@ -16,17 +16,17 @@ const HeroSearch = () => {
     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 xl:gap-4 w-full">
       {/* Search Bar */}
       <div className="w-full h-[40px] md:w-[90%] lg:w-[70%] mx-0">
-        <div className="flex  border border-gray-300 rounded overflow-hidden w-full">
+        <div className="flex items-center justify-center border border-gray-300 rounded overflow-hidden w-full">
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="What do you need?"
-            className="flex-grow p-3 outline-none placeholder:text-sm text-sm sm:text-base"
+            className="flex-grow px-3 py-2 outline-none placeholder:text-sm text-sm sm:text-base"
           />
           <Button
             text="Search"
-            tailwindClasees="p-3 w-[35%] text-[10px] sm:text-sm md:text-xl border border-blue-600 sm:w-[30%] md:w-[25%] lg:w-[20%] active:bg-blue-700"
+            tailwindClasees="px-3 py-2 w-[35%] text-[10px] sm:text-sm md:text-xl border border-blue-600 sm:w-[30%] md:w-[25%] lg:w-[20%] active:bg-blue-700"
             handleClick={handleClick}
           />
         </div>
