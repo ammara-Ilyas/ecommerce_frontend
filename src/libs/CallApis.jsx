@@ -1,15 +1,7 @@
-const HOSTNAME = "https://ecommerce-apis-hl5w.onrender.com/api";
-// const HOSTNAME = "http://localhost:5000/api";
-// const getToken = () => {
-//   // For example, from localStorage:
-//   return localStorage.getItem("token");
-// }; // Function to make API calls using fetch
+// const HOSTNAME = "https://ecommerce-apis-hl5w.onrender.com/api";
+const HOSTNAME = "http://localhost:5000/api";
+
 export const callPrivateApi = async (endpoint, method, payload, token) => {
-  // const token = getToken();
-
-  // console.log("data in api call", endpoint, method, payload);
-  // console.log("token in private", token);
-
   const headers = {
     Accept: "application/json",
     Authorization: `Bearer ${token}`, // ✅ Correct way
@@ -21,7 +13,7 @@ export const callPrivateApi = async (endpoint, method, payload, token) => {
     headers["Content-Type"] = "application/json";
     body = JSON.stringify(payload);
   } else {
-    body = payload; // Let fetch set the headers automatically for FormData
+    body = payload;
   }
 
   try {

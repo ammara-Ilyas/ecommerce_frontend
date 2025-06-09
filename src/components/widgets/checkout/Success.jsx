@@ -10,14 +10,39 @@ export default function Success() {
   const router = useRouter();
   const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
+  const [isVerified, setIsVerified] = useState(null); // null: loading, true: success, false: failed
 
   useEffect(() => {
-    const session_id = new URLSearchParams(window.location.search).get(
-      "session_id"
-    );
-    if (session_id) {
-      fetch(`/api/verify-payment?session_id=${session_id}`);
-    }
+    const verifyPayment = async () => {
+      const session_id = new URLSearchParams(window.location.search).get(
+        "session_id"
+      );
+      if (session_id) {
+        try {
+          const res = await fetch(
+            `/api/verify-payment?session_id=${session_id}`
+          );
+          if (res.ok) {
+            const data = await res.json();
+            // Check your API response to confirm it’s a success
+            if (data.success) {
+              setIsVerified(true);
+            } else {
+              setIsVerified(false);
+            }
+          } else {
+            setIsVerified(false);
+          }
+        } catch (error) {
+          console.error("Error verifying payment:", error);
+          setIsVerified(false);
+        }
+      } else {
+        setIsVerified(false);
+      }
+    };
+
+    verifyPayment();
   }, []);
 
   useEffect(() => {
@@ -34,7 +59,7 @@ export default function Success() {
 
   useEffect(() => {
     const deleteCartItems = async () => {
-      if (user && token) {
+      if (user && token && isVerified) {
         try {
           await callPrivateApi(
             `/cart/delete-all/${user.id}`,
@@ -42,13 +67,28 @@ export default function Success() {
             undefined,
             token
           );
+          console.log("Cart items deleted after payment verification.");
         } catch (error) {
           console.error("Error deleting cart:", error);
         }
       }
     };
+
     deleteCartItems();
-  }, [user, token]);
+  }, [user, token, isVerified]);
+
+  if (isVerified === null) {
+    return <div className="mt-20 text-center">Verifying your payment...</div>;
+  }
+
+  if (isVerified === false) {
+    return (
+      <div className="mt-20 text-center text-red-600">
+        <h1 className="text-2xl font-bold">Payment Verification Failed</h1>
+        <p className="mt-2">Please contact support or try again.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="mt-20 flex flex-col items-center justify-center p-6">

@@ -1,8 +1,9 @@
 "use client";
 
 import { Heading } from "@/components/miniWidgets/Button";
+import { callPublicApi } from "@/libs/CallApis";
 import { useEffect, useState } from "react";
-
+import { format } from "date-fns";
 const OrderTable = () => {
   const [orders, setOrders] = useState([]);
   const [token, setToken] = useState(null);
@@ -11,6 +12,7 @@ const OrderTable = () => {
 
   const fetchAllOrders = async () => {
     setLoading(true);
+
     try {
       const res = await callPublicApi("/orders", "GET");
       console.log("res order", res);
@@ -42,7 +44,7 @@ const OrderTable = () => {
           <thead>
             <tr className="bg-blue-600 text-white text-left">
               <th className="p-2 sm:p-3">Order ID</th>
-              <th className="p-2 sm:p-3">Venue</th>
+              <th className="p-2 sm:p-3">Email</th>
               <th className="p-2 sm:p-3 hidden md:table-cell">Address</th>
               <th className="p-2 sm:p-3">Date</th>
               <th className="p-2 sm:p-3">Price</th>
@@ -52,16 +54,19 @@ const OrderTable = () => {
           </thead>
           <tbody>
             {orders.length == 0 ? (
-              <div className="flex items-center justify-center min-h-56">
+              <tr className="flex items-center justify-center min-h-56">
                 No Order found
-              </div>
+              </tr>
             ) : (
               orders.map((order) => (
-                <tr key={order?.id} className="border-t border-gray-300">
+                <tr
+                  key={order?._id + order?.userId}
+                  className="border-t border-gray-300"
+                >
                   <td className="p-2 sm:p-3 w-[150px] overflow-hidden whitespace-nowrap text-ellipsis ">
                     {order?._id}
                   </td>
-                  <td className="p-2 sm:p-3"></td>
+                  <td className="p-2 sm:p-3">{order?.userEmail}</td>
                   <td className="p-2 sm:p-3 hidden md:table-cell">
                     {order?.address}
                   </td>

@@ -15,6 +15,9 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { callPrivateApi } from "@/libs/CallApis";
 import { useSelector } from "react-redux";
+import OrderSummaryModal from "@/components/miniWidgets/OrderSummary";
+import StripePayment from "./StripePayment";
+import StripeWrapper from "./StripeWrapper";
 const FormGrid = styled(Grid)(() => ({
   display: "flex",
   flexDirection: "column",
@@ -22,9 +25,17 @@ const FormGrid = styled(Grid)(() => ({
 
 export default function AddressForm() {
   const [loading, setLoading] = useState(false);
+  const [showSummary, setShowSummary] = useState(false);
+  const [formData, setFormData] = useState(null);
+  const [clientSecret, setClientSecret] = useState("");
+  const [isCard, setIsCard] = useState(false);
+  const [user, setUser] = useState({});
   const cartItem = useSelector((state) => state.cart.cartItems);
-  const [user, setUser] = useState(null);
+  function getRandomAmount() {
+    return Math.floor(Math.random() * (100 - 10 + 1)) + 10;
+  }
 
+  const totalAmount = getRandomAmount();
   useEffect(() => {
     if (typeof window !== "undefined") {
       const localUser = localStorage.getItem("user");
@@ -40,11 +51,17 @@ export default function AddressForm() {
   } = useForm();
   // console.log("user in address", user);
 
-  // console.log("cart item", cartItem);
   const onSubmit = async (data) => {
+    console.log("data in submit", data);
+
+    setFormData(data);
+    setShowSummary(true);
+  };
+  const handleConfirm = async () => {
     setLoading(true);
-    // e.preventDefault();
-    // console.log("data in checkout", data);
+    setShowSummary(false);
+    setLoading(true);
+    const data = formData;
 
     try {
       const fullName = `${data.firstName} ${data.lastName}`;
@@ -67,10 +84,12 @@ export default function AddressForm() {
         "POST",
         payload
       );
-      // console.log("res in address", res);
+      console.log("res in address", res);
 
       if (res.url) {
-        window.location.href = res.url;
+        setTimeout(() => {
+          window.location.href = res.url;
+        }, 2000);
       } else {
         toast.error("Failed to create checkout session");
       }
@@ -167,11 +186,19 @@ export default function AddressForm() {
           variant="contained"
           color="primary"
           sx={{ mt: 4 }}
-          disabled={loading}
         >
-          {loading ? "Processing..." : "Place Order"}
+          Place Order{" "}
         </Button>
       </form>
+      <OrderSummaryModal
+        isOpen={showSummary}
+        onClose={() => setShowSummary(false)}
+        onConfirm={handleConfirm}
+        cartItems={cartItem}
+        total={totalAmount}
+        loading={loading}
+      />
+
       <ToastContainer />
     </>
   );

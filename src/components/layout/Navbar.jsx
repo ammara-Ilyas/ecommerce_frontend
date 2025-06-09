@@ -27,17 +27,14 @@ const navlinks = [
     name: "Product",
     link: "/product",
   },
-  {
-    name: "Blog",
-    link: "/blog",
-  },
+
   {
     name: "About",
     link: "/about",
   },
   {
-    name: "shop",
-    link: "shop/",
+    name: "Faqs",
+    link: "/faqs",
   },
   {
     name: "contact",

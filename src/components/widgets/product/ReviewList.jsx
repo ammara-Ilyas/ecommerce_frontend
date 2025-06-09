@@ -4,33 +4,6 @@ import { Star, StarBorder } from "@mui/icons-material";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
 
-const reviews = [
-  {
-    name: "Restu Muhammad",
-    date: "2025-04-13",
-    comment: "nice",
-    rating: 5,
-  },
-  {
-    name: "Virza Bahul",
-    date: "2025-04-13",
-    comment: "nice",
-    rating: 3.5,
-  },
-  {
-    name: "Muhammad Virza",
-    date: "2025-04-13",
-    comment: "nice",
-    rating: 4.2,
-  },
-  {
-    name: "Suhas Suryavanshi",
-    date: "2025-01-15",
-    comment: "Nice product",
-    rating: 1,
-  },
-];
-
 const ReviewList = ({ id }) => {
   const [reviews, setReviews] = useState([]);
   useEffect(() => {
