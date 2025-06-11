@@ -14,6 +14,16 @@ const WishList = () => {
   const carts = useSelector((state) => state.cart.cartItems);
   const [wishListItems, setWishListItems] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const localUser = localStorage.getItem("user");
+      if (localUser) {
+        setUser(JSON.parse(localUser));
+      }
+    }
+  }, []);
   useEffect(() => {
     const fetchCartItems = async () => {
       setLoading(true);
@@ -34,8 +44,6 @@ const WishList = () => {
   // console.log("wishlist items", wishListItems);
 
   const handleDelete = async (id) => {
-    // console.log("id in del", id);
-
     setLoading(true);
     try {
       const res = await callPrivateApi(`/wish/${id}`, "DELETE");

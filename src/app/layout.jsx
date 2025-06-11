@@ -10,6 +10,7 @@ import { callPrivateApi, callPublicApi } from "@/libs/CallApis";
 import Navbar from "@/components/layout/Navbar";
 import { ToastContainer } from "react-toastify";
 import Wrapper from "@/components/miniWidgets/Wrapper";
+import ProgressBarProviders from "@/components/miniWidgets/Progressbar";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -69,7 +70,7 @@ export default function RootLayout({ children }) {
           <Navbar />
           <Wrapper>
             {/* <Header /> */}
-            {children}
+            <ProgressBarProviders>{children}</ProgressBarProviders>
             {/* <NewsLatter /> */}
             <NewsletterSection />
             <ShopWithUs />
