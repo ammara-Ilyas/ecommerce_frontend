@@ -3,8 +3,9 @@ import FilterPanel from "@/components/widgets/product/FilterPanel";
 import SaleSlider from "@/components/widgets/product/Sliders";
 import React from "react";
 export const metadata = {
-  title: "Products",
-  description: "Product page in Shop You & Me",
+  title: "Products | Ecommerce",
+  description: "Browse our wide range of products including fashion, electronics, and more.",
+  keywords: "products, shop, ecommerce, fashion, electronics"
 };
 const page = () => {
   return (

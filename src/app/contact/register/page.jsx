@@ -7,7 +7,7 @@ export const metadata = {
 const Page = () => {
   return (
     <div
-      className=" -mt-24 h-[100vh]"
+      className="min-h-screen"
       style={{
         backgroundImage: "url('@l/assets/image/bg_signup.webp')'",
         backgroundSize: "cover",

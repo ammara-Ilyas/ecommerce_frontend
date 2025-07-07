@@ -1,8 +1,9 @@
 import React from "react";
 import FAQAccordion from "@/components/widgets/faqs/FaqQuestions";
 export const metadata = {
-  title: "Faqs",
-  description: "Faqs page of ecommerce dashboard",
+  title: "FAQs | Ecommerce Help Center",
+  description: "Frequently asked questions about shopping, shipping, returns, and more on our ecommerce platform.",
+  keywords: "faqs, help, support, returns, shipping, ecommerce questions"
 };
 const page = () => {
   return (

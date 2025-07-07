@@ -55,7 +55,9 @@ const Cart = () => {
   // console.log("cart", cartItems);
   useEffect(() => {
     const totalPriceAllProducts = cartItem.reduce((acc, priceItem) => {
-      return acc + priceItem.quantity * priceItem.product.newPrice;
+      // Add null checks to prevent errors
+      if (!priceItem?.product || !priceItem?.quantity) return acc;
+      return acc + priceItem.quantity * (priceItem.product.newPrice || 0);
     }, 0);
     // console.log("item", totalPriceAllProducts);
     dispatch(setTotalPrice(totalPriceAllProducts));
@@ -131,18 +133,18 @@ const Cart = () => {
                 >
                   <div className="flex items-center space-x-4">
                     <Image
-                      src={product?.product?.images[0]}
-                      alt={product?.product?.product}
+                      src={product?.product?.images?.[0] || "/images/dummy.png"}
+                      alt={product?.product?.product || "Product image"}
                       width={50}
                       height={50}
                       className="h-28 w-28 md:h-16 md:w-16 object-cover rounded"
                     />
                     <div>
                       <h2 className="text-lg font-bold">
-                        {product?.product?.product}
+                        {product?.product?.product || "Product Name"}
                       </h2>
                       <p className="text-gray-600 font-semibold">
-                        Price: ${product?.product?.newPrice}
+                        Price: ${product?.product?.newPrice || 0}
                       </p>
                     </div>
                   </div>

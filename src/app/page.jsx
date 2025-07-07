@@ -5,8 +5,9 @@ import FeaturedProducts from "@/components/widgets/home/FeaturedProducts";
 import DealSlider from "@/components/widgets/home/DealSlider";
 import Products from "@/components/widgets/home/ProductsCompenent";
 export const metadata = {
-  title: "Home",
-  description: "home page in SHop you & me",
+  title: "Ecommerce Home | Best Online Shopping",
+  description: "Welcome to the best ecommerce platform for fashion, electronics, and more. Shop online with great deals and fast shipping.",
+  keywords: "ecommerce, online shopping, fashion, electronics, deals, shop online"
 };
 export default function Home() {
   const images = [

@@ -27,16 +27,25 @@ export default function OrderSummaryModal({
 
           {/* Cart Items */}
           <ul className="text-sm space-y-1">
-            {cartItems.map((item, i) => (
-              <li key={i}>
-                {item.product.product} x {item.quantity} — $
-                {(item.product.newPrice / 100).toFixed(2)}
-              </li>
-            ))}
+            {cartItems.map((item, i) => {
+              if (!item?.product || !item?.quantity) return null;
+              const name = item.product.product || "Product Name";
+              const price = (item.product.newPrice || 0) / 100;
+              const qty = item.quantity;
+              const subtotal = price * qty;
+              return (
+                <li key={i} className="flex justify-between">
+                  <span>{name} x {qty}</span>
+                  <span>
+                    ${price.toFixed(2)} each | Subtotal: ${subtotal.toFixed(2)}
+                  </span>
+                </li>
+              );
+            })}
           </ul>
 
           {/* Total Amount */}
-          <div className="text-right font-bold">
+          <div className="text-right font-bold mt-2">
             Total: ${(total / 100).toFixed(2)}
           </div>
           <input

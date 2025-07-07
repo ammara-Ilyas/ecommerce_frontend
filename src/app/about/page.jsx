@@ -3,8 +3,9 @@ import Hero from "@/components/widgets/about/Hero";
 import AboutUs from "@/components/widgets/about/AboutUs";
 // import ShopWithUs from "@/components/layout/widgets/ShopWithUS";
 export const metadata = {
-  title: "About",
-  description: "about page in Ecommerce",
+  title: "About Us | Ecommerce",
+  description: "Learn more about our ecommerce platform, our mission, and our team.",
+  keywords: "about ecommerce, company info, our team, mission"
 };
 const page = () => {
   return (

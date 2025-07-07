@@ -37,17 +37,14 @@ function DataInitializer({ categories, product, banners, children }) {
           undefined,
           token
         );
-        // console.log("res in cartRes list ", cartRes);
+        console.log("res in cartRes list ", cartRes);
         if (cartRes) {
           // console.log("cartItem data in Redux Provider", cartRes.cartItems);
           dispatch(setCartItems(cartRes.cartItems));
-          const totalPriceAllProducts = cartRes.cartItems.reduce(
-            (acc, priceItem) => {
-              return acc + priceItem.quantity * priceItem.product.newPrice;
-            },
-            0
-          );
-          // console.log("totalPriceAllProducts in redux", totalPriceAllProducts);
+          const totalPriceAllProducts = cartRes.cartItems
+            .filter(item => item.product && item.product.newPrice)
+            .reduce((acc, item) => acc + item.quantity * item.product.newPrice, 0);
+          console.log("totalPriceAllProducts in redux", totalPriceAllProducts);
           dispatch(setTotalPrice(totalPriceAllProducts));
         }
       } catch (error) {

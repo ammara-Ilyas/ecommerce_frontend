@@ -84,12 +84,19 @@ const Navbar = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     setUser(null);
-    router.push("/");
+    window.location.href = "/";
   };
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedUser = localStorage.getItem("user");
       setUser(storedUser ? JSON.parse(storedUser) : null);
+      // Listen for login event
+      const handleUserLogin = () => {
+        const updatedUser = localStorage.getItem("user");
+        setUser(updatedUser ? JSON.parse(updatedUser) : null);
+      };
+      window.addEventListener("userLogin", handleUserLogin);
+      return () => window.removeEventListener("userLogin", handleUserLogin);
     }
   }, []);
 
@@ -156,11 +163,11 @@ const Navbar = () => {
               ))}
 
               {/* User/Login */}
-              <div
-                className="relative items-center justify-between flex space-x-1 cursor-pointer w-[190px] text-xl"
-                onClick={() => setIsOpen((prev) => !prev)}
-              >
-                {user ? (
+              {user ? (
+                <div
+                  className="relative items-center justify-between flex space-x-1 cursor-pointer w-[190px] text-xl"
+                  onClick={() => setIsOpen((prev) => !prev)}
+                >
                   <div className="flex items-center space-x-2">
                     {user.img ? (
                       <Avatar alt={user.name} src={user.img} />
@@ -174,38 +181,22 @@ const Navbar = () => {
                       <p className="text-xs text-gray-500">{user.email}</p>
                     </div>
                   </div>
-                ) : (
-                  <span className="text-xl flex gap-2 flex-row">
-                    <FaUser />
-                    Login
-                  </span>
-                )}
-                {isOpen && (
-                  <ul className="absolute flex flex-col gap-2 w-[190px] bg-white z-50 py-3 border rounded-md shadow-md top-10 left-0">
-                    {account.map((item, i) => (
-                      <li
-                        key={i}
-                        className="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 cursor-pointer transition-all"
-                      >
-                        <span className="text-gray-700">{item.icon}</span>
-                        <Link
-                          href={item.link}
-                          className="text-sm text-gray-800"
+                  {isOpen && (
+                    <ul className="absolute flex flex-col gap-2 w-[190px] bg-white z-50 py-3 border rounded-md shadow-md top-10 left-0">
+                      {account.map((item, i) => (
+                        <li
+                          key={i}
+                          className="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 cursor-pointer transition-all"
                         >
-                          {item.name}
-                        </Link>
-                      </li>
-                    ))}
-                    {!user ? (
-                      <li className="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 cursor-pointer transition-all text-sm text-gray-800">
-                        <Link
-                          className="flex items-center gap-3"
-                          href="/contact/login"
-                        >
-                          <FaUser size={20} className="text-gray-700" /> Login
-                        </Link>
-                      </li>
-                    ) : (
+                          <span className="text-gray-700">{item.icon}</span>
+                          <Link
+                            href={item.link}
+                            className="text-sm text-gray-800"
+                          >
+                            {item.name}
+                          </Link>
+                        </li>
+                      ))}
                       <li
                         className="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 cursor-pointer transition-all text-sm text-gray-800"
                         onClick={handleLogout}
@@ -213,10 +204,18 @@ const Navbar = () => {
                         <MdLogout size={20} className="text-gray-700" />
                         Logout
                       </li>
-                    )}
-                  </ul>
-                )}
-              </div>
+                    </ul>
+                  )}
+                </div>
+              ) : (
+                <Link
+                  href="/contact/login"
+                  className="text-xl flex gap-2 flex-row items-center hover:text-blue-600 transition-colors"
+                >
+                  <FaUser />
+                  Login
+                </Link>
+              )}
             </div>
             {/* Mobile Menu Button */}
             <button
@@ -274,11 +273,11 @@ const Navbar = () => {
           ))}
 
           {/* User/Login */}
-          <div
-            className=" items-center justify-between flex space-x-1 cursor-pointer w-[190px] text-xl"
-            onClick={() => setIsOpen((prev) => !prev)}
-          >
-            {user ? (
+          {user ? (
+            <div
+              className=" items-center justify-between flex space-x-1 cursor-pointer w-[190px] text-xl"
+              onClick={() => setIsOpen((prev) => !prev)}
+            >
               <div className="flex items-center space-x-2">
                 {user.img ? (
                   <Avatar alt={user.name} src={user.img} />
@@ -292,30 +291,19 @@ const Navbar = () => {
                   <p className="text-xs text-gray-500">{user.email}</p>
                 </div>
               </div>
-            ) : (
-              <span className="text-xl flex gap-2 flex-row">
-                <FaUser />
-                Login
-              </span>
-            )}
-            {isOpen && (
-              <ul className="absolute flex flex-col gap-2 bg-white z-50 py-3 border rounded-md shadow-md right-0 top-0">
-                {account.map((item, i) => (
-                  <li
-                    key={i}
-                    className="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 cursor-pointer transition-all"
-                  >
-                    <span className="text-gray-700">{item.icon}</span>
-                    <Link href={item.link} className="text-sm text-gray-800">
-                      {item.name}
-                    </Link>
-                  </li>
-                ))}
-                {!user ? (
-                  <li className="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 cursor-pointer transition-all text-sm text-gray-800">
-                    <FaUser size={20} className="text-gray-700" /> Login
-                  </li>
-                ) : (
+              {isOpen && (
+                <ul className="absolute flex flex-col gap-2 bg-white z-50 py-3 border rounded-md shadow-md right-0 top-0">
+                  {account.map((item, i) => (
+                    <li
+                      key={i}
+                      className="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 cursor-pointer transition-all"
+                    >
+                      <span className="text-gray-700">{item.icon}</span>
+                      <Link href={item.link} className="text-sm text-gray-800">
+                        {item.name}
+                      </Link>
+                    </li>
+                  ))}
                   <li
                     className="flex items-center gap-3 px-4 py-2 hover:bg-gray-100 cursor-pointer transition-all text-sm text-gray-800"
                     onClick={handleLogout}
@@ -323,10 +311,18 @@ const Navbar = () => {
                     <MdLogout size={20} className="text-gray-700" />
                     Logout
                   </li>
-                )}
-              </ul>
-            )}
-          </div>
+                </ul>
+              )}
+            </div>
+          ) : (
+            <Link
+              href="/contact/login"
+              className="text-xl flex gap-2 flex-row items-center hover:text-blue-600 transition-colors"
+            >
+              <FaUser />
+              Login
+            </Link>
+          )}
           {/* Phone Section */}
         </div>
         <div className="xl:hidden flex items-center gap-4">

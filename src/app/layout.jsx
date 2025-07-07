@@ -2,15 +2,13 @@ import { Geist, Geist_Mono } from "next/font/google";
 // import Header from "../components/layout/Header";
 import TopMarqueeBar from "@/components/layout/widgets/TopBar.jsx";
 import "./globals.css";
-import Footer from "@/components/layout/footer/Footer";
-import ShopWithUs from "@/components/layout/widgets/ShopWithUS";
-import NewsletterSection from "@/components/layout/footer/widgets/NewsLetter";
 import ReduxProviders from "@/redux/ReduxProvider";
 import { callPrivateApi, callPublicApi } from "@/libs/CallApis";
 import Navbar from "@/components/layout/Navbar";
 import { ToastContainer } from "react-toastify";
 import Wrapper from "@/components/miniWidgets/Wrapper";
 import ProgressBarProviders from "@/components/miniWidgets/Progressbar";
+import Footer from "@/components/layout/footer/Footer";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -66,16 +64,18 @@ export default function RootLayout({ children }) {
           categories={CategoriesRes}
           banners={bannerRes}
         >
-          <TopMarqueeBar />
-          <Navbar />
-          <Wrapper>
-            {/* <Header /> */}
-            <ProgressBarProviders>{children}</ProgressBarProviders>
-            {/* <NewsLatter /> */}
-            <NewsletterSection />
-            <ShopWithUs />
-            <Footer /> <ToastContainer position="top-right" autoClose={3000} />
-          </Wrapper>
+          <ProgressBarProviders>
+            <TopMarqueeBar />
+            <Navbar />
+            <Wrapper>
+              {/* <Header /> */}
+              {children}
+
+
+       <ToastContainer position="top-right" autoClose={3000} />
+            </Wrapper>
+<Footer/>    
+          </ProgressBarProviders>
         </ReduxProviders>
       </body>
     </html>

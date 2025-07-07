@@ -8,7 +8,7 @@ const Page = () => {
   return (
     <>
       <div
-        className=" -mt-24 h-[100vh]"
+        className="min-h-screen"
         style={{
           backgroundImage: `url${"/images/bg_signup.webp"}`,
           backgroundSize: "cover",

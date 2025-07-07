@@ -37,6 +37,18 @@ export default function OtpForm() {
     }
   };
 
+  const handlePaste = (e) => {
+    const paste = e.clipboardData.getData('text');
+    if (/^\d{6}$/.test(paste)) {
+      setOtp(paste.split(''));
+      // Move focus to last input
+      setTimeout(() => {
+        if (inputRefs.current[5]) inputRefs.current[5].focus();
+      }, 0);
+      e.preventDefault();
+    }
+  };
+
   const handleResendOtp = async () => {
     try {
       const res = await callPublicApi("/auth/resend-otp", "POST", {
@@ -114,6 +126,7 @@ export default function OtpForm() {
                 value={digit}
                 onChange={(e) => handleChange(e, index)}
                 onKeyDown={(e) => handleKeyDown(e, index)}
+                onPaste={handlePaste}
               />
             ))}
           </div>

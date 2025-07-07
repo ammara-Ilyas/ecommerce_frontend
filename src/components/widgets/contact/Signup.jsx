@@ -5,11 +5,9 @@ import { TextField, Button, CircularProgress } from "@mui/material";
 import { callPublicApi } from "@/libs/callApis";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import logo from "/images/logo.png";
 import { FcGoogle } from "react-icons/fc";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { useUser } from "@/contextApi/UserContext";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -72,7 +70,7 @@ export default function Signup() {
       });
 
       // Optional: navigate to login
-      router.push("/auth/otp");
+      router.push("/otp");
     } catch (error) {
       toast.error(error?.message || "Something went wrong");
     } finally {
@@ -81,10 +79,10 @@ export default function Signup() {
   };
 
   return (
-    <div className=" flex flex-col items-center  justify-center  ">
-      <div className="flex  items-center shadow-lg rounded-lg overflow-hidden gap-4">
+    <div className="flex flex-col items-center shadow-lg mb-5 bg-gray-100 justify-center  w-full overflow-x-hidden">
+      <div className="flex items-center  rounded-lg overflow-hidden gap-4 w-[95%] mx-auto">
         {/* Left Side */}
-        <div className=" w-[65%] mt-10 flex  flex-col   pr-0 pl-14">
+        <div className="w-[65%] mt-10 flex flex-col pr-0 pl-14">
           <p className="text-[44px] leading-[48px] font-extrabold   ">
             <span className=" text-black">BEST UX/UI FASHION </span>
             <span className=" text-blue-700">ECOMMERCE DASHBOARD </span>
@@ -109,13 +107,13 @@ export default function Signup() {
         </div>
 
         {/* Right Side */}
-        <div className="w-[30%] shadow-md mr-2 rounded-md py-6 bg-gray-100 ml-auto pr-0 flex justify-center items-center flex-col  ">
+        <div className="w-[30%]  p-5 px-6  px-3 mr-2 rounded-md py-6 bg-gray-100 ml-auto pr-0 flex justify-center items-center flex-col">
           <Image
-            src={logo}
+            src="/images/logo.png"
             alt="Ecommerce Logo"
             className="w-16 h-16 my-6"
             width={16}
-            heigt={16}
+            height={16}
           />
           <h2 className="text-2xl font-semibold text-gray-800">ECOMMERCE</h2>
 

@@ -57,7 +57,6 @@ export default function StripePayment({
       php-template Copy Edit
       <div
         style={{
-          border: "1px solid #ccc",
           padding: "12px",
           borderRadius: "6px",
         }}
