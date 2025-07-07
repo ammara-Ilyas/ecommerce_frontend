@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { CloudUpload as CloudUploadIcon } from "@mui/icons-material";
 import { TextField, Button, CircularProgress } from "@mui/material";
-import { callPublicApi } from "@/libs/callApis";
+import { callPublicApi } from "@/libs/CallApis";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FcGoogle } from "react-icons/fc";

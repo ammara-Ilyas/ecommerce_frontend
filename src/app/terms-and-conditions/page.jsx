@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { callPublicApi } from "@/libs/CallApis";
 
 export const metadata = {
   title: "Terms and Conditions | Ecommerce",
