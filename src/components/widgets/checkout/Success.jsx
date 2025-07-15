@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { callPrivateApi } from "@/libs/CallApis";
 import { getToken } from "@/libs/Token";
+// const HOSTNAME = "https://ecommerce-apis-hl5w.onrender.com/api";
+const HOSTNAME = "http://localhost:5000/api";
 
 export default function Success() {
   const router = useRouter();
@@ -17,22 +19,25 @@ export default function Success() {
       const session_id = new URLSearchParams(window.location.search).get(
         "session_id"
       );
+      console.log("session id",session_id);
+      
       if (session_id) {
         try {
           const res = await fetch(
-            `/api/verify-payment?session_id=${session_id}`
+            `${HOSTNAME}/verify-payment?session_id=${session_id}`
           );
-          if (res.ok) {
-            const data = await res.json();
+          
+          console.log("res",res);
+          const data = await res.json();
+          console.log("data",data);
             // Check your API response to confirm it’s a success
+            
             if (data.success) {
               setIsVerified(true);
             } else {
               setIsVerified(false);
             }
-          } else {
-            setIsVerified(false);
-          }
+          
         } catch (error) {
           console.error("Error verifying payment:", error);
           setIsVerified(false);

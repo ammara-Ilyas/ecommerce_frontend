@@ -68,7 +68,7 @@ export default function AddressForm() {
       const fullAddress = `${data.address1}${
         data.address2 ? ", " + data.address2 : ""
       }, ${data.city}, ${data.state}, ${data.zip}, ${data.country}`;
-
+   
       const payload = {
         userId: user.id,
         name: fullName,
@@ -101,6 +101,7 @@ export default function AddressForm() {
       setLoading(false);
     }
   };
+   console.log("cart items",cartItem);
 
   return (
     <>
