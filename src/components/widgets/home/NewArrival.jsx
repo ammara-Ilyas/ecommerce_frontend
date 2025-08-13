@@ -4,80 +4,8 @@ import ProductCard from "./ProductCard";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { Heading, SeeAllButton } from "@/components/miniWidgets/Button";
-// const products = [
-//   {
-//     category: "Fashion",
-//     title: "Glito Black Solid Dry-Fit...",
-//     rating: 5,
-//     seller: "V-Mart",
-//     currentPrice: 460,
-//     originalPrice: 490,
-//     images: ["/images/dummy.png", "images/dummy.png"], // Replace with actual image path or URL
-//   },
-//   {
-//     category: "Fashion",
-//     title: "Glito Black Solid Dry-Fit...",
-//     rating: 5,
-//     seller: "V-Mart",
-//     currentPrice: 460,
-//     originalPrice: 490,
-//     imageUrl: ["/images/dummy.png", "images/dummy.png"], // Replace with actual image path or URL
-//   },
-//   {
-//     category: "Fashion",
-//     title: "Glito Black Solid Dry-Fit...",
-//     rating: 5,
-//     seller: "V-Mart",
-//     currentPrice: 460,
-//     originalPrice: 490,
-//     imageUrl: ["/images/dummy.png", "images/dummy.png"], // Replace with actual image path or URL
-//   },
-//   {
-//     category: "Fashion",
-//     title: "Glito Black Solid Dry-Fit...",
-//     rating: 5,
-//     seller: "V-Mart",
-//     currentPrice: 460,
-//     originalPrice: 490,
-//     imageUrl: ["/images/dummy.png", "images/dummy.png"], // Replace with actual image path or URL
-//   },
-//   {
-//     category: "Fashion",
-//     title: "Glito Black Solid Dry-Fit...",
-//     rating: 5,
-//     seller: "V-Mart",
-//     currentPrice: 460,
-//     originalPrice: 490,
-//     imageUrl: ["/images/dummy.png", "images/dummy.png"], // Replace with actual image path or URL
-//   },
-//   {
-//     category: "Fashion",
-//     title: "Glito Black Solid Dry-Fit...",
-//     rating: 5,
-//     seller: "V-Mart",
-//     currentPrice: 460,
-//     originalPrice: 490,
-//     imageUrl: ["/images/dummy.png", "images/dummy.png"], // Replace with actual image path or URL
-//   },
-//   {
-//     category: "Fashion",
-//     title: "Glito Black Solid Dry-Fit...",
-//     rating: 5,
-//     seller: "V-Mart",
-//     currentPrice: 460,
-//     originalPrice: 490,
-//     imageUrl: ["/images/dummy.png", "images/dummy.png"], // Replace with actual image path or URL
-//   },
-//   {
-//     category: "Fashion",
-//     title: "Glito Black Solid Dry-Fit...",
-//     rating: 5,
-//     seller: "V-Mart",
-//     currentPrice: 460,
-//     originalPrice: 490,
-//     imageUrl: ["/images/dummy.png", "images/dummy.png"], // Replace with actual image path or URL
-//   },
-// ];
+import ProductSkeleton from "@/components/miniWidgets/ProductSkeleton";
+
 const NewArrival = () => {
   const router = useRouter();
   const products = useSelector((state) => state.product.products);
@@ -92,21 +20,24 @@ const NewArrival = () => {
     router.push("product");
   };
   return (
-    <div className="flex flex-col mt-10 justify-between ">
+    <div className="flex flex-col mt-10 justify-between bg-white dark:bg-gray-900 text-black dark:text-white rounded-lg">
       <div className="flex mr-16  mb-2 justify-between items-center">
         {" "}
-        <Heading text="New Arrivals" />
+        <Heading text="New Arrivals" className="text-black dark:text-white" />
         <SeeAllButton text="See All" handleNavigate={handleNavigate} />
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4   mx-10 ">
-        {newArrival &&
-          newArrival.map((item, i) => (
-            <div className="" key={i}>
-              <ProductCard product={item} />
-            </div>
-          ))}
+      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4 mx-10">
+  {newArrival && newArrival.length > 0 ? (
+    newArrival.map((item, i) => (
+      <div className="" key={i}>
+        <ProductCard product={item} />
       </div>
+    ))
+  ) : (
+    <ProductSkeleton />
+  )}
+</div>
     </div>
   );
 };

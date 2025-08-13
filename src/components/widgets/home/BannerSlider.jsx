@@ -7,6 +7,7 @@ import Image from "next/image";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { useSelector } from "react-redux";
+import BannerSkeleton from "@/components/miniWidgets/BannerSkeleton";
 
 const BannerSlider = () => {
   const carouselRef = useRef(null);
@@ -30,42 +31,45 @@ const BannerSlider = () => {
   };
   return (
     <div className=" ">
-      <Carousel
-        ref={carouselRef} // Attach the ref here
-        additionalTransfrom={0}
-        arrows
-        autoPlay
-        autoPlaySpeed={3000}
-        className="mb-12"
-        containerClass="carousel-container"
-        draggable
-        focusOnSelect={true}
-        infinite
-        itemClass="carousel-item-padding-40-px"
-        keyBoardControl
-        minimumTouchDrag={80}
-        pauseOnHover
-        renderDotsOutside
-        responsive={responsive}
-        rewind={false}
-        rewindWithAnimation={false}
-        rtl={false}
-        shouldResetAutoplay
-        sliderClass=""
-        slidesToSlide={1}
-        swipeable
-      >
-        {banners &&
+      {(!banners || banners.length === 0) ? (
+        <BannerSkeleton />
+      ) : (
+        <Carousel
+          ref={carouselRef}
+          additionalTransfrom={0}
+          arrows
+          autoPlay
+          autoPlaySpeed={3000}
+          className="mb-12"
+          containerClass="carousel-container"
+          draggable
+          focusOnSelect={true}
+          infinite
+          itemClass="carousel-item-padding-40-px"
+          keyBoardControl
+          minimumTouchDrag={80}
+          pauseOnHover
+          renderDotsOutside
+          responsive={responsive}
+          rewind={false}
+          rewindWithAnimation={false}
+          rtl={false}
+          shouldResetAutoplay
+          sliderClass=""
+          slidesToSlide={1}
+          swipeable
+        >
+          {banners &&
           banners.map((banner, index) => (
             <div
               className="w-full h-[150px] sm:h-[250px] md:h-[350px] lg:h-[400px]"
               key={banner._id}
             >
-              {" "}
               <Image src={banner.image} alt={banner.name} fill />
             </div>
           ))}
-      </Carousel>
+        </Carousel>
+      )}
     </div>
   );
 };

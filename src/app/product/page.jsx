@@ -10,10 +10,10 @@ export const metadata = {
 const page = () => {
   return (
     <div className="flex w-[98%]  mx-auto ">
-      <div className="w-[20%] ml-10 border-2 border-red-700">
+      <div className="w-[20%] ml-10 ">
         <FilterPanel />
       </div>
-      <div className="w-[75%] border-4 border-green-900">
+      <div className="w-[75%] ">
         <FilteredProduct />
       </div>
     </div>

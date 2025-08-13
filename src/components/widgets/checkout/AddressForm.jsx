@@ -8,8 +8,11 @@ import {
   Checkbox,
   Typography,
   Button,
+  RadioGroup,
+  Radio,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -24,11 +27,14 @@ const FormGrid = styled(Grid)(() => ({
 }));
 
 export default function AddressForm() {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
   const [formData, setFormData] = useState(null);
   const [clientSecret, setClientSecret] = useState("");
-  const [isCard, setIsCard] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState("card");
+  const [refundAccepted, setRefundAccepted] = useState(false);
+  const [bankReference, setBankReference] = useState("");
   const [user, setUser] = useState({});
   const cartItem = useSelector((state) => state.cart.cartItems);
   function getRandomAmount() {
@@ -77,6 +83,9 @@ export default function AddressForm() {
         address: fullAddress,
         cartItems: cartItem,
         amount: Number(180),
+        paymentMethod,
+        refundAccepted,
+        bankReference: paymentMethod === "bank" ? bankReference : undefined,
       };
 
       const res = await callPrivateApi(
@@ -86,12 +95,26 @@ export default function AddressForm() {
       );
       console.log("res in address", res);
 
-      if (res.url) {
-        setTimeout(() => {
-          window.location.href = res.url;
-        }, 2000);
-      } else {
-        toast.error("Failed to create checkout session");
+      if (paymentMethod === "card") {
+        if (res.url) {
+          setTimeout(() => {
+            window.location.href = res.url;
+          }, 800);
+        } else {
+          toast.error("Failed to create checkout session");
+        }
+      } else if (paymentMethod === "bank") {
+        toast.success("Bank order created. Please transfer using these details.");
+        if (res.instructions) {
+          const { accountName, accountNumber, bankName, iban, reference } =
+            res.instructions;
+          toast.info(
+            `Account: ${accountName} | ${bankName}\nAcc#: ${accountNumber}\nIBAN: ${iban}\nRef: ${reference}`,
+            { autoClose: 8000 }
+          );
+        }
+        // Navigate to orders page so the user can track status
+        router.push("/order");
       }
     } catch (err) {
       console.log("error", err);
@@ -105,10 +128,7 @@ export default function AddressForm() {
 
   return (
     <>
-      <Typography
-        variant="h6"
-        sx={{ color: "black", fontWeight: "bold", mb: 4 }}
-      >
+      <Typography variant="h6" sx={{ color: "#1d4ed8", fontWeight: 700, mb: 3 }}>
         Shipping Information
       </Typography>
 
@@ -179,16 +199,53 @@ export default function AddressForm() {
               label="Use this address for payment details"
             />
           </FormGrid>
+
+          <FormGrid item xs={12}>
+            <FormLabel sx={{ color: "#1d4ed8", fontWeight: 600 }}>Payment Method *</FormLabel>
+            <RadioGroup
+              row
+              value={paymentMethod}
+              onChange={(e) => setPaymentMethod(e.target.value)}
+            >
+              <FormControlLabel value="card" control={<Radio color="primary" />} label="Card" />
+              <FormControlLabel value="bank" control={<Radio color="primary" />} label="Bank Transfer" />
+            </RadioGroup>
+          </FormGrid>
+
+          {paymentMethod === "bank" && (
+            <>
+              <FormGrid item xs={12}>
+                <Typography variant="body2" color="text.secondary">
+                  You will receive bank details and a reference after placing the order. Optionally add your bank reference now.
+                </Typography>
+              </FormGrid>
+              <FormGrid item xs={12} md={6}>
+                <FormLabel htmlFor="bankReference">Bank Reference (optional)</FormLabel>
+                <OutlinedInput
+                  id="bankReference"
+                  placeholder="e.g. TRX-123456"
+                  size="small"
+                  value={bankReference}
+                  onChange={(e) => setBankReference(e.target.value)}
+                />
+              </FormGrid>
+            </>
+          )}
+
+          <FormGrid item xs={12}>
+            <FormControlLabel
+              control={<Checkbox color="primary" checked={refundAccepted} onChange={(e) => setRefundAccepted(e.target.checked)} />}
+              label={
+                <span>
+                  I agree to the <a href="/refund" target="_blank" rel="noreferrer">refund policy</a>
+                </span>
+              }
+            />
+          </FormGrid>
         </Grid>
 
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="primary"
-          sx={{ mt: 4 }}
-        >
-          Place Order{" "}
+        <Button type="submit" fullWidth variant="contained" color="primary" sx={{ mt: 4, backgroundColor: '#1d4ed8' }}>
+          Place Order
         </Button>
       </form>
       <OrderSummaryModal

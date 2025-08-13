@@ -17,12 +17,12 @@ export default function Home() {
     "/images/home/sale_pro_04.jpg",
   ];
   return (
-    <>
+    <div className="bg-white min-h-screen">
       <BannerSlider />
       <CategoriesSlider />
       <Products />
       <FeaturedProducts />
       <DealSlider images={images} height="h-[250px]" />
-    </>
+    </div>
   );
 }

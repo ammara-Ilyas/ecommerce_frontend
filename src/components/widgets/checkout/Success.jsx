@@ -13,12 +13,18 @@ export default function Success() {
   const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
   const [isVerified, setIsVerified] = useState(null); // null: loading, true: success, false: failed
+  const [orderId, setOrderId] = useState("");
+  const [sessionId, setSessionId] = useState("");
 
   useEffect(() => {
     const verifyPayment = async () => {
-      const session_id = new URLSearchParams(window.location.search).get(
+      const params = new URLSearchParams(window.location.search);
+      const session_id = params.get(
         "session_id"
       );
+      const oid = params.get("orderId");
+      if (oid) setOrderId(oid);
+      if (session_id) setSessionId(session_id);
       console.log("session id",session_id);
       
       if (session_id) {
@@ -104,6 +110,27 @@ export default function Success() {
           Go to Order page
         </button>
       </Link>
+      {(orderId || sessionId) && (
+        <button
+          className="mt-4 inline-block bg-gray-100 hover:bg-gray-200 text-gray-900 font-medium py-2 px-4 rounded-md"
+          onClick={async () => {
+            try {
+              const t = getToken();
+              await callPrivateApi(
+                "/refund",
+                "POST",
+                { orderId: orderId || undefined, session_id: sessionId || undefined, reason: "requested_by_customer" },
+                t
+              );
+              alert("Refund request submitted.");
+            } catch (e) {
+              alert(e?.error || e?.message || "Refund failed");
+            }
+          }}
+        >
+          Request Refund
+        </button>
+      )}
     </div>
   );
 }

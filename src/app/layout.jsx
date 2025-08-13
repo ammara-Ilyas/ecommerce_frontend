@@ -59,24 +59,22 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased w-screen `}
       >
-        <ReduxProviders
-          product={productRes}
-          categories={CategoriesRes}
-          banners={bannerRes}
-        >
-          <ProgressBarProviders>
-            <TopMarqueeBar />
-            <Navbar />
-            <Wrapper>
-              {/* <Header /> */}
-              {children}
-
-
-       <ToastContainer position="top-right" autoClose={3000} />
-            </Wrapper>
-<Footer/>    
-          </ProgressBarProviders>
-        </ReduxProviders>
+          <ReduxProviders
+            product={productRes}
+            categories={CategoriesRes}
+            banners={bannerRes}
+          >
+            <ProgressBarProviders>
+              <TopMarqueeBar />
+              <Navbar />
+              <Wrapper>
+                {/* <Header /> */}
+                {children}
+                {/* <NewsLatter /> */}
+                <ToastContainer position="top-right" autoClose={3000} />
+              </Wrapper>
+            </ProgressBarProviders>
+          </ReduxProviders>
       </body>
     </html>
   );

@@ -38,8 +38,8 @@ const PopularPRoducts = () => {
     },
   };
   return (
-    <div className=" mx-8 h-[400px] space-x-2  pt-3 ">
-      <Heading text="Popular Products" />
+    <div className="w-full px-2 sm:px-4 md:px-8 pt-3 bg-white text-black rounded-lg">
+      <Heading text="Popular Products" className="text-black" />
       <Carousel
         ref={carouselRef}
         additionalTransfrom={0}
@@ -66,7 +66,7 @@ const PopularPRoducts = () => {
         swipeable
       >
         {products.map((product, index) => (
-          <div key={index + product._id} className="mx-3  border-red-950 mt-3">
+          <div key={index + product._id} className="mx-1 sm:mx-2 md:mx-3 mt-3 min-w-[160px] max-w-xs w-full">
             <ProductCard product={product} />
           </div>
         ))}

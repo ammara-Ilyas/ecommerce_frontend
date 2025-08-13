@@ -24,7 +24,7 @@ const DealSlider = ({ images = [], height = "" }) => {
     },
   };
   return (
-    <div className={` mx-8 my-2 sm:my-5 space-x-2  ${height} `}>
+    <div className={`mx-8 my-2 sm:my-5 space-x-2 ${height} bg-white dark:bg-gray-900 text-black dark:text-white rounded-lg`}>
       <Carousel
         ref={carouselRef}
         additionalTransfrom={0}

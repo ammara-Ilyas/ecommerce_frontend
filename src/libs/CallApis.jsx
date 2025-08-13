@@ -4,7 +4,7 @@ const HOSTNAME = "http://localhost:5000/api";
 export const callPrivateApi = async (endpoint, method, payload, token) => {
   const headers = {
     Accept: "application/json",
-    Authorization: `Bearer ${token}`, // ✅ Correct way
+    Authorization: `Bearer ${token}`, 
   };
 
   let body = null;
