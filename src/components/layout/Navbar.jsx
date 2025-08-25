@@ -87,18 +87,25 @@ const Navbar = () => {
     window.location.href = "/";
   };
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedUser = localStorage.getItem("user");
-      setUser(storedUser ? JSON.parse(storedUser) : null);
-      // Listen for login event
-      const handleUserLogin = () => {
+  if (typeof window !== "undefined") {
+   
+    // Listen for login event
+      try {
         const updatedUser = localStorage.getItem("user");
-        setUser(updatedUser ? JSON.parse(updatedUser) : null);
-      };
-      window.addEventListener("userLogin", handleUserLogin);
-      return () => window.removeEventListener("userLogin", handleUserLogin);
-    }
-  }, []);
+        if (updatedUser && updatedUser !== "undefined") {
+          setUser(JSON.parse(updatedUser));
+        } else {
+          setUser(null);
+          localStorage.removeItem("user")
+        }
+      } catch (err) {
+        console.error("Invalid JSON in localStorage:", err);
+        setUser(null);
+      }
+    };
+
+  
+}, []);
 
   return (
     <>
@@ -134,7 +141,7 @@ const Navbar = () => {
             {/* Desktop Nav */}
             <nav className="hidden xl:block">
               <ul className="flex items-center space-x-4">
-                {navlinks.map((item, i) => (
+                <>{navlinks.map((item, i) => (
                   <li key={i}>
                     <Link
                       href={item.link}
@@ -144,6 +151,12 @@ const Navbar = () => {
                     </Link>
                   </li>
                 ))}
+                <li>{user?.role=="admin" ? <Link
+                      href="https://ecommerce-shop-dashboard.netlify.app/"
+                      className="text-black text-xl capitalize duration-200 active:text-blue-700 hover:text-blue-500"
+                    >
+                      Dashboard
+                    </Link>:"" }</li></>
               </ul>
             </nav>
 

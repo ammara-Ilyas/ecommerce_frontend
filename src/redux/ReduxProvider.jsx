@@ -21,8 +21,10 @@ function DataInitializer({ categories, product, banners, children }) {
     setToken(t);
     if (typeof window !== "undefined") {
       const localUser = localStorage.getItem("user");
-      if (localUser) {
+      if (localUser && localUser !=="undefined") {
         setUser(JSON.parse(localUser));
+      }else{
+        setUser(null)
       }
     }
   }, []);

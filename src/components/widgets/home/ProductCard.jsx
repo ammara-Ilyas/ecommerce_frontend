@@ -26,8 +26,19 @@ export default function ProductCard({ product }) {
     const t = getToken();
     setToken(t);
   }, []);
-  const user = JSON.parse(localStorage.getItem("user"));
-  // console.log("product", product);
+let user = null;
+
+if (typeof window !== "undefined") {
+  try {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser && storedUser !== "undefined") {
+      user = JSON.parse(storedUser);
+    }
+  } catch (err) {
+    console.error("Invalid user data in localStorage:", err);
+    user = null;
+  }
+}  // console.log("product", product);
   const cartItems = useSelector((state) => state.cart.cartItems);
   const isInCart = cartItems.some((item) => item._id === product._id);
   const handleAddToCart = async (item) => {

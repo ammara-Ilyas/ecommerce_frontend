@@ -13,8 +13,8 @@ import { useRouter } from "next/navigation";
 
 export default function Login() {
   const [loginForm, setLoginForm] = useState({
-    email: "",
-    password: "",
+    email: "admin@gmail.com",
+    password: "Admin@123",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -39,7 +39,7 @@ export default function Login() {
     }
     try {
       const res = await callPublicApi("/auth/login", "POST", loginForm);
-      // console.log("res in login ", res);
+      console.log("res in login ", res);
 
       if (res.status === "error") {
         toast.error(res.message || "Login failed");
@@ -52,8 +52,8 @@ export default function Login() {
           password: "",
         });
 
-        localStorage.setItem("token", res.token);
-        localStorage.setItem("user", JSON.stringify(res.user));
+        localStorage.setItem("token", res?.data?.token);
+        localStorage.setItem("user", JSON.stringify(res?.data?.user));
         window.dispatchEvent(new Event("userLogin"));
         router.push("/"); // Navigate after success
       }
